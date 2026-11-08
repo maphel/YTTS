@@ -3,6 +3,7 @@
 ## What YTTS does with your data
 
 - YTTS has no backend, analytics or telemetry. It makes no network requests of its own.
+  Opening YouTube's native transcript panel can cause YouTube itself to load transcript data.
 - The content script runs only on `https://www.youtube.com/*`. It reads the transcript that
   YouTube's own transcript panel renders and keeps it in the page's memory.
 - The only permission is `storage`, used for three display preferences

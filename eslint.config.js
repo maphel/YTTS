@@ -3,7 +3,7 @@ import globals from 'globals';
 
 export default [
   js.configs.recommended,
-  { ignores: ['node_modules/', 'dist/', 'test-results/', 'playwright-report/', '.playwright-mcp/'] },
+  { ignores: ['node_modules/', 'dist/', '.cache/', 'test-results/', 'playwright-report/', '.playwright-mcp/'] },
   {
     // Classic scripts: content scripts and the popup run without ES modules.
     files: ['extension/**/*.js'],
