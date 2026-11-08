@@ -8,7 +8,10 @@
   "scripts": {
     "lint": "eslint .",
     "check": "node scripts/check.mjs",
-    "test": "playwright test --config tests/playwright.config.mjs"
+    "test": "playwright test --config tests/playwright.config.mjs",
+    "pack": "node scripts/pack.mjs",
+    "release": "node scripts/release.mjs",
+    "changelog:section": "node scripts/changelog-section.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

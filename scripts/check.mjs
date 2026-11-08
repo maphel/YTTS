@@ -8,6 +8,8 @@ import { runInNewContext } from 'node:vm';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const extension = resolve(root, 'extension');
 const manifest = JSON.parse(await readFile(resolve(extension, 'manifest.json'), 'utf8'));
+const pkg = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
+assert.equal(manifest.version, pkg.version, 'extension/manifest.json and package.json versions differ');
 assert.equal(manifest.manifest_version, 3);
 assert.equal(manifest.name, 'YTTS');
 assert.deepEqual(manifest.permissions, ['storage']);

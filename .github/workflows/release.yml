@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # The tag must match the version in package.json (pack checks manifest.json against it).
+      - run: test "v$(node -p "require('./package.json').version")" = "${GITHUB_REF_NAME}"
+      - run: npm run lint
+      - run: npm run check
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - run: npm run pack
+      # Release notes are the CHANGELOG.md section for this version; fails if it is missing or empty.
+      - run: node scripts/changelog-section.mjs "${GITHUB_REF_NAME#v}" > "${RUNNER_TEMP}/release-notes.md"
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" dist/*.zip --title "YTTS ${GITHUB_REF_NAME#v}" --notes-file "${RUNNER_TEMP}/release-notes.md" --verify-tag
