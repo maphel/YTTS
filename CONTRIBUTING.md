@@ -29,6 +29,7 @@ Install the optional development tools and run:
 
 ```sh
 npm ci
+npm run lint
 npm run check
 npm test
 ```

@@ -1,3 +1,4 @@
+/* global storageWrites, savedSettings -- defined by the popup harness inside the page */
 import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { extname } from 'node:path';

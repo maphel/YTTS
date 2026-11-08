@@ -2,13 +2,30 @@
   "name": "ytts",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "Development checks for the YTTS Chromium extension",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint .",
     "check": "node scripts/check.mjs",
     "test": "playwright test --config tests/playwright.config.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "1.65.0"
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.65.0",
+    "eslint": "10.14.0",
+    "globals": "17.14.0"
+  },
+  "overrides": {
+    "eslint": {
+      "minimatch": "^11.0.4"
+    }
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maphel/YTTS.git"
   }
 }
