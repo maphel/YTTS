@@ -1,0 +1,11 @@
+.playwright-mcp/
+.DS_Store
+node_modules/
+.cache/
+test-results/
+playwright-report/
+dist/
+*.zip
+.env
+.env.*
+!.env.example

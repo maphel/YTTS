@@ -1,0 +1,41 @@
+name: Bug report
+description: Report a transcript, copying, display, or settings problem.
+title: "[Bug] "
+body:
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 140 on Windows 11
+    validations:
+      required: true
+  - type: input
+    id: extension-version
+    attributes:
+      label: YTTS version
+      description: Find this on your browser's extensions page.
+    validations:
+      required: true
+  - type: input
+    id: video
+    attributes:
+      label: Public video URL
+      description: If relevant, share a public video where the problem occurs.
+      placeholder: https://www.youtube.com/watch?v=...
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the video.
+        2. Click …
+        3. Observe …
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+      description: Screenshots are helpful for display problems. Remove private information.
+    validations:
+      required: true

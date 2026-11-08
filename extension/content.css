@@ -1,0 +1,267 @@
+/* Values mirror YouTube's own engagement panel / transcript panel / tonal buttons
+   (measured from youtube.com computed styles, 2026-11). Dark theme = html[dark]. */
+#ytts-panel {
+  --ytts-fg: #0f0f0f;
+  --ytts-fg2: #606060;
+  --ytts-outline: rgba(0, 0, 0, 0.2);
+  --ytts-tonal: rgba(0, 0, 0, 0.05);
+  --ytts-tonal-hover: rgba(0, 0, 0, 0.1);
+  --ytts-hover: rgba(0, 0, 0, 0.05);
+  --ytts-chip-fg: #065fd4;
+  --ytts-chip-bg: #def1ff;
+
+  margin: 0 0 16px;
+  border: 1px solid var(--ytts-outline);
+  border-radius: 12px;
+  color: var(--ytts-fg);
+  font-family: "Roboto", "Arial", sans-serif;
+  overflow: hidden;
+}
+
+html[dark] #ytts-panel {
+  --ytts-fg: #f1f1f1;
+  --ytts-fg2: #aaa;
+  --ytts-outline: rgba(255, 255, 255, 0.2);
+  --ytts-tonal: rgba(255, 255, 255, 0.1);
+  --ytts-tonal-hover: rgba(255, 255, 255, 0.2);
+  --ytts-hover: rgba(255, 255, 255, 0.1);
+  --ytts-chip-fg: #3ea6ff;
+  --ytts-chip-bg: #263850;
+}
+
+/* Header — same box as ytd-engagement-panel-title-header-renderer */
+#ytts-panel .ytts-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 4px 4px 4px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+#ytts-panel .ytts-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
+#ytts-panel button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  margin: 0;
+  font-family: inherit;
+  color: var(--ytts-fg);
+  cursor: pointer;
+}
+
+#ytts-panel button:focus-visible {
+  outline: 2px solid var(--ytts-chip-fg);
+  outline-offset: -2px;
+}
+
+/* Tonal pill — same as YouTube's Share / Save buttons (size M) */
+#ytts-panel .ytts-copy {
+  flex: none;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px 0 12px;
+  border-radius: 18px;
+  background: var(--ytts-tonal);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 36px;
+}
+
+#ytts-panel .ytts-copy:hover:not(:disabled) {
+  background: var(--ytts-tonal-hover);
+}
+
+#ytts-panel .ytts-copy:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Round icon button — same as the panel close button */
+#ytts-panel .ytts-chevron {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+#ytts-panel .ytts-chevron:hover {
+  background: var(--ytts-tonal-hover);
+}
+
+#ytts-panel svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  pointer-events: none;
+}
+
+#ytts-panel .ytts-chevron svg {
+  transition: transform 0.2s;
+}
+
+#ytts-panel.ytts-collapsed .ytts-chevron svg {
+  transform: rotate(180deg);
+}
+
+/* Body — same rows as ytd-transcript-segment-renderer */
+#ytts-panel .ytts-body {
+  max-height: 440px;
+  overflow-y: auto;
+  border-top: 1px solid var(--ytts-outline);
+  padding: 4px 0 8px;
+}
+
+#ytts-panel.ytts-collapsed .ytts-body {
+  display: none;
+}
+
+#ytts-panel .ytts-status {
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ytts-fg2);
+}
+
+#ytts-panel .ytts-chapter {
+  margin: 0;
+  padding: 16px 16px 4px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+}
+
+#ytts-panel .ytts-seg {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 16px;
+  padding: 8px 16px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+#ytts-panel .ytts-seg:hover {
+  background: var(--ytts-hover);
+}
+
+#ytts-panel .ytts-time {
+  flex: none;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: var(--ytts-chip-bg);
+  color: var(--ytts-chip-fg);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+#ytts-panel .ytts-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* View "Sätze": time range chip above the sentence */
+#ytts-panel .ytts-sent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+#ytts-panel .ytts-sent:hover {
+  background: var(--ytts-hover);
+}
+
+/* View "Text": paragraphs, each sentence clickable */
+#ytts-panel .ytts-para {
+  margin: 0;
+  padding: 8px 16px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+/* Inline sentence (span role=button): flows like plain text inside the paragraph */
+#ytts-panel .ytts-s {
+  border-radius: 4px;
+  cursor: pointer;
+  box-decoration-break: clone;
+}
+
+#ytts-panel .ytts-s:focus-visible {
+  outline: 2px solid var(--ytts-chip-fg);
+}
+
+#ytts-panel .ytts-s:hover {
+  background: var(--ytts-hover);
+}
+
+/* Thin scrollbar like YouTube's panels */
+#ytts-panel .ytts-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+#ytts-panel .ytts-body::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: transparent;
+}
+
+#ytts-panel .ytts-body:hover::-webkit-scrollbar-thumb,
+#ytts-panel .ytts-body:focus-within::-webkit-scrollbar-thumb {
+  background: var(--ytts-outline);
+}
+
+#ytts-panel .ytts-announcement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ytts-panel .ytts-chevron svg {
+    transition: none;
+  }
+}
+
+/* While the extension scrapes YouTube's native transcript panel, make it invisible
+   so the user does not see it flash open and closed. It must stay ON-SCREEN:
+   YouTube lazy-loads the segment list via IntersectionObserver, so an off-screen
+   panel (left:-10000px) never loads. See LESSONS_LEARNED.md. */
+html.ytts-busy ytd-engagement-panel-section-list-renderer[visibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"]:is(
+  [target-id="engagement-panel-searchable-transcript"],
+  [identifier="engagement-panel-searchable-transcript"],
+  :has(transcript-segment-view-model, ytd-transcript-segment-renderer)
+) {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
