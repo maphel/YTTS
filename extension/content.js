@@ -127,9 +127,14 @@
   }
 
   async function scrapeTranscript(prevSignature, signal, videoId) {
-    if (!await waitFor(() => pageShowsVideo(videoId), 15000, 100, signal)) {
-      throw new Error('Transkript konnte nicht geladen werden.');
+    if (document.querySelector('ytd-watch-flexy[video-id]')) {
+      // Best effort: if YouTube ever leaves video-id stale, a stale button still only reopens the
+      // previous transcript, which the prevSignature check below rejects.
+      await waitFor(() => pageShowsVideo(videoId), 3000, 100, signal);
+    } else {
+      await sleep(300); // layouts without the attribute keep the former 600 ms total grace
     }
+    signal.throwIfAborted();
     const btn = await waitFor(() => document.querySelector(OPEN_BTN_SEL), 8000, 200, signal);
     if (!btn) throw new Error('Für dieses Video gibt es kein Transkript.');
     signal.throwIfAborted();

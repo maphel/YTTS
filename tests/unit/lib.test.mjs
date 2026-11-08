@@ -68,6 +68,16 @@ test('quotes and brackets after punctuation still end the sentence', () => {
   assert.deepEqual(plain(texts), ['Er sagte „Hallo.“', 'Dann ging er.', '(Applaus.)', 'Weiter.']);
 });
 
+// French typography with a space before » ("« Oui. »") is not recognised; captions rarely use it.
+test('German single and French guillemet closers end a sentence', () => {
+  const de = lib.toSentences([seg('0:00', 'Er sagte ‚Ja.‘ Gut.')], 3).map((s) => s.text);
+  assert.deepEqual(plain(de), ['Er sagte ‚Ja.‘', 'Gut.']);
+  const fr = lib.toSentences([seg('0:00', 'Il dit «Oui.» Puis.')], 3).map((s) => s.text);
+  assert.deepEqual(plain(fr), ['Il dit «Oui.»', 'Puis.']);
+  const ch = lib.toSentences([seg('0:00', 'Er sagt »Nein.« Dann.')], 3).map((s) => s.text);
+  assert.deepEqual(plain(ch), ['Er sagt »Nein.«', 'Dann.']);
+});
+
 test('ellipsis ends a sentence', () => {
   const texts = lib.toSentences([seg('0:00', 'Na ja… Egal.')], 3).map((s) => s.text);
   assert.deepEqual(plain(texts), ['Na ja…', 'Egal.']);

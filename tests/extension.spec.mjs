@@ -337,6 +337,22 @@ test('navigating to a video without transcript ignores the previous video\'s but
   await expect(page.locator('.ytts-copy')).toBeDisabled();
 });
 
+// #12: the poll keeps the card in place on watch pages and removes it after leaving them,
+// even when YouTube fires no navigation event.
+test('the poll re-inserts a card that YouTube re-rendered away', async ({ page }) => {
+  await setup(page);
+  await ready(page);
+  await page.evaluate(() => document.getElementById('ytts-panel').remove());
+  await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel', { timeout: 2_500 });
+});
+
+test('the poll removes the card after leaving the watch page without an event', async ({ page }) => {
+  await setup(page);
+  await ready(page);
+  await page.evaluate(() => history.pushState({}, '', '/'));
+  await expect(page.locator('#ytts-panel')).toHaveCount(0, { timeout: 2_500 });
+});
+
 test('missing transcripts show a clear error without enabling copy', async ({ page }) => {
   await setup(page, { noTranscript: true, settings: { expandedByDefault: true } });
   await expect(page.locator('.ytts-status')).toHaveText('Für dieses Video gibt es kein Transkript.', { timeout: 12_000 });

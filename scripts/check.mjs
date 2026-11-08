@@ -40,7 +40,11 @@ for (const size of [16, 32, 48, 128]) {
 }
 
 // lib.js is the single source of DEFAULTS and must load before its consumers.
-assert.equal(manifest.content_scripts[0].js[0], 'lib.js', 'lib.js must be the first content script');
+for (const entry of manifest.content_scripts) {
+  if (entry.js.includes('content.js')) {
+    assert.equal(entry.js[0], 'lib.js', 'lib.js must be the first script of every entry that loads content.js');
+  }
+}
 const popupHtml = await readFile(resolve(extension, manifest.action.default_popup), 'utf8');
 const popupScripts = [...popupHtml.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1]);
 assert.ok(popupScripts.indexOf('lib.js') > -1 && popupScripts.indexOf('lib.js') < popupScripts.indexOf('popup.js'),
@@ -49,4 +53,4 @@ for (const file of ['content.js', 'popup.js']) {
   const source = await readFile(resolve(extension, file), 'utf8');
   assert.doesNotMatch(source, /const DEFAULTS\s*=\s*\{/, `${file} must take DEFAULTS from lib.js`);
 }
-console.log('Extension syntax, manifest, icon dimensions and settings defaults and script order verified.');
+console.log('Extension syntax, manifest, icon dimensions, settings defaults and script order verified.');
