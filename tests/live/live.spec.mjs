@@ -7,15 +7,19 @@ import { fileURLToPath } from 'node:url';
 
 const extensionPath = fileURLToPath(new URL('../../extension/', import.meta.url));
 
-// Stable public videos. Replace one if it disappears or loses its transcript.
+// Stable public videos that are known to have transcripts. Replace one if that changes.
 const VIDEOS = {
   short: 'jNQXAC9IVRw', // "Me at the zoo": 3 caption lines
   chapters: 'zjkBMFhNj_g', // 1 h talk with chapters
 };
 
+const NATIVE_TRANSCRIPT_EXPANDED = 'ytd-engagement-panel-section-list-renderer'
+  + '[target-id="engagement-panel-searchable-transcript"][visibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"]';
+
 const test = base.extend({
   // Extensions need a persistent context; Playwright's bundled Chromium runs them headless.
-  context: async ({ browserName: _ }, use) => {
+  // eslint-disable-next-line no-empty-pattern
+  context: async ({}, use) => {
     const context = await chromium.launchPersistentContext('', {
       channel: 'chromium',
       locale: 'en-US',
@@ -26,14 +30,29 @@ const test = base.extend({
     await context.close();
   },
   page: async ({ context }, use) => {
-    await use(context.pages()[0] ?? await context.newPage());
+    const page = context.pages()[0] ?? await context.newPage();
+    // Independent evidence of whether YouTube delivered transcript data at all, recorded from
+    // the start: YouTube may serve a reopened panel from cache without a new request.
+    // Measured 2026-11-08: the view-model panel loads via /youtubei/v1/get_panel, the legacy one
+    // via /youtubei/v1/get_transcript (which YouTube answers with 400 when it refuses).
+    page.transcriptResponses = [];
+    page.on('response', (response) => {
+      if (/\/youtubei\/v1\/(get_transcript|get_panel)\b/.test(response.url())) {
+        page.transcriptResponses.push(response.text().then(
+          (body) => ({ status: response.status(), transcript: body.length > 500 && /transcript/i.test(body) }),
+          () => ({ status: response.status(), transcript: false }),
+        ));
+      }
+    });
+    await use(page);
   },
 });
 
-// YouTube may show an EU consent dialog or, from data-centre IPs, a bot check. The consent
-// dialog is dismissed; a bot check skips the run instead of reporting a false breakage.
+// YouTube may show an EU consent dialog or, from data-centre IPs, a bot check. The dialog is
+// dismissed; a consent redirect or a bot check skips the run instead of reporting a breakage.
 async function openWatchPage(page, videoId) {
   await page.goto(`https://www.youtube.com/watch?v=${videoId}`, { waitUntil: 'domcontentloaded' });
+  test.skip(page.url().includes('consent.'), 'YouTube redirected to a consent page.');
   const consent = page.locator('ytd-consent-bump-v2-lightbox button, tp-yt-paper-dialog button')
     .filter({ hasText: /reject all|accept all/i });
   try {
@@ -44,36 +63,50 @@ async function openWatchPage(page, videoId) {
   await page.evaluate(() => document.querySelector('video')?.pause());
 }
 
-// YouTube sometimes does not load its *own* transcript panel at all (rate limiting of the
-// transcript endpoint, attestation in automated browsers). Then YTTS cannot work either, and a
-// failure says nothing about the extension. So when YTTS does not finish, open the native panel
-// by hand: if YouTube loads segments there, YTTS is broken (fail); if not, skip as inconclusive.
+// Did YouTube deliver transcript data? Decided without YTTS's selectors: the transcript button
+// is found by its accessible name and delivery is judged from the network.
+async function youtubeDeliveredTranscript(page) {
+  // The button usually sits in the collapsed description, i.e. hidden: include hidden elements.
+  const button = page.getByRole('button', { name: /show transcript/i, includeHidden: true });
+  if (!(await button.count())) {
+    throw new Error('No "Show transcript" button on a video known to have one: YouTube changed its UI.');
+  }
+  if (!(await page.locator(NATIVE_TRANSCRIPT_EXPANDED).count())) {
+    await button.first().evaluate((node) => node.click());
+  }
+  await page.waitForTimeout(10_000);
+  const responses = await Promise.all(page.transcriptResponses);
+  return responses.some((r) => r.status === 200 && r.transcript);
+}
+
+// YouTube sometimes does not deliver transcripts at all (throttling of the transcript endpoint,
+// attestation in automated browsers). Then YTTS cannot work either, and a failure says nothing
+// about the extension: skip as inconclusive. If YouTube did deliver and YTTS did not: fail.
 async function waitForTranscript(page) {
   await expect(page.locator('#ytts-panel')).toBeVisible({ timeout: 20_000 });
-  const copy = page.locator('#ytts-panel .ytts-copy');
   try {
-    await expect(copy).toBeEnabled({ timeout: 30_000 });
+    await expect(page.locator('#ytts-panel .ytts-copy')).toBeEnabled({ timeout: 30_000 });
   } catch (error) {
     await expect(page.locator('html')).not.toHaveClass(/ytts-busy/, { timeout: 20_000 });
-    await page.evaluate(() => document.querySelector('ytd-video-description-transcript-section-renderer button')?.click());
-    const nativeSegments = await page.waitForFunction(
-      () => document.querySelectorAll('transcript-segment-view-model, ytd-transcript-segment-renderer').length,
-      null, { timeout: 15_000 },
-    ).then(() => true, () => false);
-    test.skip(!nativeSegments, 'YouTube did not load its own transcript panel either; inconclusive.');
-    throw error; // YouTube delivers segments but YTTS did not: a real breakage.
+    const delivered = await youtubeDeliveredTranscript(page);
+    test.skip(!delivered, 'YouTube delivered no transcript data (throttled or refused); inconclusive.');
+    throw error; // YouTube delivered data but YTTS did not show it: a real breakage.
   }
   await expect(page.locator('html')).not.toHaveClass(/ytts-busy/);
+  // The native panel YTTS opened must be closed again.
+  await expect(page.locator(NATIVE_TRANSCRIPT_EXPANDED)).toHaveCount(0);
 }
+
+// Same idea as segSignature() in content.js: count + first + last rendered row.
+const cardSignature = (page) => page.evaluate(() => {
+  const rows = document.querySelectorAll('#ytts-panel [data-sec]');
+  return rows.length ? `${rows.length}|${rows[0].textContent}|${rows[rows.length - 1].textContent}` : '';
+});
 
 test('loads, renders and copies a transcript from the live site', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write'], { origin: 'https://www.youtube.com' });
   await openWatchPage(page, VIDEOS.short);
   await waitForTranscript(page);
-
-  // The native panel YTTS opened must be closed again.
-  const nativeOpen = await page.locator('ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-searchable-transcript"][visibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"]').count();
-  expect(nativeOpen).toBe(0);
 
   await page.locator('#ytts-panel .ytts-title').click();
   await expect(page.locator('#ytts-panel [data-sec]').first()).toBeVisible();
@@ -90,23 +123,26 @@ test('reads chapters and a long transcript, then follows SPA navigation', async 
   await page.locator('#ytts-panel .ytts-title').click();
   expect(await page.locator('#ytts-panel .ytts-chapter').count()).toBeGreaterThan(5);
   expect(await page.locator('#ytts-panel [data-sec]').count()).toBeGreaterThan(100);
-  const firstText = await page.locator('#ytts-panel [data-sec]').first().textContent();
+  const oldSignature = await cardSignature(page);
 
-  // Navigate inside the single-page app like a user: click a recommended video. It may or may
-  // not have a transcript; either way the previous video's text must never be shown.
-  const related = page.locator(`#related a[href*="/watch?v="]:not([href*="${VIDEOS.chapters}"]), #secondary a[href*="/watch?v="]:not([href*="${VIDEOS.chapters}"])`);
-  await related.first().click();
+  // Navigate inside the single-page app like a user: click a visible recommended video. It may
+  // or may not have a transcript; either way the previous video's text must never be shown.
+  await page.locator(`#related a[href*="/watch?v="]:not([href*="${VIDEOS.chapters}"]), #secondary a[href*="/watch?v="]:not([href*="${VIDEOS.chapters}"])`)
+    .filter({ visible: true }).first().click();
   await page.waitForURL((url) => url.searchParams.get('v') && url.searchParams.get('v') !== VIDEOS.chapters, { timeout: 15_000 });
+
+  // Settled on the NEW video: its transcript (different signature) or a final error message.
   const copy = page.locator('#ytts-panel .ytts-copy');
   const status = page.locator('#ytts-panel .ytts-status');
-  // Settled = transcript loaded (copy enabled) or a final error message instead of "Loading…".
   await expect.poll(async () => {
-    if (await copy.isEnabled()) return 'loaded';
+    if (await copy.isEnabled() && await cardSignature(page) !== oldSignature) return 'loaded';
     const text = (await status.count()) ? await status.textContent() : '';
     return text && !/loading/i.test(text) ? 'error' : 'pending';
-  }, { timeout: 40_000 }).not.toBe('pending');
-  if (await copy.isEnabled()) {
-    await expect(page.locator('#ytts-panel [data-sec]').first()).not.toHaveText(firstText ?? '');
-  }
+  }, { timeout: 45_000 }).not.toBe('pending');
+
+  // Re-check after a pause: a late re-render must not bring the old transcript back (#11).
+  await page.waitForTimeout(3_000);
+  expect(await cardSignature(page)).not.toBe(oldSignature);
   await expect(page.locator('html')).not.toHaveClass(/ytts-busy/, { timeout: 20_000 });
+  await expect(page.locator(NATIVE_TRANSCRIPT_EXPANDED)).toHaveCount(0);
 });

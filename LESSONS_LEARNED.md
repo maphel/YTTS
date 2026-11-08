@@ -6,9 +6,13 @@
 also showed only a spinner, with and without the extension, in bundled Chromium and in Chrome.
 **Root cause:** YouTube-side: after many automated runs from one IP (and in automated browsers) the
 transcript request is throttled or refused. Not an extension bug.
-**Fix:** The live canary opens the native panel by hand when YTTS fails and skips as inconclusive
-when YouTube delivers no segments there either; it only fails when YouTube works and YTTS does not.
-**Prevention:** Never treat a live failure as a regression without that native-panel control.
+**Fix:** When YTTS fails, the live canary checks independently of YTTS's selectors whether YouTube
+delivered: button by accessible name (it is hidden in the collapsed description), data by network.
+The view-model panel loads via `/youtubei/v1/get_panel`, the legacy one via `get_transcript` (400 when
+refused). Skip only if neither returned transcript data; a mutation test (renamed segment selector)
+confirmed the canary then fails instead of skipping.
+**Prevention:** Never treat a live failure as a regression without that independent control, and
+never build the control on the selectors under test.
 
 ## 2026-11-08 — Stale transcript button after SPA navigation (#11)
 
