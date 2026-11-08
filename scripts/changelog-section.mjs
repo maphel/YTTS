@@ -1,5 +1,5 @@
 // Prints the body of one CHANGELOG.md section: `node scripts/changelog-section.mjs 0.1.0`.
-// The release workflow uses it for the GitHub release notes; release.js uses the exports.
+// The release workflow uses it for the GitHub release notes; release.mjs uses the exports.
 // Exits 1 when the section is missing or empty, so the workflow never publishes empty notes.
 import fs from 'node:fs';
 import path from 'node:path';

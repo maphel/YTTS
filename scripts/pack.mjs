@@ -18,7 +18,14 @@ fs.mkdirSync(dist, { recursive: true });
 const out = path.join(dist, `ytts-${manifest.version}.zip`);
 fs.rmSync(out, { force: true });
 
-// zip(1) is available on macOS, Linux and GitHub's runners; -X drops OS metadata.
-execFileSync('zip', ['-r', '-X', '-q', out, '.', '-x', '*.DS_Store'], { cwd: extension, stdio: 'inherit' });
+// Only files tracked by git ship, so local notes or build leftovers in extension/ never leak into
+// a release. zip(1) is available on macOS, Linux and GitHub's runners; -X drops OS metadata.
+const files = execFileSync('git', ['ls-files', '-z', '--', '.'], { cwd: extension, encoding: 'utf8' })
+  .split('\0').filter(Boolean);
+if (!files.includes('manifest.json')) {
+  console.error('extension/manifest.json is not tracked by git');
+  process.exit(1);
+}
+execFileSync('zip', ['-X', '-q', out, ...files], { cwd: extension, stdio: 'inherit' });
 const size = fs.statSync(out).size;
 console.log(`${path.relative(root, out)} (${(size / 1024).toFixed(0)} KB)`);

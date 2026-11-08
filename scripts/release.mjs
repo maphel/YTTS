@@ -96,7 +96,13 @@ function prepare(version) {
   if (!versionPattern.test(version)) fail(`"${version}" is not a version of the form x.y.z (numbers without leading zeros)`);
   requireCleanMain();
   const current = currentVersion();
-  if (compareVersions(version, current) <= 0) fail(`${version} is not greater than the current version ${current}`);
+  // The very first release ships the version already in the files (e.g. 0.1.0): allowed only while
+  // no tag for it exists locally or on origin. Every later release must be greater.
+  const sameAsUnreleasedCurrent = compareVersions(version, current) === 0
+    && !git('tag', '--list', `v${version}`) && !git('ls-remote', '--tags', 'origin', `v${version}`);
+  if (compareVersions(version, current) < 0 || (compareVersions(version, current) === 0 && !sameAsUnreleasedCurrent)) {
+    fail(`${version} is not greater than the current version ${current}`);
+  }
   if (git('tag', '--list', `v${version}`)) fail(`tag v${version} already exists`);
   const branch = `release/v${version}`;
   if (git('branch', '--list', branch)) fail(`branch ${branch} already exists`);
@@ -112,7 +118,7 @@ function prepare(version) {
     branched = true;
 
     // package.json + package-lock.json; no lifecycle scripts or git actions.
-    run('npm', ['version', version, '--no-git-tag-version', '--ignore-scripts'], { stdio: ['ignore', 'ignore', 'inherit'] });
+    run('npm', ['version', version, '--no-git-tag-version', '--ignore-scripts', '--allow-same-version'], { stdio: ['ignore', 'ignore', 'inherit'] });
 
     // manifest.json: JSON.stringify keeps the key order; 2 spaces and a trailing newline match the file.
     const manifest = readJson('extension/manifest.json');
