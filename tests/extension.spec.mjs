@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
 
 const libPath = fileURLToPath(new URL('../extension/lib.js', import.meta.url));
+const i18nPath = fileURLToPath(new URL('../extension/i18n.js', import.meta.url));
 const contentPath = fileURLToPath(new URL('../extension/content.js', import.meta.url));
 const cssPath = fileURLToPath(new URL('../extension/content.css', import.meta.url));
 const nativePanel = 'ytd-engagement-panel-section-list-renderer';
@@ -140,7 +141,10 @@ const fixture = `<!doctype html><html><head><meta charset="utf-8">
 </script></body></html>`;
 
 async function setup(page, options = {}) {
-  await page.route('https://www.youtube.com/**', (route) => route.fulfill({ contentType: 'text/html', body: fixture }));
+  // YouTube sets <html lang> to its interface language; the card follows it (default: German).
+  const lang = options.lang ?? 'de';
+  const html = fixture.replace('<html>', `<html lang="${lang}"${lang === 'ar' ? ' dir="rtl"' : ''}>`);
+  await page.route('https://www.youtube.com/**', (route) => route.fulfill({ contentType: 'text/html', body: html }));
   await page.addInitScript((options) => {
     window.fixture = {
       variant: 'legacy', video: 'first', opens: 0, delay: 30, seek: 0,
@@ -166,6 +170,7 @@ async function setup(page, options = {}) {
     document.execCommand = () => false;
   }, options);
   await page.addInitScript({ path: libPath });
+  await page.addInitScript({ path: i18nPath });
   await page.addInitScript({ path: contentPath });
   await page.goto('https://www.youtube.com/watch?v=first');
   await page.addStyleTag({ path: cssPath });
@@ -335,6 +340,40 @@ test('navigating to a video without transcript ignores the previous video\'s but
   await expect(page.locator('.ytts-status')).toHaveText('Für dieses Video gibt es kein Transkript.', { timeout: 12_000 });
   expect(await page.evaluate(() => fixture.opens)).toBe(opensBefore);
   await expect(page.locator('.ytts-copy')).toBeDisabled();
+});
+
+// #10: the card follows YouTube's interface language from <html lang>.
+for (const [lang, title, copy, seekPrefix] of [
+  ['en', 'Transcript', 'Copy', 'Jump to 0:00: '],
+  ['ja', '文字起こし', 'コピー', '0:00 に移動: '],
+  ['ar', 'النص', 'نسخ', 'الانتقال إلى 0:00: '],
+  ['xx-unknown', 'Transcript', 'Copy', 'Jump to 0:00: '],
+]) {
+  test(`card follows YouTube's interface language: ${lang}`, async ({ page }) => {
+    await setup(page, { lang, settings: { expandedByDefault: true } });
+    await ready(page);
+    await expect(page.locator('.ytts-title')).toHaveText(title);
+    await expect(page.locator('.ytts-copy')).toHaveText(copy);
+    await expect(page.locator('.ytts-seg').first()).toHaveAttribute('aria-label', new RegExp(`^${seekPrefix}`));
+  });
+}
+
+test('errors are shown in YouTube\'s interface language', async ({ page }) => {
+  await setup(page, { lang: 'en', noTranscript: true, settings: { expandedByDefault: true } });
+  await expect(page.locator('.ytts-status')).toHaveText('This video has no transcript.', { timeout: 12_000 });
+});
+
+test('the card mirrors in right-to-left YouTube', async ({ page }) => {
+  await setup(page, { lang: 'ar', settings: { expandedByDefault: true } });
+  await ready(page);
+  const [titleX, copyX] = await page.evaluate(() => [
+    document.querySelector('.ytts-title').getBoundingClientRect().left,
+    document.querySelector('.ytts-copy').getBoundingClientRect().left,
+  ]);
+  expect(titleX).toBeGreaterThan(copyX);
+  // Transcript text keeps its own direction; time chips stay left-to-right.
+  await expect(page.locator('.ytts-seg .ytts-text').first()).toHaveAttribute('dir', 'auto');
+  await expect(page.locator('.ytts-seg .ytts-time').first()).toHaveAttribute('dir', 'ltr');
 });
 
 // #12: the poll keeps the card in place on watch pages and removes it after leaving them,

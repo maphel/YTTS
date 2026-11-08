@@ -43,6 +43,9 @@ html[dark] #ytts-panel {
 #ytts-panel .ytts-title {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 20px;
   line-height: 28px;
   font-weight: 700;
@@ -150,7 +153,7 @@ html[dark] #ytts-panel {
   gap: 16px;
   padding: 8px 16px;
   background: transparent;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
@@ -187,12 +190,21 @@ html[dark] #ytts-panel {
   box-sizing: border-box;
   padding: 8px 16px;
   background: transparent;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
 #ytts-panel .ytts-sent:hover {
   background: var(--ytts-hover);
+}
+
+/* Text follows its own direction (dir="auto"), even inside right-to-left YouTube */
+#ytts-panel .ytts-sent .ytts-text {
+  align-self: stretch;
+}
+
+#ytts-panel .ytts-seg .ytts-text {
+  flex: 1;
 }
 
 /* View "Text": paragraphs, each sentence clickable */

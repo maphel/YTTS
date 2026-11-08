@@ -3,6 +3,7 @@ import { readFile, access } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
+import { diffLocales } from './locales.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const extension = resolve(root, 'extension');
@@ -39,18 +40,25 @@ for (const size of [16, 32, 48, 128]) {
   assert.equal(png.readUInt32BE(20), size);
 }
 
-// lib.js is the single source of DEFAULTS and must load before its consumers.
+// lib.js (DEFAULTS, helpers) and i18n.js (strings) must load before their consumers, in this order.
+const expectedOrder = (consumer) => ['lib.js', 'i18n.js', consumer];
 for (const entry of manifest.content_scripts) {
   if (entry.js.includes('content.js')) {
-    assert.equal(entry.js[0], 'lib.js', 'lib.js must be the first script of every entry that loads content.js');
+    assert.deepEqual(entry.js.slice(0, 3), expectedOrder('content.js'), 'content scripts must load lib.js, i18n.js, content.js');
   }
 }
 const popupHtml = await readFile(resolve(extension, manifest.action.default_popup), 'utf8');
 const popupScripts = [...popupHtml.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1]);
-assert.ok(popupScripts.indexOf('lib.js') > -1 && popupScripts.indexOf('lib.js') < popupScripts.indexOf('popup.js'),
-  'popup.html must load lib.js before popup.js');
+assert.deepEqual(popupScripts, expectedOrder('popup.js'), 'popup.html must load lib.js, i18n.js, popup.js');
+
+// Manifest strings come from _locales, which are generated from i18n.js (npm run locales).
+assert.equal(manifest.default_locale, 'en');
+assert.equal(manifest.description, '__MSG_extDescription__');
+assert.equal(manifest.action.default_title, '__MSG_actionTitle__');
+const localeProblems = diffLocales();
+assert.deepEqual(localeProblems, [], `extension/_locales is out of sync with i18n.js: run npm run locales`);
 for (const file of ['content.js', 'popup.js']) {
   const source = await readFile(resolve(extension, file), 'utf8');
   assert.doesNotMatch(source, /const DEFAULTS\s*=\s*\{/, `${file} must take DEFAULTS from lib.js`);
 }
-console.log('Extension syntax, manifest, icon dimensions, settings defaults and script order verified.');
+console.log('Extension syntax, manifest, icon dimensions, settings defaults, script order and locales verified.');

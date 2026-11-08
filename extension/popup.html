@@ -1,48 +1,50 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>YTTS – Einstellungen</title>
+  <title>YTTS – Settings</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
+  <!-- Texts are filled from i18n.js (data-i18n*); the English text is only the fallback. -->
   <header class="brand">
     <img src="icons/icon48.png" width="40" height="40" alt="">
     <div>
       <h1>YTTS</h1>
-      <p>YouTube-Transkripte kopieren</p>
+      <p data-i18n="tagline">Copy YouTube transcripts</p>
     </div>
   </header>
-  <main aria-label="Einstellungen">
+  <main data-i18n-aria-label="settings" aria-label="Settings">
     <div class="row view-row">
       <span>
-        <span class="setting-title" id="view-label">Ansicht</span>
-        <span class="setting-hint" id="view-hint">Zeilen wie YouTube, ganze Sätze oder Fließtext</span>
+        <span class="setting-title" id="view-label" data-i18n="view">View</span>
+        <span class="setting-hint" id="view-hint" data-i18n="viewHint">Lines like YouTube, full sentences or running text</span>
       </span>
       <div class="chips" role="radiogroup" aria-labelledby="view-label" aria-describedby="view-hint">
-        <label class="chip"><input type="radio" name="view" value="lines" disabled>Zeilen</label>
-        <label class="chip"><input type="radio" name="view" value="sentences" disabled>Sätze</label>
-        <label class="chip"><input type="radio" name="view" value="text" disabled>Text</label>
+        <label class="chip"><input type="radio" name="view" value="lines" disabled><span data-i18n="viewLines">Lines</span></label>
+        <label class="chip"><input type="radio" name="view" value="sentences" disabled><span data-i18n="viewSentences">Sentences</span></label>
+        <label class="chip"><input type="radio" name="view" value="text" disabled><span data-i18n="viewText">Text</span></label>
       </div>
     </div>
     <label class="row">
       <span>
-        <span class="setting-title">Transkript ausgeklappt anzeigen</span>
-        <span class="setting-hint" id="expanded-hint">Direkt beim Öffnen eines Videos</span>
+        <span class="setting-title" data-i18n="expandedByDefault">Show transcript expanded</span>
+        <span class="setting-hint" id="expanded-hint" data-i18n="expandedHint">As soon as a video opens</span>
       </span>
       <input type="checkbox" role="switch" class="toggle" data-key="expandedByDefault" aria-describedby="expanded-hint" disabled>
     </label>
     <label class="row">
       <span>
-        <span class="setting-title">Zeitstempel beim Kopieren</span>
-        <span class="setting-hint" id="timestamps-hint">Zeitangaben im kopierten Text</span>
+        <span class="setting-title" data-i18n="copyTimestamps">Timestamps when copying</span>
+        <span class="setting-hint" id="timestamps-hint" data-i18n="copyTimestampsHint">Include times in the copied text</span>
       </span>
       <input type="checkbox" role="switch" class="toggle" data-key="copyTimestamps" aria-describedby="timestamps-hint" disabled>
     </label>
   </main>
-  <footer id="save-status" role="status">Einstellungen werden automatisch gespeichert.</footer>
+  <footer id="save-status" role="status" data-i18n="autoSave">Settings are saved automatically.</footer>
   <script src="lib.js"></script>
+  <script src="i18n.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

@@ -47,7 +47,7 @@ Test in a real browser before opening a pull request:
    `ytd-watch-flexy[side-rail-dismissible-panels]` layout, it belongs immediately
    before `#primary #related`, below the video. Confirm it remains visible after
    the native panel closes.
-2. Check all three views: **Zeilen**, **Sätze**, and **Text**. Copy and inspect the
+2. Check all three views: **Lines**, **Sentences**, and **Text**. Copy and inspect the
    full text, chapter headings, and optional timestamps. Line view uses original
    segment timestamps; the other views use heuristic sentence ranges. Without
    timestamps, copying produces paragraphs in every view. Check the clipboard
@@ -63,6 +63,15 @@ For browser automation, follow the Playwright injection routine in
 [AGENTS.md](AGENTS.md); test the unpacked extension separately to cover extension
 storage and popup behavior. Include a short description of the checks you ran
 and screenshots for visual changes.
+
+## Translations
+
+All UI strings live in `extension/i18n.js` (one row per language, values in `KEYS` order).
+To add or fix a language, edit that file, run `npm run locales` to regenerate
+`extension/_locales/` (manifest description and button title), then `npm test`. The unit
+tests require every language to translate every key and keep the `{time}` and `{text}`
+placeholders; `npm run check` fails when `_locales` is out of date. Use the terms
+YouTube itself uses in that language for "transcript" where possible.
 
 ## Branches, commits and pull requests
 

@@ -4,7 +4,8 @@
 
 YouTube transcripts, ready to copy. A small Chromium extension that puts the
 transcript above the watch page's recommendations and matches YouTube's light
-and dark themes. The interface is in German.
+and dark themes. The interface follows YouTube's language (20 languages, English
+fallback).
 
 - **One click to copy** the full transcript as plain text.
 - **Collapsed by default**, with an expandable transcript and clickable timestamps.
@@ -30,7 +31,7 @@ Transcript card: [light theme](docs/screenshots/youtube-light.png) ·
    `brave://extensions` in Brave.
 3. Turn on **Developer mode**.
 4. Choose **Load unpacked** and select the `extension/` folder.
-5. Open a YouTube video with a transcript. The **Transkript** card appears above
+5. Open a YouTube video with a transcript. The **Transcript** card appears above
    the related videos: in the sidebar on the classic layout, or below the video
    on YouTube's newer layout.
 
@@ -41,23 +42,37 @@ reload YTTS on the extensions page and refresh your YouTube tab.
 
 | Setting | Default | Effect |
 | --- | --- | --- |
-| Ansicht | Sätze | Choose **Zeilen**, **Sätze**, or **Text**. |
-| Transkript ausgeklappt anzeigen | Off | Opens the transcript card automatically. |
-| Zeitstempel beim Kopieren | Off | Includes line timestamps or sentence time ranges. |
+| View | Sentences | Choose **Lines**, **Sentences**, or **Text**. |
+| Show transcript expanded | Off | Opens the transcript card automatically. |
+| Timestamps when copying | Off | Includes line timestamps or sentence time ranges. |
 
-**Zeilen** shows YouTube's caption segments. **Sätze** groups fragments using
+**Lines** shows YouTube's caption segments. **Sentences** groups fragments using
 punctuation and length/time limits; this is a heuristic, especially for automatic
 captions without punctuation. **Text** displays these groups as paragraphs.
 Sentence time ranges are approximate, using the next segment's start or the
 video duration, with an estimated fallback if the duration is unavailable.
 
 Copying without timestamps always produces paragraph text. With timestamps,
-**Zeilen** preserves the original segment timestamps; **Sätze** and **Text** use
+**Lines** preserves the original segment timestamps; **Sentences** and **Text** use
 the grouped sentence ranges.
 
 Settings use the browser's extension sync storage. Transcripts are read from the
 current page and kept in memory; YTTS has no backend and sends no transcript data
 to an external service. See [Privacy](PRIVACY.md) for details.
+
+## Languages
+
+The card uses YouTube's interface language (the `lang` of youtube.com) and the
+settings popup uses the browser's language: English, German, Spanish, French,
+Italian, Portuguese, Dutch, Polish, Turkish, Russian, Ukrainian, Japanese, Korean,
+Chinese (Simplified and Traditional), Hindi, Indonesian, Vietnamese, Arabic
+(right-to-left) and Swedish. Other languages fall back to English. Transcript
+text keeps its own direction, so an English transcript reads correctly inside
+Arabic YouTube.
+
+The transcript itself is the track YouTube's own transcript panel shows, usually
+the video's original or default caption language. YTTS cannot choose another
+track or translate it.
 
 ## How it works
 

@@ -1,7 +1,7 @@
 # AGENTS.md — YTTS
 
 Chromium MV3 extension: YouTube transcript card in the watch-page sidebar + copy button.
-User-facing UI text is German.
+User-facing UI text is localized via `extension/i18n.js` (20 languages, English fallback).
 
 ## File map
 

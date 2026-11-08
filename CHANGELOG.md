@@ -10,10 +10,11 @@ All notable changes to YTTS are listed here. The format is based on
 ### Added
 - Transcript card at the top of the watch-page sidebar, styled like YouTube in light and dark themes.
 - One-click copy of the full transcript; chapters become `##` headings.
-- Three views: *Zeilen* (YouTube's caption lines), *Sätze* (merged sentences with from–to times) and *Text* (paragraphs).
+- Three views: *Lines* (YouTube's caption lines), *Sentences* (merged sentences with from–to times) and *Text* (paragraphs).
 - Click any line or sentence to jump to that point in the video.
 - Settings popup: expand by default, timestamps when copying, view.
+- Interface in 20 languages: the card follows YouTube's language, the popup the browser's; English fallback and right-to-left support for Arabic.
 
 ### Fixed
 - Switching to a video without a transcript no longer reopens the previous video's transcript or shows a misleading loading error.
-- Sentences ending in German or French closing quotes (“ ‘ « ») are split correctly in the *Sätze* and *Text* views.
+- Sentences ending in German or French closing quotes (“ ‘ « ») are split correctly in the *Sentences* and *Text* views.
