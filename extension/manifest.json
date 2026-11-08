@@ -20,6 +20,7 @@
         "https://www.youtube.com/*"
       ],
       "js": [
+        "lib.js",
         "content.js"
       ],
       "css": [

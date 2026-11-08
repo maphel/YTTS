@@ -3,7 +3,6 @@ import { readFile, access } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
-import { runInNewContext } from 'node:vm';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const extension = resolve(root, 'extension');
@@ -40,12 +39,14 @@ for (const size of [16, 32, 48, 128]) {
   assert.equal(png.readUInt32BE(20), size);
 }
 
-const defaults = [];
+// lib.js is the single source of DEFAULTS and must load before its consumers.
+assert.equal(manifest.content_scripts[0].js[0], 'lib.js', 'lib.js must be the first content script');
+const popupHtml = await readFile(resolve(extension, manifest.action.default_popup), 'utf8');
+const popupScripts = [...popupHtml.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1]);
+assert.ok(popupScripts.indexOf('lib.js') > -1 && popupScripts.indexOf('lib.js') < popupScripts.indexOf('popup.js'),
+  'popup.html must load lib.js before popup.js');
 for (const file of ['content.js', 'popup.js']) {
   const source = await readFile(resolve(extension, file), 'utf8');
-  const literal = source.match(/const DEFAULTS\s*=\s*(\{[^}]+\})/);
-  assert.ok(literal, `${file} must declare DEFAULTS`);
-  defaults.push(JSON.parse(JSON.stringify(runInNewContext(`(${literal[1]})`))));
+  assert.doesNotMatch(source, /const DEFAULTS\s*=\s*\{/, `${file} must take DEFAULTS from lib.js`);
 }
-assert.deepEqual(defaults[0], defaults[1], 'Content and popup defaults differ');
-console.log('Extension syntax, manifest, icon dimensions and settings defaults verified.');
+console.log('Extension syntax, manifest, icon dimensions and settings defaults and script order verified.');
