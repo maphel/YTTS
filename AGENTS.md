@@ -16,15 +16,18 @@ popup. Vanilla JavaScript classic scripts, no build step, no runtime dependencie
 | `extension/content.css` | Card styles; values measured from YouTube's computed styles; dark theme via `html[dark]`; logical properties for RTL |
 | `extension/popup.{html,css,js}` | Settings popup (`chrome.storage.sync`); language = browser UI language |
 | `extension/_locales/` | **Generated** by `npm run locales` from `i18n.js`; never edit by hand |
-| `extension/icons/`, `THIRD_PARTY_NOTICES.md`, `licenses/` | Icons (16–128 px PNG + SVG source) and Material Icons attribution (Apache-2.0) |
+| `extension/icons/`, `extension/THIRD_PARTY_NOTICES.md`, `extension/licenses/` | Icons (16–128 px PNG + SVG source) and Material Icons attribution (Apache-2.0) |
 | `tests/unit/*.test.mjs` | `node:test` unit tests for `lib.js` and `i18n.js`, loaded through `node:vm` like the browser runs them |
 | `tests/extension.spec.mjs`, `tests/popup.spec.mjs` | Playwright e2e against a YouTube-like fixture (Trusted Types CSP, both segment variants, side-rail layout, delayed `video-id`) and the popup with a stubbed `chrome` |
-| `tests/live/` | Live canary: the real unpacked extension in Chromium against youtube.com (`npm run test:live`) |
+| `tests/live/` | Live canary: the real unpacked extension in Chromium against youtube.com (`npm run test:live`, own config) |
+| `tests/playwright.config.mjs` | E2E config (ignores `tests/live/`) |
 | `scripts/check.mjs` | Static checks: syntax, manifest, icons, versions (manifest/package/lock), script load order, `_locales` in sync |
 | `scripts/locales.mjs` | Generates/verifies `_locales` from `i18n.js` |
 | `scripts/pack.mjs`, `release.mjs`, `changelog-section.mjs` | Release zip (git-tracked files of `extension/` only), two-step release, release notes |
 | `.github/workflows/` | `check.yml` (lint, check, unit, e2e, pack artifact), `release.yml` (build with read-only token, publish job with write), `live.yml` (nightly canary, issue on failure) |
-| `.github/` templates, `dependabot.yml` | Bug report, security contact, PR checklist (definition of done), monthly grouped updates |
+| `.github/` templates, `dependabot.yml` | Bug report, security contact, PR checklist (definition of done); monthly updates (npm grouped, SHA-pinned actions) |
+| `package.json`, `eslint.config.js`, `.editorconfig`, `.gitignore` | Scripts and exact-pinned dev dependencies; lint rules (classic scripts in `extension/`, ESM elsewhere); editor settings |
+| `docs/screenshots/` | README images (card and popup, light and dark) |
 | `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, `PRIVACY.md`, `LICENSE` | User docs, release notes, contributor guide, security and privacy policy, MIT |
 | `AGENTS.md`, `CLAUDE.md`, `LESSONS_LEARNED.md` | This file (`CLAUDE.md` is a symlink); append-only incident log, newest first |
 
@@ -55,15 +58,19 @@ entry, same isolated world) and `lib.js` → `i18n.js` → `popup.js` in `popup.
    `npm run locales` after changing `extDescription` or `actionTitle`. Transcript text gets
    `dir="auto"`, time chips `dir="ltr"`.
 10. **Everything read from `chrome.storage` is validated** (`normalizeSettings`).
-11. **A live-canary failure is only a regression if YouTube's own panel loaded** (the canary
-    checks this itself; YouTube throttles transcript requests from busy IPs).
+11. **A live-canary skip means YouTube delivered no transcript data; a failure means it did and
+    YTTS did not show it.** The canary decides this without YTTS's selectors (button by
+    accessible name, data from the `get_panel` / `get_transcript` responses). Keep that control
+    independent of the code under test.
 
 ## Workflow
 
 `CONTRIBUTING.md` is the source of truth for branching, commits, the definition of done and
 releases. For agents, in addition:
 
-- Issue first for any behaviour change, bug fixes included; branch `<type>/<topic>` from `main`.
+- Issue first for any behaviour change, bug fixes included (stricter than CONTRIBUTING.md on
+  purpose: agents work unattended, and the issue is the human-readable trail); branch
+  `<type>/<topic>` from `main`.
 - Regression test first for bugs, and confirm it fails without the fix.
 - Open a PR and get an independent review (a second agent or a human) before merge. Never merge
   your own PR unreviewed.
