@@ -11,7 +11,7 @@ runInNewContext(source, sandbox);
 const i18n = sandbox.YTTS_I18N;
 
 test('ships the common YouTube interface languages', () => {
-  for (const locale of ['en', 'de', 'es', 'fr', 'it', 'pt', 'nl', 'pl', 'tr', 'ru', 'uk', 'ja', 'ko', 'zh-CN', 'zh-TW', 'hi', 'id', 'vi', 'ar', 'sv']) {
+  for (const locale of ['en', 'de', 'es', 'fr', 'it', 'pt', 'pt-PT', 'nl', 'pl', 'tr', 'ru', 'uk', 'ja', 'ko', 'zh-CN', 'zh-TW', 'hi', 'id', 'vi', 'ar', 'sv']) {
     assert.ok(i18n.LOCALES.includes(locale), `missing ${locale}`);
   }
 });
@@ -44,9 +44,9 @@ test('manifest strings fit the Chrome Web Store limits', () => {
 
 test('locale resolution handles regions, scripts, underscores and unknown languages', () => {
   const cases = {
-    de: 'de', 'de-DE': 'de', 'de-AT': 'de', 'en-GB': 'en', 'pt-BR': 'pt', pt_PT: 'pt', 'es-419': 'es',
+    de: 'de', 'de-DE': 'de', 'de-AT': 'de', 'en-GB': 'en', 'pt-BR': 'pt', pt: 'pt', pt_PT: 'pt-PT', 'pt-pt': 'pt-PT', 'es-419': 'es', in: 'id', 'in-ID': 'id',
     'zh-CN': 'zh-CN', 'zh-Hans': 'zh-CN', 'zh-SG': 'zh-CN', zh: 'zh-CN',
-    'zh-TW': 'zh-TW', 'zh-Hant-HK': 'zh-TW', 'zh-HK': 'zh-TW', zh_TW: 'zh-TW',
+    'zh-TW': 'zh-TW', 'zh-Hant-HK': 'zh-TW', 'zh-HK': 'zh-TW', zh_TW: 'zh-TW', 'zh-Hans-HK': 'zh-CN', 'zh-Hant': 'zh-TW',
     'JA': 'ja', 'fil': 'en', '': 'en', undefined: 'en',
   };
   for (const [tag, expected] of Object.entries(cases)) {

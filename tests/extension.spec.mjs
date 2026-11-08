@@ -346,7 +346,7 @@ test('navigating to a video without transcript ignores the previous video\'s but
 for (const [lang, title, copy, seekPrefix] of [
   ['en', 'Transcript', 'Copy', 'Jump to 0:00: '],
   ['ja', '文字起こし', 'コピー', '0:00 に移動: '],
-  ['ar', 'النص', 'نسخ', 'الانتقال إلى 0:00: '],
+  ['ar', 'نص الفيديو', 'نسخ', 'الانتقال إلى 0:00: '],
   ['xx-unknown', 'Transcript', 'Copy', 'Jump to 0:00: '],
 ]) {
   test(`card follows YouTube's interface language: ${lang}`, async ({ page }) => {
@@ -371,6 +371,10 @@ test('the card mirrors in right-to-left YouTube', async ({ page }) => {
     document.querySelector('.ytts-copy').getBoundingClientRect().left,
   ]);
   expect(titleX).toBeGreaterThan(copyX);
+  // Logical padding: the title sits 16px from the right edge in RTL, like YouTube's own panels.
+  const gap = await page.evaluate(() => document.getElementById('ytts-panel').getBoundingClientRect().right
+    - document.querySelector('.ytts-title').getBoundingClientRect().right);
+  expect(Math.round(gap)).toBe(17); // 1px border + 16px padding
   // Transcript text keeps its own direction; time chips stay left-to-right.
   await expect(page.locator('.ytts-seg .ytts-text').first()).toHaveAttribute('dir', 'auto');
   await expect(page.locator('.ytts-seg .ytts-time').first()).toHaveAttribute('dir', 'ltr');

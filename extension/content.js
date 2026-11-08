@@ -28,11 +28,15 @@
 
   // UI language follows YouTube's interface language (<html lang>), see i18n.js.
   let translator = null;
-  function t(key, vars) {
+  function currentTranslator() {
     const lang = document.documentElement.lang || navigator.language;
     if (translator?.tag !== lang) translator = { tag: lang, ...globalThis.YTTS_I18N.createTranslator(lang) };
-    return translator.t(key, vars);
+    return translator;
   }
+  const t = (key, vars) => currentTranslator().t(key, vars);
+  // The card's lang is the language actually shown (e.g. "en" for an unsupported YouTube
+  // language), so screen readers pick the right voice for fallback text.
+  const uiLocale = () => currentTranslator().locale;
   // Errors travel as message keys and are translated when rendered.
   const ERROR_KEYS = new Set(['noTranscript', 'loadFailed', 'empty']);
 
@@ -261,7 +265,7 @@
     }, [icon(ICON_CHEVRON)]);
     chevron.setAttribute('aria-controls', 'ytts-body');
     const header = el('div', { className: 'ytts-header' }, [
-      el('span', { id: 'ytts-title', className: 'ytts-title', textContent: t('title') }),
+      el('span', { id: 'ytts-title', className: 'ytts-title', dir: 'auto', textContent: t('title') }),
       copyBtn,
       chevron,
     ]);
@@ -269,7 +273,7 @@
     const announcement = el('div', { className: 'ytts-announcement' });
     announcement.setAttribute('role', 'status');
     announcement.setAttribute('aria-live', 'polite');
-    const panel = el('section', { id: PANEL_ID }, [header, body, announcement]);
+    const panel = el('section', { id: PANEL_ID, lang: uiLocale() }, [header, body, announcement]);
     panel.setAttribute('aria-labelledby', 'ytts-title');
 
     // Whole header toggles, except the copy button.
@@ -427,6 +431,7 @@
     if (state.error || !state.items) {
       body.append(el('div', {
         className: 'ytts-status',
+        dir: 'auto', // English fallback text inside RTL YouTube (he, fa, ur) must not mirror
         textContent: t(state.error || 'loading'),
       }));
       return;

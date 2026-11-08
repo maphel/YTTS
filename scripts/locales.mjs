@@ -12,7 +12,7 @@ const localesDir = path.join(root, 'extension', '_locales');
 const MANIFEST_KEYS = ['extDescription', 'actionTitle'];
 
 // i18n.js locale → Chrome _locales folder names (Chrome has no plain "pt" or "zh").
-const CHROME_CODES = { pt: ['pt_BR', 'pt_PT'], 'zh-CN': ['zh_CN'], 'zh-TW': ['zh_TW'] };
+const CHROME_CODES = { pt: ['pt_BR'], 'pt-PT': ['pt_PT'], 'zh-CN': ['zh_CN'], 'zh-TW': ['zh_TW'] };
 
 export function loadI18n() {
   const sandbox = {};

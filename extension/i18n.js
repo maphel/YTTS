@@ -43,9 +43,9 @@
     ],
     fr: [
       'Transcription', 'Copier', 'Copié', 'Échec de la copie', 'Copier la transcription', 'Transcription copiée.', 'La copie a échoué. Veuillez réessayer.',
-      'Afficher la transcription', 'Masquer la transcription', 'Chargement de la transcription…', 'Cette vidéo n’a pas de transcription.', 'Impossible de charger la transcription.', 'La transcription est vide.', 'Aller à {time} : {text}',
+      'Afficher la transcription', 'Masquer la transcription', 'Chargement de la transcription…', 'Cette vidéo n’a pas de transcription.', 'Impossible de charger la transcription.', 'La transcription est vide.', 'Aller à {time} : {text}',
       'Copier les transcriptions YouTube', 'Paramètres', 'Affichage', 'Lignes comme sur YouTube, phrases complètes ou texte continu', 'Lignes', 'Phrases', 'Texte',
-      'Afficher la transcription dépliée', 'Dès l’ouverture d’une vidéo', 'Horodatage lors de la copie', 'Inclure les temps dans le texte copié',
+      'Afficher la transcription dépliée', 'Dès l’ouverture d’une vidéo', 'Horodatage lors de la copie', 'Inclure les horodatages dans le texte copié',
       'Les paramètres sont enregistrés automatiquement.', 'Paramètres enregistrés.', 'Échec de l’enregistrement. Veuillez réessayer.', 'Impossible de charger les paramètres.',
       'Lisez les transcriptions YouTube à côté de la vidéo et copiez-les en un clic.', 'YTTS – Copier la transcription',
     ],
@@ -53,7 +53,7 @@
       'Trascrizione', 'Copia', 'Copiato', 'Errore di copia', 'Copia trascrizione', 'Trascrizione copiata.', 'Copia non riuscita. Riprova.',
       'Espandi trascrizione', 'Comprimi trascrizione', 'Caricamento trascrizione…', 'Questo video non ha una trascrizione.', 'Impossibile caricare la trascrizione.', 'La trascrizione è vuota.', 'Vai a {time}: {text}',
       'Copia le trascrizioni di YouTube', 'Impostazioni', 'Visualizzazione', 'Righe come su YouTube, frasi intere o testo continuo', 'Righe', 'Frasi', 'Testo',
-      'Mostra la trascrizione espansa', 'All’apertura di un video', 'Timestamp nella copia', 'Includi i tempi nel testo copiato',
+      'Mostra la trascrizione espansa', 'All’apertura di un video', 'Timestamp nella copia', 'Includi i timestamp nel testo copiato',
       'Le impostazioni vengono salvate automaticamente.', 'Impostazioni salvate.', 'Salvataggio non riuscito. Riprova.', 'Impossibile caricare le impostazioni.',
       'Leggi le trascrizioni di YouTube accanto al video e copiale con un clic.', 'YTTS – Copia trascrizione',
     ],
@@ -63,29 +63,37 @@
       'Copiar transcrições do YouTube', 'Configurações', 'Visualização', 'Linhas como no YouTube, frases completas ou texto corrido', 'Linhas', 'Frases', 'Texto',
       'Mostrar transcrição expandida', 'Ao abrir um vídeo', 'Marcações de tempo ao copiar', 'Incluir tempos no texto copiado',
       'As configurações são salvas automaticamente.', 'Configurações salvas.', 'Não foi possível salvar. Tente novamente.', 'Não foi possível carregar as configurações.',
-      'Leia transcrições do YouTube ao lado do vídeo e copie com um clique.', 'YTTS – Copiar transcrição',
+      'Leia transcrições do YouTube ao lado do vídeo e copie-as com um clique.', 'YTTS – Copiar transcrição',
+    ],
+    'pt-PT': [
+      'Transcrição', 'Copiar', 'Copiado', 'Erro ao copiar', 'Copiar transcrição', 'Transcrição copiada.', 'Não foi possível copiar. Tente novamente.',
+      'Expandir transcrição', 'Fechar transcrição', 'A carregar a transcrição…', 'Este vídeo não tem transcrição.', 'Não foi possível carregar a transcrição.', 'A transcrição está vazia.', 'Ir para {time}: {text}',
+      'Copiar transcrições do YouTube', 'Definições', 'Vista', 'Linhas como no YouTube, frases completas ou texto contínuo', 'Linhas', 'Frases', 'Texto',
+      'Mostrar a transcrição expandida', 'Ao abrir um vídeo', 'Marcas de tempo ao copiar', 'Incluir as marcas de tempo no texto copiado',
+      'As definições são guardadas automaticamente.', 'Definições guardadas.', 'Não foi possível guardar. Tente novamente.', 'Não foi possível carregar as definições.',
+      'Leia transcrições do YouTube ao lado do vídeo e copie-as com um clique.', 'YTTS – Copiar transcrição',
     ],
     nl: [
       'Transcript', 'Kopiëren', 'Gekopieerd', 'Kopiëren mislukt', 'Transcript kopiëren', 'Transcript gekopieerd.', 'Kopiëren mislukt. Probeer het opnieuw.',
-      'Transcript uitvouwen', 'Transcript samenvouwen', 'Transcript laden…', 'Deze video heeft geen transcript.', 'Het transcript kan niet worden geladen.', 'Het transcript is leeg.', 'Naar {time} gaan: {text}',
+      'Transcript uitvouwen', 'Transcript samenvouwen', 'Transcript laden…', 'Deze video heeft geen transcript.', 'Het transcript kon niet worden geladen.', 'Het transcript is leeg.', 'Naar {time} gaan: {text}',
       'YouTube-transcripten kopiëren', 'Instellingen', 'Weergave', 'Regels zoals YouTube, hele zinnen of doorlopende tekst', 'Regels', 'Zinnen', 'Tekst',
-      'Transcript uitgevouwen tonen', 'Zodra een video opent', 'Tijdstempels bij kopiëren', 'Tijden opnemen in de gekopieerde tekst',
+      'Transcript uitgevouwen tonen', 'Zodra een video wordt geopend', 'Tijdstempels bij kopiëren', 'Tijden opnemen in de gekopieerde tekst',
       'Instellingen worden automatisch opgeslagen.', 'Instellingen opgeslagen.', 'Opslaan mislukt. Probeer het opnieuw.', 'Instellingen konden niet worden geladen.',
       'Lees YouTube-transcripten naast de video en kopieer ze met één klik.', 'YTTS – Transcript kopiëren',
     ],
     pl: [
       'Transkrypcja', 'Kopiuj', 'Skopiowano', 'Błąd kopiowania', 'Kopiuj transkrypcję', 'Transkrypcja skopiowana.', 'Nie udało się skopiować. Spróbuj ponownie.',
       'Rozwiń transkrypcję', 'Zwiń transkrypcję', 'Wczytywanie transkrypcji…', 'Ten film nie ma transkrypcji.', 'Nie udało się wczytać transkrypcji.', 'Transkrypcja jest pusta.', 'Przejdź do {time}: {text}',
-      'Kopiuj transkrypcje z YouTube', 'Ustawienia', 'Widok', 'Wiersze jak w YouTube, całe zdania lub tekst ciągły', 'Wiersze', 'Zdania', 'Tekst',
-      'Pokazuj rozwiniętą transkrypcję', 'Od razu po otwarciu filmu', 'Sygnatury czasowe przy kopiowaniu', 'Dołącz czasy do kopiowanego tekstu',
+      'Kopiuj transkrypcje z YouTube', 'Ustawienia', 'Widok', 'Wiersze jak na YouTube, całe zdania lub tekst ciągły', 'Wiersze', 'Zdania', 'Tekst',
+      'Pokazuj rozwiniętą transkrypcję', 'Od razu po otwarciu filmu', 'Sygnatury czasowe przy kopiowaniu', 'Dołączaj znaczniki czasu do kopiowanego tekstu',
       'Ustawienia są zapisywane automatycznie.', 'Zapisano ustawienia.', 'Nie udało się zapisać. Spróbuj ponownie.', 'Nie udało się wczytać ustawień.',
       'Czytaj transkrypcje YouTube obok filmu i kopiuj je jednym kliknięciem.', 'YTTS – Kopiuj transkrypcję',
     ],
     tr: [
       'Transkript', 'Kopyala', 'Kopyalandı', 'Kopyalama hatası', 'Transkripti kopyala', 'Transkript kopyalandı.', 'Kopyalanamadı. Lütfen tekrar deneyin.',
       'Transkripti genişlet', 'Transkripti daralt', 'Transkript yükleniyor…', 'Bu videonun transkripti yok.', 'Transkript yüklenemedi.', 'Transkript boş.', '{time} konumuna git: {text}',
-      'YouTube transkriptlerini kopyalayın', 'Ayarlar', 'Görünüm', 'YouTube’daki gibi satırlar, tam cümleler veya akıcı metin', 'Satırlar', 'Cümleler', 'Metin',
-      'Transkripti genişletilmiş göster', 'Bir video açılır açılmaz', 'Kopyalarken zaman damgaları', 'Kopyalanan metne zamanları ekle',
+      'YouTube transkriptlerini kopyalayın', 'Ayarlar', 'Görünüm', 'YouTube’daki gibi satırlar, tam cümleler veya kesintisiz metin', 'Satırlar', 'Cümleler', 'Metin',
+      'Transkripti genişletilmiş göster', 'Bir video açılır açılmaz', 'Kopyalarken zaman damgaları', 'Kopyalanan metne zaman bilgisini ekle',
       'Ayarlar otomatik olarak kaydedilir.', 'Ayarlar kaydedildi.', 'Kaydedilemedi. Lütfen tekrar deneyin.', 'Ayarlar yüklenemedi.',
       'YouTube transkriptlerini videonun yanında okuyun ve tek tıkla kopyalayın.', 'YTTS – Transkripti kopyala',
     ],
@@ -147,9 +155,9 @@
     ],
     id: [
       'Transkrip', 'Salin', 'Disalin', 'Gagal menyalin', 'Salin transkrip', 'Transkrip disalin.', 'Gagal menyalin. Coba lagi.',
-      'Luaskan transkrip', 'Ciutkan transkrip', 'Memuat transkrip…', 'Video ini tidak memiliki transkrip.', 'Transkrip tidak dapat dimuat.', 'Transkrip kosong.', 'Buka {time}: {text}',
+      'Luaskan transkrip', 'Ciutkan transkrip', 'Memuat transkrip…', 'Video ini tidak memiliki transkrip.', 'Transkrip tidak dapat dimuat.', 'Transkrip kosong.', 'Lompat ke {time}: {text}',
       'Salin transkrip YouTube', 'Setelan', 'Tampilan', 'Baris seperti di YouTube, kalimat lengkap, atau teks bersambung', 'Baris', 'Kalimat', 'Teks',
-      'Tampilkan transkrip diluaskan', 'Begitu video dibuka', 'Stempel waktu saat menyalin', 'Sertakan waktu dalam teks yang disalin',
+      'Tampilkan transkrip dalam keadaan diluaskan', 'Begitu video dibuka', 'Stempel waktu saat menyalin', 'Sertakan waktu dalam teks yang disalin',
       'Setelan disimpan secara otomatis.', 'Setelan disimpan.', 'Gagal menyimpan. Coba lagi.', 'Setelan tidak dapat dimuat.',
       'Baca transkrip YouTube di samping video dan salin dengan sekali klik.', 'YTTS – Salin transkrip',
     ],
@@ -157,13 +165,13 @@
       'Bản chép lời', 'Sao chép', 'Đã sao chép', 'Lỗi sao chép', 'Sao chép bản chép lời', 'Đã sao chép bản chép lời.', 'Không sao chép được. Vui lòng thử lại.',
       'Mở rộng bản chép lời', 'Thu gọn bản chép lời', 'Đang tải bản chép lời…', 'Video này không có bản chép lời.', 'Không tải được bản chép lời.', 'Bản chép lời trống.', 'Chuyển đến {time}: {text}',
       'Sao chép bản chép lời YouTube', 'Cài đặt', 'Chế độ xem', 'Dòng như trên YouTube, câu hoàn chỉnh hoặc văn bản liền mạch', 'Dòng', 'Câu', 'Văn bản',
-      'Hiển thị bản chép lời ở dạng mở rộng', 'Ngay khi mở video', 'Dấu thời gian khi sao chép', 'Đưa thời gian vào văn bản đã sao chép',
+      'Hiển thị bản chép lời ở dạng mở rộng', 'Ngay khi mở video', 'Dấu thời gian khi sao chép', 'Thêm dấu thời gian vào văn bản đã sao chép',
       'Cài đặt được lưu tự động.', 'Đã lưu cài đặt.', 'Không lưu được. Vui lòng thử lại.', 'Không tải được cài đặt.',
       'Đọc bản chép lời YouTube ngay cạnh video và sao chép chỉ bằng một lần nhấp.', 'YTTS – Sao chép bản chép lời',
     ],
     ar: [
-      'النص', 'نسخ', 'تم النسخ', 'تعذّر النسخ', 'نسخ النص', 'تم نسخ النص.', 'تعذّر النسخ. يُرجى المحاولة مرة أخرى.',
-      'توسيع النص', 'تصغير النص', 'جارٍ تحميل النص…', 'لا يتوفّر نص لهذا الفيديو.', 'تعذّر تحميل النص.', 'النص فارغ.', 'الانتقال إلى {time}: {text}',
+      'نص الفيديو', 'نسخ', 'تم النسخ', 'تعذّر النسخ', 'نسخ النص', 'تم نسخ النص.', 'تعذّر النسخ. يُرجى المحاولة مرة أخرى.',
+      'توسيع النص', 'طيّ النص', 'جارٍ تحميل النص…', 'لا يتوفّر نص لهذا الفيديو.', 'تعذّر تحميل النص.', 'النص فارغ.', 'الانتقال إلى {time}: {text}',
       'نسخ نصوص YouTube', 'الإعدادات', 'العرض', 'أسطر كما في YouTube أو جمل كاملة أو نص متصل', 'أسطر', 'جمل', 'نص',
       'عرض النص موسّعًا', 'فور فتح الفيديو', 'الطوابع الزمنية عند النسخ', 'تضمين الأوقات في النص المنسوخ',
       'يتم حفظ الإعدادات تلقائيًا.', 'تم حفظ الإعدادات.', 'تعذّر الحفظ. يُرجى المحاولة مرة أخرى.', 'تعذّر تحميل الإعدادات.',
@@ -173,7 +181,7 @@
       'Transkription', 'Kopiera', 'Kopierat', 'Kopieringen misslyckades', 'Kopiera transkription', 'Transkriptionen har kopierats.', 'Det gick inte att kopiera. Försök igen.',
       'Visa transkription', 'Dölj transkription', 'Läser in transkription…', 'Den här videon har ingen transkription.', 'Det gick inte att läsa in transkriptionen.', 'Transkriptionen är tom.', 'Gå till {time}: {text}',
       'Kopiera transkriptioner från YouTube', 'Inställningar', 'Visning', 'Rader som på YouTube, hela meningar eller löpande text', 'Rader', 'Meningar', 'Text',
-      'Visa transkriptionen expanderad', 'Så fort en video öppnas', 'Tidsstämplar vid kopiering', 'Ta med tider i den kopierade texten',
+      'Visa transkriptionen utfälld', 'Så fort en video öppnas', 'Tidsstämplar vid kopiering', 'Ta med tider i den kopierade texten',
       'Inställningarna sparas automatiskt.', 'Inställningarna har sparats.', 'Det gick inte att spara. Försök igen.', 'Det gick inte att läsa in inställningarna.',
       'Läs YouTube-transkriptioner bredvid videon och kopiera dem med ett klick.', 'YTTS – Kopiera transkription',
     ],
@@ -186,13 +194,17 @@
   const RTL = new Set(['ar']);
 
   // BCP 47 tag (YouTube's <html lang> or the browser UI language) → a key of
-  // MESSAGES. Chinese picks the script (Hant: TW/HK/MO), Portuguese any region, else English.
+  // MESSAGES. Chinese: an explicit script wins (Hans/Hant), then the region (TW/HK/MO → zh-TW).
+  // Portuguese: Portugal gets pt-PT, every other region Brazilian. Legacy "in" = Indonesian.
   function resolveLocale(tag) {
     const parts = String(tag || '').trim().replace(/_/g, '-').toLowerCase().split('-');
-    const lang = parts[0];
+    const lang = parts[0] === 'in' ? 'id' : parts[0];
     if (lang === 'zh') {
-      return parts.some((p) => ['hant', 'tw', 'hk', 'mo'].includes(p)) ? 'zh-TW' : 'zh-CN';
+      if (parts.includes('hans')) return 'zh-CN';
+      if (parts.includes('hant')) return 'zh-TW';
+      return parts.some((p) => ['tw', 'hk', 'mo'].includes(p)) ? 'zh-TW' : 'zh-CN';
     }
+    if (lang === 'pt') return parts.includes('pt', 1) ? 'pt-PT' : 'pt';
     return Object.hasOwn(MESSAGES, lang) ? lang : 'en';
   }
 
