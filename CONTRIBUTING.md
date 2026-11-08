@@ -59,10 +59,10 @@ Test in a real browser before opening a pull request:
 5. Check light and dark themes and all popup settings. Reload the popup to
    confirm settings persist.
 
-For browser automation, follow the Playwright injection routine in
-[AGENTS.md](AGENTS.md); test the unpacked extension separately to cover extension
-storage and popup behavior. Include a short description of the checks you ran
-and screenshots for visual changes.
+`npm test` covers these against a YouTube-like fixture; `npm run test:live` loads
+the real unpacked extension against youtube.com (it skips, rather than fails, when
+YouTube itself does not deliver a transcript). Include a short description of the
+checks you ran and screenshots for visual changes (light and dark).
 
 ## Translations
 
