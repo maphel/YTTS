@@ -22,6 +22,8 @@ videos got HTTP 400 while `get_panel` videos loaded (4 of 4 vs. 2 of 2 measured)
 `get_transcript` chapters video (`zjkBMFhNj_g`): the measured `get_panel` videos had no chapter
 headers, and a refused request already counts as inconclusive there.
 **Prevention:** When a live run fails, check which endpoint the video uses before suspecting YTTS.
+In a normal Chrome both kinds load (maintainer check, 2026-11-09): the refusal is specific to
+automated browsers, not a problem for users.
 
 ## 2026-11-08 — YouTube sometimes does not load its own transcript panel
 

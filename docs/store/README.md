@@ -84,7 +84,7 @@ be published within 30 days).
 | Unauthorized download of copyrighted content (Prohibited products) | No media download; only the transcript YouTube itself shows, copied on a user click. Avoid "download", "save video" or "scrape" in any listing text |
 | Keyword spam (Listing 4; Yellow Argon) | No keyword lists; languages mentioned once as a count |
 | Missing or insufficient metadata (Yellow Zinc) | Description, icon, screenshots, category present |
-| Functionality not working (Yellow Magnesium) | Test instructions point to a video that works; see open items for older-panel videos |
+| Functionality not working (Yellow Magnesium) | Test instructions point to a video that works; older-panel videos verified in a normal browser |
 | Excessive permissions (Purple Potassium) | `storage` + one site; no `tabs`, `scripting`, `host_permissions` or broad patterns |
 | User data disclosure (Purple Lithium, Purple Nickel) | Privacy policy with Limited Use statement; Website content declared |
 | Remote code, obfuscation (Blue Argon, Red Titanium) | None; plain, unminified source |
@@ -92,11 +92,9 @@ be published within 30 days).
 
 ## Open items
 
-- **Gate before submitting: older transcript panel.** In automated Chromium, videos whose
-  transcript YouTube loads via `get_transcript` were refused (HTTP 400, YouTube's own panel too).
-  In a normal Chrome with YTTS installed, open `https://www.youtube.com/watch?v=arj7oStGLkU` and
-  `https://www.youtube.com/watch?v=zjkBMFhNj_g`: the card must load the transcript. If it does
-  not, fix the code or document the limitation under GOOD TO KNOW before submitting.
+- ~~Gate before submitting: older transcript panel.~~ Passed on 2026-11-09: in a normal Chrome
+  with YTTS 0.1.1, `arj7oStGLkU` and `zjkBMFhNj_g` (both `get_transcript` videos) load their
+  transcripts. The HTTP 400 only affects automated browsers.
 - **Privacy contact.** PRIVACY.md points to GitHub issues (needs an account). Optionally add the
   dashboard's verified contact email there.
 - **Sentence time ranges** (#27): several sentences inside one caption segment show the same
