@@ -96,9 +96,10 @@ const fixture = `<!doctype html><html><head><meta charset="utf-8">
     related.textContent = 'Recommendations';
     sidebar.append(related);
     watch.append(primary, secondary);
-    state.setColumns = (count) => {
+    // YouTube reflows in two steps: #secondary hides first, #related moves afterwards.
+    state.setColumns = (count, { moveRelated = true } = {}) => {
       secondary.style.display = count === 1 ? 'none' : '';
-      (count === 1 ? relatedSlot : sidebar).append(related);
+      if (moveRelated) (count === 1 ? relatedSlot : sidebar).append(related);
     };
   }
   Object.defineProperty(video, 'duration', { value: state.duration ?? 60 });
@@ -259,9 +260,16 @@ test('single-column layout keeps the card visible above the recommendations (#23
   const precedesRelated = () => page.locator('#related').evaluate((node) => node.previousElementSibling?.id);
   await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel');
 
+  // Mid-reflow: #secondary hidden, recommendations not moved yet. The card waits, no error.
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error));
+  await page.evaluate(() => fixture.setColumns(1, { moveRelated: false }));
+  await page.waitForTimeout(1_500);
+  expect(await page.locator('#secondary-inner #ytts-panel').count()).toBe(1);
+
   // Narrow window: YouTube hides #secondary and moves the recommendations below the video.
   await page.evaluate(() => fixture.setColumns(1));
-  await expect(card).toBeVisible({ timeout: 2_500 });
+  await expect(card).toBeVisible({ timeout: 3_000 });
   expect(await precedesRelated()).toBe('ytts-panel');
   expect(await page.locator('#primary #ytts-panel').count()).toBe(1);
   await card.locator('.ytts-copy').click();
@@ -269,8 +277,9 @@ test('single-column layout keeps the card visible above the recommendations (#23
 
   // Wide again: back to the top of the sidebar.
   await page.evaluate(() => fixture.setColumns(2));
-  await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel', { timeout: 2_500 });
+  await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel', { timeout: 3_000 });
   await expect(card).toBeVisible();
+  expect(errors).toEqual([]);
 });
 
 test('copies line timestamps when enabled', async ({ page }) => {
