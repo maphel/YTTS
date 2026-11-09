@@ -4,7 +4,7 @@
 
 YouTube transcripts, ready to copy. A small Chromium extension that puts the
 transcript above the watch page's recommendations and matches YouTube's light
-and dark themes. The interface follows YouTube's language (20 languages, English
+and dark themes. The interface follows YouTube's language (19 languages, English
 fallback).
 
 - **One click to copy** the full transcript as plain text.

@@ -1,28 +1,28 @@
-YouTube transcripts, ready to copy. YTTS puts the transcript of the video you are watching into a small card above the recommendations, styled like YouTube itself in light and dark themes.
+YouTube transcripts, ready to copy. YTTS puts the transcript of the video you are watching into a small card above the recommendations, matching the page in light and dark themes.
 
 COPY IN ONE CLICK
 • Copy the full transcript as plain text; chapters become headings.
 • Optionally include timestamps: caption times (Lines) or time ranges (Sentences, Text).
 
 READ IT YOUR WAY
-• Lines: YouTube's caption lines with timestamps.
+• Lines: the original caption lines with timestamps.
 • Sentences: fragments merged into full sentences, with from–to times.
 • Text: continuous paragraphs.
 • Click any line or sentence to jump to that moment in the video.
 
 SMALL ON PURPOSE
 • The card starts collapsed; expand it when you need it, or set it to start expanded.
-• The interface follows YouTube's language (20 languages, right-to-left for Arabic).
+• The interface follows the site's language (19 languages, right-to-left for Arabic).
 • No account, API key, AI service or summaries.
 
 HOW IT WORKS
-On a YouTube watch page, YTTS opens YouTube's own transcript panel in the background, reads the transcript it shows, closes the panel again if YTTS opened it, and displays the text in its card. It only runs on youtube.com.
+On a watch page, YTTS opens the site's built-in transcript panel in the background, reads the transcript it shows, closes the panel again if YTTS opened it, and displays the text in its card. It only runs on youtube.com.
 
 PRIVACY
 YTTS has no backend, analytics or telemetry and sends no data to its developer or third parties. The transcript stays in the page's memory and is written to the clipboard only when you click Copy. Only three display preferences are saved, in the browser's extension storage. See the privacy policy for details.
 
 GOOD TO KNOW
-The video must have a transcript on YouTube. YTTS shows the track YouTube's own transcript panel offers; it does not generate or translate captions. Changes to YouTube's interface can affect compatibility.
+The video must have a transcript. YTTS shows the track the built-in transcript panel offers; it does not generate or translate captions. Changes to the site's interface can affect compatibility.
 
 Source code, documentation and issue tracker: https://github.com/maphel/YTTS
 

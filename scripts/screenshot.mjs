@@ -83,12 +83,17 @@ async function cardScreenshots() {
       const page = context.pages()[0] ?? await context.newPage();
       await openWatchPage(page);
       if (store) {
-        // Store assets must not show third-party content: blur the video frame, thumbnails and
-        // channel avatars (Chrome Web Store policy, Impersonation and Intellectual Property).
+        // Store assets must not show third-party content or suggest a YouTube product: blur the
+        // video frame, thumbnails, avatars, titles, channel names, description and the YouTube logo
+        // (Chrome Web Store policy, Impersonation and Intellectual Property).
         await page.addStyleTag({ content: `#movie_player video, ytd-thumbnail img, yt-thumbnail-view-model img,
           #related img, #owner img, #avatar img, yt-img-shadow img, .ytp-cued-thumbnail-overlay-image,
           .ytp-watermark, .iv-branding, .ytp-ce-element
-          { filter: blur(24px) !important; }` });
+          { filter: blur(24px) !important; }
+          ytd-topbar-logo-renderer, ytd-watch-metadata #title, #owner #channel-name, #owner-sub-count,
+          #description, ytd-text-inline-expander, #related #video-title, #related ytd-channel-name,
+          #related #metadata-line, #related yt-lockup-metadata-view-model, .ytp-chapter-container
+          { filter: blur(6px) !important; }` });
       }
       for (const { name, width, height } of SIZES) {
         await page.setViewportSize({ width, height });

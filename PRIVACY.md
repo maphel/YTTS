@@ -1,6 +1,7 @@
 # Privacy policy
 
-Effective: 9 November 2026 · Applies to the YTTS browser extension, version 0.1.0 and later.
+Effective: 9 November 2026 · Applies to the YTTS browser extension from version 0.1.0; changes are
+listed at the end of this page.
 
 YTTS has no backend, analytics, advertising, or telemetry. It does not send any data to its
 developer or to third parties, and it does not sell or transfer data.
@@ -12,12 +13,14 @@ show the transcript card and copy the transcript.
 
 | Data | What YTTS does with it | Stored? |
 | --- | --- | --- |
-| Transcript text of the video you are watching (website content) | On a watch page, YTTS opens YouTube's own transcript panel in the background, reads the transcript it renders, closes the panel again if YTTS opened it, and shows the text in the card. | Kept in the page's memory while the tab is open; never written to storage. |
+| Transcript text of the video you are watching (website content) | On a watch page, YTTS opens YouTube's own transcript panel in the background, reads the transcript it renders, closes the panel again (unless you had already opened it for this video), and shows the text in the card. | Kept in memory until you open another video or close the tab; never written to storage. |
 | The current video's ID, read from the page URL | Used only to detect that you switched videos, so the card shows the right transcript. | Kept in memory for the current tab; not stored, not collected as a history. |
+| YouTube's interface language (`<html lang>`) and the video's length | Used to choose the card's language and to compute sentence end times. | Not stored. |
 | Three display preferences | `expandedByDefault` (card starts expanded), `copyTimestamps` (copied text includes timestamps), `view` (`lines`, `sentences`, or `text`). | Saved with `chrome.storage.sync`. |
 
-YTTS does not read other pages, your account, comments, cookies, form input, keystrokes, or your
-existing clipboard contents.
+YTTS does not read other pages, your account, comments, cookies, form input or your existing
+clipboard contents, and it does not log keystrokes or clicks; it only reacts to clicks and
+Enter/Space on its own card.
 
 ## Clipboard
 
@@ -39,7 +42,7 @@ practices. YTTS is an independent project and is not affiliated with YouTube or 
 ## Chrome Web Store User Data Policy
 
 The use of information received by YTTS adheres to the
-[Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/policies),
+[Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/policies#limited-use),
 including the Limited Use requirements. In particular, YTTS uses data only to provide its single
 purpose (showing and copying the transcript of the current YouTube video); does not transfer data
 to third parties; does not use or transfer data for personalized advertising, for determining

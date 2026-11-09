@@ -2,7 +2,7 @@
 
 This folder prepares the first manual submission of YTTS ([#21](https://github.com/maphel/YTTS/issues/21)),
 checked against the Chrome Web Store program policies, User Data FAQ, Privacy practices docs,
-image guidelines and review-process docs on 9 November 2026 ([#29](https://github.com/maphel/YTTS/issues/29)).
+image guidelines and review-process docs as of 9 November 2026 (re-check before later submissions) ([#29](https://github.com/maphel/YTTS/issues/29)).
 It does not publish an item or automate uploads. Keep the listing, the privacy policy and the
 dashboard declarations aligned with the code: contradictions between them are a removal reason
 ("If the information listed in your privacy fields contradicts…", Listing requirements 3).
@@ -17,7 +17,8 @@ repository or the screenshots.
 ### Store listing
 | Field | Value |
 | --- | --- |
-| Description | [long-description.txt](long-description.txt) (plain text) |
+| Summary | Comes from the manifest; English text in [short-description.txt](short-description.txt) |
+| Description | [long-description.txt](long-description.txt) (plain text; "YouTube" appears 3 times, below the keyword-repetition threshold of 5) |
 | Category | Tools (alternatives in the current list: Accessibility, Education) |
 | Language | English. The summary comes from the manifest (`__MSG_extDescription__`, 21 locales); localized descriptions per locale are optional and can be added later |
 | Store icon | `extension/icons/icon128.png`: 128 × 128 PNG, 96 × 96 artwork with 16 px transparent padding, blue (not YouTube red) |
@@ -30,8 +31,10 @@ repository or the screenshots.
 The summary shown in the store is the manifest description: "Read YouTube transcripts next to
 the video and copy them with one click." (72 characters, limit 132). The screenshots are
 generated with `npm run screenshot -- --store`: the real extension on a public video, with the
-video frame, thumbnails, avatars and channel watermark blurred so the store assets show no
-third-party content beyond YouTube's page chrome.
+video frame, thumbnails, avatars, channel watermark, titles, channel names, description and the
+YouTube logo blurred. Only the YTTS card stays sharp; its lines are short excerpts of the video's
+captions. Replacing the video with one you own or one under CC BY removes that remaining
+third-party text.
 
 ### Privacy (Privacy practices tab)
 | Field | Value |
@@ -60,8 +63,12 @@ The Limited Use affirmative statement required on the homepage or one click away
 PRIVACY.md, linked from README.md.
 
 ### Test instructions
-[test-instructions.txt](test-instructions.txt) (417 characters, field limit 500). It names a
-short video whose transcript loads reliably.
+[test-instructions.txt](test-instructions.txt) (455 characters, field limit 500). It names a
+short video whose transcript loads reliably and covers the usual false alarms: tabs opened before
+the install have no content script until reloaded, a cookie notice, and the few seconds before
+Copy becomes active. If the form offers a separate notes field, add
+[reviewer-notes.txt](reviewer-notes.txt) (471 characters); never append it to the test
+instructions.
 
 ### Distribution
 Free, all regions. Visibility: Public (Unlisted goes through the same review). Leave "publish
@@ -85,9 +92,15 @@ be published within 30 days).
 
 ## Open items
 
-- **Older transcript panel.** In automated Chromium, videos whose transcript YouTube loads via
-  `get_transcript` were refused (HTTP 400, YouTube's own panel too). Confirm in a normal browser
-  that YTTS loads such a video (e.g. `arj7oStGLkU`) before submitting.
+- **Gate before submitting: older transcript panel.** In automated Chromium, videos whose
+  transcript YouTube loads via `get_transcript` were refused (HTTP 400, YouTube's own panel too).
+  In a normal Chrome with YTTS installed, open `https://www.youtube.com/watch?v=arj7oStGLkU` and
+  `https://www.youtube.com/watch?v=zjkBMFhNj_g`: the card must load the transcript. If it does
+  not, fix the code or document the limitation under GOOD TO KNOW before submitting.
+- **Privacy contact.** PRIVACY.md points to GitHub issues (needs an account). Optionally add the
+  dashboard's verified contact email there.
+- **Sentence time ranges** (#27): several sentences inside one caption segment show the same
+  range, visible in the screenshots. Not a policy issue; fix or switch the store shots to Lines.
 
 ## Manual checklist
 
