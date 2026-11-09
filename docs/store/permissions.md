@@ -13,7 +13,7 @@ text). No transcript text, video IDs or browsing data are stored.
 
 The content script runs only on youtube.com, the single site the extension is for. On a watch
 page it reads the current video ID from the URL to detect navigation, opens YouTube's own
-transcript panel invisibly, reads the rendered transcript, closes the panel again and shows the
+transcript panel invisibly, reads the rendered transcript, closes the panel again if YTTS opened it and shows the
 text in a card on the page. It does not run on any other site and sends nothing to the developer
 or third parties.
 

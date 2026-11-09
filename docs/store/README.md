@@ -8,21 +8,22 @@ dashboard declarations aligned with the code.
 
 | Dashboard field | Source |
 | --- | --- |
-| Package | `dist/ytts-<version>.zip` from the GitHub release, or `npm run pack` |
+| Package | `dist/ytts-<version>.zip` from the GitHub release, or `npm run pack`; must include the single-column fix (#24) |
 | Name | YTTS |
 | Summary | [short-description.txt](short-description.txt), identical to the manifest's English `extDescription` |
 | Detailed description | [long-description.txt](long-description.txt) |
 | Single purpose | [single-purpose.txt](single-purpose.txt) |
 | Permission explanations and remote code | [permissions.md](permissions.md) |
 | Test instructions (500-character field) | [test-instructions.txt](test-instructions.txt) |
-| Additional reviewer context | [reviewer-notes.txt](reviewer-notes.txt) |
+| Additional reviewer context (optional; only if the form offers a notes field, not inside the 500-character test instructions) | [reviewer-notes.txt](reviewer-notes.txt) |
 | Store icon | [`extension/icons/icon128.png`](../../extension/icons/icon128.png), 128 × 128 |
 | Screenshots | [`screenshots/`](screenshots/), 1280 × 800 and 640 × 400, light and dark |
-| Privacy policy | https://github.com/maphel/YTTS/blob/main/PRIVACY.md |
+| Privacy policy | https://github.com/maphel/YTTS/blob/main/PRIVACY.md (current wording after this PR is merged) |
 | Homepage | https://github.com/maphel/YTTS |
 | Support URL | https://github.com/maphel/YTTS/issues |
 
-Suggested listing language: English (the package ships 21 locales; the dashboard can add
+Suggested listing language: English (the package ships 21 locales, i.e. 20 languages with
+Brazilian and European Portuguese; the dashboard can add
 localized listings later). Suggested category: Tools (verify the current choices; "Education" also
 fits). The summary is 72 characters (limit 132).
 
