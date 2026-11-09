@@ -84,9 +84,11 @@ async function cardScreenshots() {
         await page.mouse.move(0, 0);
         await page.waitForTimeout(1_000); // relayout, lazy thumbnails
         if (width < 1000) {
-          // Too narrow for the sidebar: YouTube moves the card below the player. Show the card.
-          await page.locator('#ytts-panel').scrollIntoViewIfNeeded();
-          await page.evaluate(() => window.scrollBy(0, -16));
+          // Single column: the card sits below the player. Put its header just under the masthead.
+          await page.evaluate(() => {
+            const top = document.getElementById('ytts-panel').getBoundingClientRect().top;
+            window.scrollBy(0, top - 72);
+          });
         }
         await shoot(page, `${name}${scheme === 'dark' ? '-dark' : '-light'}.png`);
       }
