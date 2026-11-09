@@ -7,6 +7,9 @@ All notable changes to YTTS are listed here. The format is based on
 
 <!-- Entries go under ### Added / ### Changed / ### Fixed / ### Removed; add only the subsections you need. -->
 
+### Changed
+- Privacy policy: lists each kind of data handled, adds the Chrome Web Store Limited Use statement, an effective date and contact.
+
 ## 0.1.0 — 2026-11-09
 
 ### Added

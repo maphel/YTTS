@@ -15,8 +15,11 @@ SMALL ON PURPOSE
 • The interface follows YouTube's language (20 languages, right-to-left for Arabic).
 • No account, API key, AI service or summaries.
 
+HOW IT WORKS
+On a YouTube watch page, YTTS opens YouTube's own transcript panel in the background, reads the transcript it shows, closes the panel again if YTTS opened it, and displays the text in its card. It only runs on youtube.com.
+
 PRIVACY
-YTTS has no backend, analytics or telemetry. It reads the transcript YouTube already shows for the current video, keeps it in the page's memory and writes it to the clipboard only when you click Copy. Only three display preferences are saved, in the browser's extension storage. See the privacy policy for details.
+YTTS has no backend, analytics or telemetry and sends no data to its developer or third parties. The transcript stays in the page's memory and is written to the clipboard only when you click Copy. Only three display preferences are saved, in the browser's extension storage. See the privacy policy for details.
 
 GOOD TO KNOW
 The video must have a transcript on YouTube. YTTS shows the track YouTube's own transcript panel offers; it does not generate or translate captions. Changes to YouTube's interface can affect compatibility.

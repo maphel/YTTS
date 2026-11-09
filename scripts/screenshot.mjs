@@ -82,6 +82,14 @@ async function cardScreenshots() {
       }]);
       const page = context.pages()[0] ?? await context.newPage();
       await openWatchPage(page);
+      if (store) {
+        // Store assets must not show third-party content: blur the video frame, thumbnails and
+        // channel avatars (Chrome Web Store policy, Impersonation and Intellectual Property).
+        await page.addStyleTag({ content: `#movie_player video, ytd-thumbnail img, yt-thumbnail-view-model img,
+          #related img, #owner img, #avatar img, yt-img-shadow img, .ytp-cued-thumbnail-overlay-image,
+          .ytp-watermark, .iv-branding, .ytp-ce-element
+          { filter: blur(24px) !important; }` });
+      }
       for (const { name, width, height } of SIZES) {
         await page.setViewportSize({ width, height });
         await page.evaluate(() => window.scrollTo(0, 0));
