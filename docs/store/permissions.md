@@ -7,15 +7,17 @@ corresponding Privacy practices field in the Developer Dashboard.
 
 YTTS saves three display preferences in chrome.storage.sync: whether the transcript card starts
 expanded, whether copied text includes timestamps, and the selected view (lines, sentences or
-text). No transcript text, video IDs or browsing data are stored.
+text). A single value in chrome.storage.local records consent for this installation, including
+across reloads and tabs. The transcript and video ID stay in tab memory.
 
 ## Host permission (content script): https://www.youtube.com/*
 
-The content script runs only on youtube.com, the single site the extension is for. On a watch
-page it reads the current video ID from the URL to detect navigation, opens the site's own
-transcript panel in the background, reads the rendered transcript, closes the panel again (unless
-the user had already opened it for this video) and shows the text in a card on the page. It does
-not run on any other site and sends nothing to the developer or third parties.
+The content script runs on www.youtube.com to display the transcript card on watch pages.
+After the user clicks Allow transcripts, YTTS reads the current video ID to detect video
+changes. It opens the site's own transcript panel when needed, reads the rendered text and
+closes the panel if YTTS opened it. The script remembers permission locally for this installation.
+It keeps the transcript in tab memory and sends no transcript or viewing data to the developer
+or third parties.
 
 ## Remote code
 

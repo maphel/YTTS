@@ -4,8 +4,8 @@
 
 YouTube transcripts, ready to copy. A small Chromium extension that puts the
 transcript above the watch page's recommendations and matches YouTube's light
-and dark themes. The interface follows YouTube's language (19 languages, English
-fallback).
+and dark themes. The interface follows YouTube's language, with English as a
+fallback.
 
 - **One click to copy** the full transcript as plain text.
 - **Collapsed by default**, with an expandable transcript and clickable timestamps.
@@ -32,8 +32,12 @@ The same in the dark theme: [watch page](docs/screenshots/youtube-dark.png),
 3. Turn on **Developer mode**.
 4. Choose **Load unpacked** and select the `extension/` folder.
 5. Open a YouTube video with a transcript. The **Transcript** card appears above
-   the related videos: in the sidebar on the classic layout, or below the video
-   in narrow windows and on YouTube's newer layout.
+   the related videos. Look in the sidebar on the classic layout, or below the
+   video in narrow windows and on YouTube's newer layout.
+6. Expand the card if needed, read its disclosure and click **Allow transcripts**.
+   Click **Copy** when the transcript is ready. YTTS remembers your choice in
+   this browser profile, so transcripts load as you switch videos, reload or
+   open another tab.
 
 Pin YTTS in the browser toolbar to reach its settings. After updating the files,
 reload YTTS on the extensions page and refresh your YouTube tab.
@@ -43,7 +47,7 @@ reload YTTS on the extensions page and refresh your YouTube tab.
 | Setting | Default | Effect |
 | --- | --- | --- |
 | View | Sentences | Choose **Lines**, **Sentences**, or **Text**. |
-| Show transcript expanded | Off | Opens the transcript card automatically. |
+| Show transcript expanded | Off | Starts with the card expanded. |
 | Timestamps when copying | Off | Includes line timestamps or sentence time ranges. |
 
 **Lines** shows YouTube's caption segments. **Sentences** groups fragments using
@@ -56,9 +60,9 @@ Copying without timestamps always produces paragraph text. With timestamps,
 **Lines** preserves the original segment timestamps; **Sentences** and **Text** use
 the grouped sentence ranges.
 
-Settings use the browser's extension sync storage. Transcripts are read from the
-current page and kept in memory; YTTS has no backend and sends no transcript data
-to an external service. See [Privacy](PRIVACY.md) for details.
+Display settings use the browser's extension sync storage. Permission to load
+transcripts is saved locally for this installation. Transcripts are read from
+the current page and kept in memory. See [Privacy](PRIVACY.md) for details.
 
 ## Languages
 
@@ -76,9 +80,10 @@ track or translate it.
 
 ## How it works
 
-YTTS opens YouTube's native transcript panel invisibly, reads its rendered
-segments, then closes the panel if YTTS opened it. It supports both native
-transcript segment layouts currently handled by the source.
+After you click **Allow transcripts**, YTTS reads the rendered segments in
+YouTube's native transcript panel as you watch videos. If YTTS opens the panel,
+it does so in the background and closes it after reading the transcript. It
+supports both native transcript segment layouts currently handled by the source.
 
 A video must have a transcript available in YouTube. Loading may take a few
 seconds, and changes to YouTube's interface can affect compatibility. YTTS uses

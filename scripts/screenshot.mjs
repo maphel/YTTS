@@ -56,12 +56,14 @@ async function openWatchPage(page) {
   const copy = page.locator('#ytts-panel .ytts-copy');
   try {
     await copy.waitFor({ state: 'visible', timeout: 30_000 });
+    const toggle = page.locator('#ytts-panel .ytts-chevron');
+    if ((await toggle.getAttribute('aria-expanded')) === 'false') await toggle.click();
+    await page.locator('#ytts-panel .ytts-load').click();
     await page.waitForFunction(() => !document.querySelector('#ytts-panel .ytts-copy')?.disabled, null, { timeout: 60_000 });
   } catch {
     throw new Error('The card did not load a transcript (YouTube may be throttling transcripts; retry later).');
   }
   await page.waitForFunction(() => !document.documentElement.classList.contains('ytts-busy'));
-  await page.locator('#ytts-panel .ytts-title').click();
   await page.locator('#ytts-panel [data-sec]').first().waitFor();
 }
 

@@ -14,6 +14,7 @@
   const OPEN_BTN_SEL = 'ytd-video-description-transcript-section-renderer button';
   const NATIVE_PANEL_SEL = 'ytd-engagement-panel-section-list-renderer';
   const EXPANDED = 'ENGAGEMENT_PANEL_VISIBILITY_EXPANDED';
+  const CONSENT_KEY = 'transcriptConsent';
 
   const ICON_COPY = 'M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z';
   const ICON_CHECK = 'M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z';
@@ -41,6 +42,9 @@
   const ERROR_KEYS = new Set(['noTranscript', 'loadFailed', 'empty']);
 
   const state = {
+    consent: false,
+    consentSaving: false,
+    consentError: false,
     videoId: null,
     items: null,
     error: null,
@@ -63,8 +67,10 @@
     return null;
   }
 
+  const onWatchPage = () => location.pathname === '/watch';
+
   function currentVideoId() {
-    if (location.pathname !== '/watch') return null;
+    if (!onWatchPage()) return null;
     return new URLSearchParams(location.search).get('v');
   }
 
@@ -73,6 +79,9 @@
   // ---------- settings ----------
 
   const storage = globalThis.chrome?.storage?.sync;
+  const consentStorage = globalThis.chrome?.storage?.local;
+  let consentRevision = 0;
+  let ready = false;
 
   async function loadSettings() {
     try {
@@ -80,7 +89,48 @@
     } catch { /* keep defaults */ }
   }
 
+  async function loadConsent() {
+    try {
+      const values = await consentStorage.get(CONSENT_KEY);
+      if (consentRevision === 0) state.consent = values[CONSENT_KEY] === true;
+    } catch { /* an unreadable choice does not grant consent */ }
+  }
+
+  function setConsent(allowed) {
+    if (state.consent === allowed) return;
+    state.consent = allowed;
+    if (!allowed) {
+      lastSignature = '';
+      lastVideoId = null;
+    }
+    if (ready) {
+      tick();
+      render();
+    }
+  }
+
+  async function grantConsent() {
+    if (state.consent || state.consentSaving) return;
+    state.consentSaving = true;
+    state.consentError = false;
+    const revision = consentRevision;
+    render();
+    try {
+      await consentStorage.set({ [CONSENT_KEY]: true });
+      if (revision === consentRevision) setConsent(true);
+    } catch {
+      state.consentError = true;
+    } finally {
+      state.consentSaving = false;
+      render();
+    }
+  }
+
   globalThis.chrome?.storage?.onChanged?.addListener((changes, area) => {
+    if (area === 'local' && Object.hasOwn(changes, CONSENT_KEY)) {
+      consentRevision++;
+      setConsent(changes[CONSENT_KEY].newValue === true);
+    }
     if (area !== 'sync') return;
     for (const [k, { newValue }] of Object.entries(changes)) {
       if (Object.hasOwn(DEFAULTS, k)) {
@@ -118,13 +168,17 @@
     return items;
   }
 
-  // Signature of the segments currently in the DOM, to tell a freshly loaded
-  // transcript apart from a stale one left over from the previous video.
+  // A short fingerprint distinguishes stale native segments without retaining their text.
   function segSignature() {
     const segs = document.querySelectorAll(SEG_SEL);
-    return segs.length
-      ? `${segs.length}|${segs[0].textContent}|${segs[segs.length - 1].textContent}`
-      : '';
+    if (!segs.length) return '';
+    let hash = 2166136261;
+    for (const edge of [segs[0], segs[segs.length - 1]]) {
+      const text = edge.textContent;
+      hash = Math.imul(hash ^ text.length, 16777619);
+      for (let i = 0; i < text.length; i++) hash = Math.imul(hash ^ text.charCodeAt(i), 16777619);
+    }
+    return `${segs.length}|${hash >>> 0}`;
   }
 
   // On SPA navigation the URL changes first; ytd-watch-flexy[video-id] follows ~0.8 s later.
@@ -283,8 +337,8 @@
       render();
     });
 
-    copyBtn.addEventListener('click', async () => {
-      if (!state.items || copyBtn._copying) return;
+    copyBtn.addEventListener('click', async (e) => {
+      if (!e.isTrusted || !state.items || copyBtn._copying || currentVideoId() !== state.videoId) return;
       const items = state.items;
       const token = state.loadToken;
       copyBtn._copying = true;
@@ -309,8 +363,9 @@
 
     body.addEventListener('click', (e) => {
       const seg = e.target.closest('[data-sec]');
+      if (!seg || !state.items || currentVideoId() !== state.videoId) return;
       const video = document.querySelector('video.html5-main-video') || document.querySelector('video');
-      if (seg && video) video.currentTime = Number(seg.dataset.sec);
+      if (video) video.currentTime = Number(seg.dataset.sec);
     });
 
     // Keyboard activation for the span-based sentences of the "Text" view.
@@ -325,8 +380,9 @@
   }
 
   function ensurePanel() {
-    if (!currentVideoId()) {
+    if (!onWatchPage() || (state.consent && !state.videoId)) {
       document.getElementById(PANEL_ID)?.remove();
+      rendered = { items: null, view: null };
       return;
     }
     let host = document.querySelector('#secondary-inner') || document.querySelector('#secondary');
@@ -422,15 +478,33 @@
       panel.querySelector('.ytts-announcement').textContent = '';
       copyBtn._items = state.items;
     }
-    if (!state.items) copyBtn.title = t(state.error || 'loading');
+    if (!state.items) copyBtn.title = t(state.consent ? state.error || 'loading' : 'copyAria');
 
     const body = panel.querySelector('.ytts-body');
-    body.setAttribute('aria-busy', String(!state.items && !state.error));
+    body.setAttribute('aria-busy', String(state.consentSaving || (state.consent && !state.items && !state.error)));
     if (state.items && rendered.items === state.items && rendered.view === settings.view
       && body.childElementCount) return;
     rendered = { items: state.items, view: settings.view };
 
     body.replaceChildren();
+    if (!state.consent) {
+      const load = el('button', {
+        className: 'ytts-load', type: 'button', textContent: t('loadTranscript'), disabled: state.consentSaving,
+      });
+      load.setAttribute('aria-describedby', 'ytts-disclosure');
+      load.addEventListener('click', (e) => { if (e.isTrusted) grantConsent(); });
+      const disclosure = el('div', { className: 'ytts-consent', dir: 'auto' }, [
+        el('p', { id: 'ytts-disclosure', textContent: t('transcriptDisclosure') }),
+        load,
+      ]);
+      if (state.consentError) {
+        const error = el('p', { textContent: t('saveFailed') });
+        error.setAttribute('role', 'alert');
+        disclosure.append(error);
+      }
+      body.append(disclosure);
+      return;
+    }
     if (state.error || !state.items) {
       body.append(el('div', {
         className: 'ytts-status',
@@ -464,19 +538,21 @@
     await sleep(300); // debounce; scrapeTranscript waits for the new page data itself
     if (token !== state.loadToken || currentVideoId() !== videoId) return;
     try {
-      const task = scrapeTask.catch(() => {}).then(async () => {
+      const task = scrapeTask.then(async () => {
         signal.throwIfAborted();
         // Read this after the previous scrape's cleanup: a cancelled load may
         // have replaced the native segments even though its card never rendered.
         const prevSignature = lastVideoId === videoId ? '' : lastSignature;
         try {
           const result = await scrapeTranscript(prevSignature, signal, videoId);
-          // Record the native result even if navigation cancelled its UI update.
-          lastSignature = result.signature;
-          lastVideoId = videoId;
+          // Keep stale detection across navigation, but not after consent is revoked.
+          if (state.consent) {
+            lastSignature = result.signature;
+            lastVideoId = videoId;
+          }
           return result;
         } finally {
-          if (signal.aborted) {
+          if (signal.aborted && state.consent) {
             const signature = segSignature();
             if (signature && signature !== lastSignature) {
               lastSignature = signature;
@@ -485,7 +561,8 @@
           }
         }
       });
-      scrapeTask = task;
+      // The queue keeps only completion, not the transcript returned by the last task.
+      scrapeTask = task.then(() => undefined, () => undefined);
       const { items } = await task;
       if (token !== state.loadToken || currentVideoId() !== videoId) return;
       state.items = items;
@@ -497,15 +574,16 @@
   }
 
   function tick() {
-    ensurePanel();
-    const id = currentVideoId();
+    const id = state.consent ? currentVideoId() : null;
     if (id !== state.videoId) onVideoChange(id);
+    ensurePanel();
   }
 
-  loadSettings().then(() => {
+  Promise.all([loadSettings(), loadConsent()]).then(() => {
+    ready = true;
     document.addEventListener('yt-navigate-finish', tick);
     // Late sidebar re-renders need a poll, but only while a watch page is (or was) active.
-    setInterval(() => { if (currentVideoId() || state.videoId) tick(); }, 1000);
+    setInterval(() => { if (onWatchPage() || state.videoId) tick(); }, 1000);
     tick();
   });
 })();

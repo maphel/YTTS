@@ -179,9 +179,19 @@ async function setup(page, options = {}) {
       variant: 'legacy', video: 'first', opens: 0, delay: 30, seek: 0,
       ...options,
     };
+    // Browser-profile storage shared between fixture documents. The real extension
+    // uses chrome.storage.local, so a reload and a fresh tab must keep consent.
+    const readLocal = () => JSON.parse(localStorage.getItem('fixture-ytts-local') || '{}');
     const listeners = [];
     window.chrome = {
       storage: {
+        local: {
+          get: async () => readLocal(),
+          set: async (values) => {
+            if (window.fixture.failConsentSave) throw new Error('Saving failed');
+            localStorage.setItem('fixture-ytts-local', JSON.stringify({ ...readLocal(), ...values }));
+          },
+        },
         sync: { get: async (defaults) => ({ ...defaults, view: 'lines', ...options.settings }) },
         onChanged: { addListener: (listener) => listeners.push(listener) },
       },
@@ -210,10 +220,83 @@ async function ready(page) {
   await expect(page.locator('html')).not.toHaveClass(/ytts-busy/);
 }
 
+async function activate(page) {
+  const toggle = page.locator('.ytts-chevron');
+  const collapsed = (await toggle.getAttribute('aria-expanded')) === 'false';
+  if (collapsed) await toggle.click();
+  await page.locator('.ytts-load').click();
+  if (collapsed) await toggle.click();
+}
+
+async function activateAndWait(page) {
+  await activate(page);
+  await ready(page);
+}
+
+test('requires a real load click before reading transcripts and remembers consent', async ({ page, context }) => {
+  await page.clock.install();
+  await setup(page);
+  await expect(page.locator('#ytts-panel')).toBeVisible();
+  await page.clock.runFor(1200);
+  expect(await page.evaluate(() => fixture.opens)).toBe(0);
+  await page.locator('.ytts-chevron').click();
+  const load = page.locator('.ytts-load');
+  await expect(load).toBeVisible();
+  await load.evaluate((button) => button.click());
+  await page.clock.runFor(1200);
+  expect(await page.evaluate(() => fixture.opens)).toBe(0);
+  // A page can put a lookalike in the card's DOM but cannot bind consent to it.
+  await load.evaluate((button) => {
+    const lookalike = button.cloneNode(true);
+    lookalike.textContent = 'Page button';
+    button.after(lookalike);
+  });
+  const lookalike = page.getByText('Page button', { exact: true });
+  await lookalike.click();
+  await page.clock.runFor(1200);
+  expect(await page.evaluate(() => fixture.opens)).toBe(0);
+  await lookalike.evaluate((button) => button.remove());
+  await expect(page.locator(nativePanel)).toHaveAttribute('visibility', hidden);
+  await expect(page.locator('.ytts-copy')).toBeDisabled();
+  expect(await page.evaluate(() => fixture.copied)).toBeUndefined();
+  expect(await page.evaluate(() => globalThis.chrome.storage.local.get())).toEqual({});
+  await load.click();
+  await ready(page);
+  expect(await page.evaluate(() => fixture.opens)).toBe(1);
+  expect(await page.evaluate(() => globalThis.chrome.storage.local.get())).toEqual({ transcriptConsent: true });
+
+  await page.reload();
+  await page.addStyleTag({ path: cssPath });
+  await ready(page);
+  expect(await page.evaluate(() => fixture.opens)).toBe(1);
+
+  const otherTab = await context.newPage();
+  await setup(otherTab);
+  await ready(otherTab);
+  expect(await otherTab.evaluate(() => fixture.opens)).toBe(1);
+});
+
+test('does not read transcripts until saving consent succeeds', async ({ page }) => {
+  await page.clock.install();
+  await setup(page, { failConsentSave: true, settings: { expandedByDefault: true } });
+  const load = page.locator('.ytts-load');
+  await load.click();
+  await expect(page.getByText('Speichern fehlgeschlagen. Bitte erneut versuchen.')).toBeVisible();
+  await page.clock.runFor(1200);
+  expect(await page.evaluate(() => fixture.opens)).toBe(0);
+  await expect(page.locator('.ytts-copy')).toBeDisabled();
+  expect(await page.evaluate(() => globalThis.chrome.storage.local.get())).toEqual({});
+
+  await page.evaluate(() => { fixture.failConsentSave = false; });
+  await load.click();
+  await ready(page);
+  expect(await page.evaluate(() => fixture.opens)).toBe(1);
+});
+
 for (const variant of ['legacy', 'view-model']) {
   test(`scrapes ${variant} segments, chapters and the complete transcript`, async ({ page }) => {
     await setup(page, { variant });
-    await ready(page);
+    await activateAndWait(page);
     await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel');
     await expect(page.locator('#ytts-panel')).toHaveClass(/ytts-collapsed/);
     await expect(page.locator(nativePanel)).toHaveAttribute('visibility', hidden);
@@ -227,7 +310,7 @@ for (const variant of ['legacy', 'view-model']) {
 
 test('modern side rails keep the card visible beside active recommendations', async ({ page }) => {
   await setup(page, { modernLayout: true });
-  await ready(page);
+  await activateAndWait(page);
   const card = page.locator('#ytts-panel');
   const activeRelated = page.locator('#primary #related[data-active="true"]');
   const transcript = page.locator(`${nativePanel}[target-id="engagement-panel-searchable-transcript"]`);
@@ -255,7 +338,7 @@ test('modern side rails keep the card visible beside active recommendations', as
 
 test('single-column layout keeps the card visible above the recommendations (#23)', async ({ page }) => {
   await setup(page, { classicLayout: true });
-  await ready(page);
+  await activateAndWait(page);
   const card = page.locator('#ytts-panel');
   const precedesRelated = () => page.locator('#related').evaluate((node) => node.previousElementSibling?.id);
   await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel');
@@ -284,7 +367,7 @@ test('single-column layout keeps the card visible above the recommendations (#23
 
 test('copies line timestamps when enabled', async ({ page }) => {
   await setup(page, { settings: { copyTimestamps: true } });
-  await ready(page);
+  await activateAndWait(page);
   await page.locator('.ytts-copy').click();
   await expect.poll(() => page.evaluate(() => fixture.copied)).toBe(
     '## Kapitel eins\n\n[0:00] Hallo\n[0:04] Welt.\n[0:08] Noch ein Satz.\n\n## Kapitel zwei\n\n[0:15] Zum Schluss.\n',
@@ -293,7 +376,7 @@ test('copies line timestamps when enabled', async ({ page }) => {
 
 test('sentence and text views preserve words, chapter boundaries and seeking', async ({ page }) => {
   await setup(page, { settings: { view: 'sentences', expandedByDefault: true } });
-  await ready(page);
+  await activateAndWait(page);
   await expect(page.locator('.ytts-sent')).toHaveCount(3);
   await expect(page.locator('.ytts-sent').first()).toHaveText('0:00 – 0:08Hallo Welt.');
   await page.evaluate(() => fixture.updateSettings({ view: 'text' }));
@@ -313,7 +396,7 @@ test('an active ad duration cannot reverse the final sentence range', async ({ p
     rows: [['18:20', 'Vorheriger Satz.'], ['18:29', 'Letzter Satz.']],
     settings: { view: 'sentences', expandedByDefault: true, copyTimestamps: true },
   });
-  await ready(page);
+  await activateAndWait(page);
   await expect(page.locator('.ytts-sent').last()).toHaveText('18:29 – 18:34Letzter Satz.');
   await page.locator('.ytts-copy').click();
   await expect.poll(() => page.evaluate(() => fixture.copied)).toBe(
@@ -327,28 +410,42 @@ test('out-of-order source timestamps cannot reverse a merged sentence range', as
     rows: [['18:29', 'Ein Satz'], ['18:20', 'mit vertauschten Zeitangaben.']],
     settings: { view: 'sentences', expandedByDefault: true },
   });
-  await ready(page);
+  await activateAndWait(page);
   await expect(page.locator('.ytts-sent')).toHaveText('18:29 – 18:29Ein Satz mit vertauschten Zeitangaben.');
 });
 
-test('keyboard opens the transcript and seeks from a raw segment', async ({ page }) => {
+test('keyboard loads and opens the transcript and seeks from a raw segment', async ({ page }) => {
   await setup(page);
-  await ready(page);
   const toggle = page.locator('.ytts-chevron');
   await toggle.focus();
   await page.keyboard.press('Space');
   await expect(toggle).toHaveAttribute('aria-expanded', 'true');
+  await page.locator('.ytts-load').focus();
+  await page.keyboard.press('Enter');
+  await ready(page);
   await expect(page.locator('.ytts-body')).toBeVisible();
   await page.locator('.ytts-seg').nth(1).focus();
   await page.keyboard.press('Enter');
   await expect.poll(() => page.evaluate(() => fixture.seek)).toBe(4);
 });
 
-test('SPA navigation replaces stale transcript text', async ({ page }) => {
+test('SPA navigation clears stale copy and loads the new transcript without asking again', async ({ page }) => {
   await setup(page);
-  await ready(page);
-  await page.evaluate(() => fixture.navigate('second'));
-  await expect(page.locator('.ytts-copy')).toBeDisabled();
+  await activateAndWait(page);
+  await page.evaluate(() => {
+    const copy = document.querySelector('.ytts-copy');
+    // Reproduce a URL change just before a trusted copy action. The extension's
+    // click listener runs before YouTube's navigation event arrives.
+    copy.addEventListener('click', () => history.pushState({}, '', '/watch?v=second'), { capture: true, once: true });
+    copy.addEventListener('click', () => {
+      fixture.navigate('second');
+      fixture.afterNavigation = {
+        opens: fixture.opens, copied: fixture.copied, rows: document.querySelectorAll('.ytts-seg').length,
+      };
+    }, { once: true });
+  });
+  await page.locator('.ytts-copy').click();
+  expect(await page.evaluate(() => fixture.afterNavigation)).toEqual({ opens: 1, copied: undefined, rows: 0 });
   await ready(page);
   await page.locator('.ytts-copy').click();
   await expect.poll(() => page.evaluate(() => fixture.copied)).toBe('Ein anderes Video. Sein eigenes Transkript.\n');
@@ -358,6 +455,7 @@ test('SPA navigation replaces stale transcript text', async ({ page }) => {
 
 test('rapid navigation cancels an in-flight scrape and cleans up', async ({ page }) => {
   await setup(page, { failLoad: true });
+  await activate(page);
   await expect(page.locator('html')).toHaveClass(/ytts-busy/);
   await page.evaluate(() => {
     fixture.failLoad = false;
@@ -373,7 +471,7 @@ test('rapid navigation cancels an in-flight scrape and cleans up', async ({ page
 
 test('a cancelled scrape cannot supply its rendered segments to the next video', async ({ page }) => {
   await setup(page);
-  await ready(page);
+  await activateAndWait(page);
   await page.evaluate(() => fixture.navigate('second'));
   await expect(page.locator('#segments')).toContainText('Ein anderes Video.');
   // The second video's DOM exists, but the scraper has not yet observed enough
@@ -392,7 +490,7 @@ test('a cancelled scrape cannot supply its rendered segments to the next video',
 // YouTube still shows the old page data after the URL changed.
 test('navigating to a video without transcript ignores the previous video\'s button', async ({ page }) => {
   await setup(page, { flexyDelay: 900, settings: { expandedByDefault: true } });
-  await ready(page);
+  await activateAndWait(page);
   const opensBefore = await page.evaluate(() => fixture.opens);
   await page.evaluate(() => fixture.navigate('second', { transcript: false }));
   await expect(page.locator('.ytts-status')).toHaveText('Für dieses Video gibt es kein Transkript.', { timeout: 12_000 });
@@ -409,7 +507,7 @@ for (const [lang, title, copy, seekPrefix] of [
 ]) {
   test(`card follows YouTube's interface language: ${lang}`, async ({ page }) => {
     await setup(page, { lang, settings: { expandedByDefault: true } });
-    await ready(page);
+    await activateAndWait(page);
     await expect(page.locator('.ytts-title')).toHaveText(title);
     await expect(page.locator('.ytts-copy')).toHaveText(copy);
     await expect(page.locator('.ytts-seg').first()).toHaveAttribute('aria-label', new RegExp(`^${seekPrefix}`));
@@ -418,12 +516,13 @@ for (const [lang, title, copy, seekPrefix] of [
 
 test('errors are shown in YouTube\'s interface language', async ({ page }) => {
   await setup(page, { lang: 'en', noTranscript: true, settings: { expandedByDefault: true } });
+  await activate(page);
   await expect(page.locator('.ytts-status')).toHaveText('This video has no transcript.', { timeout: 12_000 });
 });
 
 test('the card mirrors in right-to-left YouTube', async ({ page }) => {
   await setup(page, { lang: 'ar', settings: { expandedByDefault: true } });
-  await ready(page);
+  await activateAndWait(page);
   const [titleX, copyX] = await page.evaluate(() => [
     document.querySelector('.ytts-title').getBoundingClientRect().left,
     document.querySelector('.ytts-copy').getBoundingClientRect().left,
@@ -442,20 +541,22 @@ test('the card mirrors in right-to-left YouTube', async ({ page }) => {
 // even when YouTube fires no navigation event.
 test('the poll re-inserts a card that YouTube re-rendered away', async ({ page }) => {
   await setup(page);
-  await ready(page);
+  await activateAndWait(page);
   await page.evaluate(() => document.getElementById('ytts-panel').remove());
   await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel', { timeout: 2_500 });
 });
 
 test('the poll removes the card after leaving the watch page without an event', async ({ page }) => {
   await setup(page);
-  await ready(page);
+  await activateAndWait(page);
   await page.evaluate(() => history.pushState({}, '', '/'));
   await expect(page.locator('#ytts-panel')).toHaveCount(0, { timeout: 2_500 });
 });
 
 test('missing transcripts show a clear error without enabling copy', async ({ page }) => {
   await setup(page, { noTranscript: true, settings: { expandedByDefault: true } });
+  await expect(page.locator('.ytts-copy')).toBeDisabled();
+  await activate(page);
   await expect(page.locator('.ytts-status')).toHaveText('Für dieses Video gibt es kein Transkript.', { timeout: 12_000 });
   await expect(page.locator('.ytts-copy')).toBeDisabled();
   await expect(page.locator('html')).not.toHaveClass(/ytts-busy/);
@@ -463,6 +564,7 @@ test('missing transcripts show a clear error without enabling copy', async ({ pa
 
 test('failed native loading closes the panel and removes the hidden state', async ({ page }) => {
   await setup(page, { failLoad: true, settings: { expandedByDefault: true } });
+  await activate(page);
   await expect(page.locator('.ytts-status')).toHaveText('Transkript konnte nicht geladen werden.', { timeout: 20_000 });
   await expect(page.locator(nativePanel)).toHaveAttribute('visibility', hidden);
   await expect(page.locator('html')).not.toHaveClass(/ytts-busy/);
@@ -471,14 +573,15 @@ test('failed native loading closes the panel and removes the hidden state', asyn
 
 test('keeps a native transcript open when the user already opened it', async ({ page }) => {
   await setup(page, { alreadyOpen: true });
-  await ready(page);
+  await expect(page.locator('.ytts-copy')).toBeDisabled();
+  await activateAndWait(page);
   await expect(page.locator(nativePanel)).toHaveAttribute('visibility', expanded);
   expect(await page.evaluate(() => fixture.opens)).toBe(0);
 });
 
 test('reports clipboard failure and restores keyboard focus', async ({ page }) => {
   await setup(page, { clipboardFailure: true });
-  await ready(page);
+  await activateAndWait(page);
   const copy = page.locator('.ytts-copy');
   await copy.focus();
   await page.keyboard.press('Enter');

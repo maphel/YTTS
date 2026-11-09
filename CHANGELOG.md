@@ -7,6 +7,9 @@ All notable changes to YTTS are listed here. The format is based on
 
 <!-- Entries go under ### Added / ### Changed / ### Fixed / ### Removed; add only the subsections you need. -->
 
+### Changed
+- The transcript card explains what it reads and waits for **Allow transcripts** before loading transcripts. YTTS remembers that choice locally for this installation.
+
 ## 0.1.1 — 2026-11-09
 
 ### Changed

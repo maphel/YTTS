@@ -1,24 +1,23 @@
 # Chrome Web Store submission
 
-This folder prepares the first manual submission of YTTS ([#21](https://github.com/maphel/YTTS/issues/21)),
-checked against the Chrome Web Store program policies, User Data FAQ, Privacy practices docs,
-image guidelines and review-process docs as of 9 November 2026 (re-check before later submissions) ([#29](https://github.com/maphel/YTTS/issues/29)).
-It does not publish an item or automate uploads. Keep the listing, the privacy policy and the
-dashboard declarations aligned with the code: contradictions between them are a removal reason
-("If the information listed in your privacy fields contradicts…", Listing requirements 3).
+Use this checklist for the first manual YTTS submission. Keep the listing, privacy policy and
+dashboard declarations aligned with the submitted package. The November 2026 audit covered the
+program policies, User Data FAQ, Privacy practices tab, image guidelines and review process.
+See [#21](https://github.com/maphel/YTTS/issues/21), [#29](https://github.com/maphel/YTTS/issues/29)
+and [#33](https://github.com/maphel/YTTS/issues/33).
 
 ## Dashboard, tab by tab
 
 ### Package
-Upload `ytts-<version>.zip` from the [GitHub release](https://github.com/maphel/YTTS/releases)
-(built by `release.yml`; contains only the git-tracked files of `extension/`). Never upload the
-repository or the screenshots.
+Upload `ytts-<version>.zip` from the [GitHub release](https://github.com/maphel/YTTS/releases).
+The release workflow packages the git-tracked files from `extension/`. Verify the asset digest
+and the manifest version before uploading.
 
 ### Store listing
 | Field | Value |
 | --- | --- |
 | Summary | Comes from the manifest; English text in [short-description.txt](short-description.txt) |
-| Description | [long-description.txt](long-description.txt) (plain text; "YouTube" appears 3 times, below the keyword-repetition threshold of 5) |
+| Description | [long-description.txt](long-description.txt) (plain text, including the transcript permission and how the native panel is used) |
 | Category | Tools (alternatives in the current list: Accessibility, Education) |
 | Language | English. The summary comes from the manifest (`__MSG_extDescription__`, 21 locales); localized descriptions per locale are optional and can be added later |
 | Store icon | `extension/icons/icon128.png`: 128 × 128 PNG, 96 × 96 artwork with 16 px transparent padding, blue (not YouTube red) |
@@ -47,28 +46,21 @@ third-party text.
 | Data usage: certifications | Tick all three after reading them; they match [PRIVACY.md](../../PRIVACY.md) (no sale/transfer to third parties, no use unrelated to the single purpose, no creditworthiness/lending use) |
 | Privacy policy URL | https://github.com/maphel/YTTS/blob/main/PRIVACY.md (open it signed out first) |
 
-Why these categories: "handle" includes local processing ("Extensions are required to disclose
-how they handle user data, even when data is processed or stored locally", User Data FAQ 3), and
-"Clipping or scraping content from a website that the user visits" is listed as handling (FAQ 2).
-YTTS reads the transcript text of the page → **Website content**. It reads only the current
-video's ID from the URL to notice video changes, keeps no list of pages, titles or visit times
-and stores nothing → not **Web history**. It observes no clicks, scrolling or keystrokes outside
-its own card → not **User activity**. Nothing else (personally identifiable, health, financial,
-authentication, personal communications, location) is accessed. The dashboard's own definitions
-are only visible signed in: compare them before ticking, and if a definition reads broader than
-described here, tick it and keep PRIVACY.md consistent. Over-disclosure is harmless, under-
-disclosure is a rejection reason (Purple Lithium / Purple Nickel).
+The [User Data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq)
+includes local processing and reading content from the active website in its definition of data
+handling. The transcript is **Website content**. YTTS uses the current video ID in memory to
+keep the transcript aligned with navigation and records no browsing history. The extension
+responds to controls on its own card. Compare the dashboard's category definitions with this
+data flow when filling in the form.
 
-The Limited Use affirmative statement required on the homepage or one click away is in
-PRIVACY.md, linked from README.md.
+The card provides the disclosure before the user clicks **Allow transcripts**. One local flag
+remembers permission for this installation across tabs and reloads. The [privacy policy](../../PRIVACY.md)
+contains the Limited Use statement and is linked from the project homepage.
 
 ### Test instructions
-[test-instructions.txt](test-instructions.txt) (455 characters, field limit 500). It names a
-short video whose transcript loads reliably and covers the usual false alarms: tabs opened before
-the install have no content script until reloaded, a cookie notice, and the few seconds before
-Copy becomes active. If the form offers a separate notes field, add
-[reviewer-notes.txt](reviewer-notes.txt) (471 characters); never append it to the test
-instructions.
+Use [test-instructions.txt](test-instructions.txt) in the 500-character field. It gives the
+reviewer a public video, the consent and copy steps, and a check that reload remembers consent.
+If the form offers a separate notes field, use [reviewer-notes.txt](reviewer-notes.txt) there.
 
 ### Distribution
 Free, all regions. Visibility: Public (Unlisted goes through the same review). Leave "publish
@@ -80,23 +72,22 @@ be published within 30 days).
 | Risk (policy / violation ID) | Status |
 | --- | --- |
 | Impersonation, trademark (Impersonation 1 and 5; Red Nickel/Red Silicon) | Listing and PRIVACY.md say "not affiliated with YouTube or Google". Name "YTTS" is descriptive. Icon is blue, not YouTube's red; it keeps a play triangle with text lines (residual risk accepted by the maintainer) |
-| Misleading or unexpected behaviour (Misleading 3; Red Nickel "actions not mentioned in the metadata") | The description's "How it works" discloses that YouTube's transcript panel is opened in the background and closed again |
+| Misleading or unexpected behaviour (Misleading 3; Red Nickel) | The listing explains that after permission YTTS opens the native transcript panel in the background when needed and closes it if YTTS opened it |
 | Unauthorized download of copyrighted content (Prohibited products) | No media download; only the transcript YouTube itself shows, copied on a user click. Avoid "download", "save video" or "scrape" in any listing text |
-| Keyword spam (Listing 4; Yellow Argon) | No keyword lists; languages mentioned once as a count |
+| Keyword spam (Listing 4; Yellow Argon) | The description explains the product in plain prose |
 | Missing or insufficient metadata (Yellow Zinc) | Description, icon, screenshots, category present |
-| Functionality not working (Yellow Magnesium) | Test instructions point to a video that works; see open items for older-panel videos |
+| Functionality not working (Yellow Magnesium) | Reviewer steps include a public video. See the normal browser check below for older-panel videos |
 | Excessive permissions (Purple Potassium) | `storage` + one site; no `tabs`, `scripting`, `host_permissions` or broad patterns |
-| User data disclosure (Purple Lithium, Purple Nickel) | Privacy policy with Limited Use statement; Website content declared |
+| User data disclosure (Purple Lithium, Purple Nickel) | In-card disclosure and affirmative consent, public policy with Limited Use statement, and Website content declaration |
 | Remote code, obfuscation (Blue Argon, Red Titanium) | None; plain, unminified source |
 | Slow review | Single-site content script and no sensitive permissions keep it out of the broad-host-permission path; new developers and new items get closer review regardless ("a few days, up to a few weeks") |
 
 ## Open items
 
-- **Gate before submitting: older transcript panel.** In automated Chromium, videos whose
-  transcript YouTube loads via `get_transcript` were refused (HTTP 400, YouTube's own panel too).
-  In a normal Chrome with YTTS installed, open `https://www.youtube.com/watch?v=arj7oStGLkU` and
-  `https://www.youtube.com/watch?v=zjkBMFhNj_g`: the card must load the transcript. If it does
-  not, fix the code or document the limitation under GOOD TO KNOW before submitting.
+- **Older transcript panel.** The maintainer verified `arj7oStGLkU` and `zjkBMFhNj_g` with
+  YTTS 0.1.1 in normal Chrome on 9 November 2026. YouTube returned HTTP 400 for those panels
+  in automated Chromium. Repeat the normal Chrome check on the candidate ZIP after allowing
+  transcripts. [Browser check notes](https://github.com/maphel/YTTS/pull/32)
 - **Privacy contact.** PRIVACY.md points to GitHub issues (needs an account). Optionally add the
   dashboard's verified contact email there.
 - **Sentence time ranges** (#27): several sentences inside one caption segment show the same
@@ -106,7 +97,7 @@ be published within 30 days).
 
 - [ ] Developer Dashboard: publisher registration, developer agreement, trader/non-trader
   declaration, verified contact email.
-- [ ] Package tab: upload the release ZIP; check name and version 0.1.0.
+- [ ] Package tab. Upload the verified release ZIP and confirm YTTS and the submitted version.
 - [ ] Store listing tab as above; upload icon and screenshots.
 - [ ] Privacy tab as above; open the privacy URL signed out.
 - [ ] Test instructions and distribution as above.
