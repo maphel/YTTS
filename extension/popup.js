@@ -3,7 +3,7 @@ const DEFAULTS = { expandedByDefault: false, copyTimestamps: false, view: 'sente
 
 const inputs = document.querySelectorAll('input[data-key]');
 const viewRadios = document.querySelectorAll('input[name="view"]');
-const status = document.getElementById('save-status');
+const statusEl = document.getElementById('save-status');
 let saveSequence = 0;
 
 async function init() {
@@ -18,7 +18,7 @@ async function init() {
       view: ['lines', 'sentences', 'text'].includes(saved.view) ? saved.view : DEFAULTS.view,
     };
   } catch {
-    status.textContent = 'Einstellungen konnten nicht geladen werden.';
+    statusEl.textContent = 'Einstellungen konnten nicht geladen werden.';
   }
 
   for (const input of inputs) {
@@ -31,11 +31,11 @@ async function init() {
       input.disabled = true;
       try {
         await chrome.storage.sync.set({ [input.dataset.key]: value });
-        if (sequence === saveSequence) status.textContent = 'Einstellungen gespeichert.';
+        if (sequence === saveSequence) statusEl.textContent = 'Einstellungen gespeichert.';
       } catch {
         input.checked = !value;
         if (sequence === saveSequence) {
-          status.textContent = 'Speichern fehlgeschlagen. Bitte erneut versuchen.';
+          statusEl.textContent = 'Speichern fehlgeschlagen. Bitte erneut versuchen.';
         }
       } finally {
         input.disabled = false;
@@ -57,12 +57,12 @@ async function init() {
       try {
         await chrome.storage.sync.set({ view: radio.value });
         currentView = radio.value;
-        if (sequence === saveSequence) status.textContent = 'Einstellungen gespeichert.';
+        if (sequence === saveSequence) statusEl.textContent = 'Einstellungen gespeichert.';
       } catch {
         currentView = previous;
         for (const r of viewRadios) r.checked = r.value === previous;
         if (sequence === saveSequence) {
-          status.textContent = 'Speichern fehlgeschlagen. Bitte erneut versuchen.';
+          statusEl.textContent = 'Speichern fehlgeschlagen. Bitte erneut versuchen.';
         }
       } finally {
         for (const r of viewRadios) r.disabled = false;
