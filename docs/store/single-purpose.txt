@@ -1,0 +1,1 @@
+YTTS shows the transcript of the YouTube video you are watching in a card on the watch page and copies it to the clipboard with one click.

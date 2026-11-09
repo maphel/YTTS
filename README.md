@@ -100,7 +100,7 @@ npm run screenshot -- --store  # docs/store/screenshots/*.png for the Chrome Web
 
 ## License
 
-[MIT](LICENSE) · Copyright © 2026 Marcel Christophel.
+[MIT](LICENSE)
 
 Interface icons include Apache-2.0-licensed Material Icons; see
 [third-party notices](extension/THIRD_PARTY_NOTICES.md).
