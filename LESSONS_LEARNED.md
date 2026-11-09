@@ -1,5 +1,27 @@
 # Lessons Learned
 
+## 2026-11-08 — YouTube sometimes does not load its own transcript panel
+
+**Symptom:** Live canary: card stuck on "Loading", then "could not be loaded"; YouTube's native panel
+also showed only a spinner, with and without the extension, in bundled Chromium and in Chrome.
+**Root cause:** YouTube-side: after many automated runs from one IP (and in automated browsers) the
+transcript request is throttled or refused. Not an extension bug.
+**Fix:** When YTTS fails, the live canary checks independently of YTTS's selectors whether YouTube
+delivered: button by accessible name (it is hidden in the collapsed description), data by network.
+The view-model panel loads via `/youtubei/v1/get_panel`, the legacy one via `get_transcript` (400 when
+refused). Skip only if neither returned transcript data; a mutation test (renamed segment selector)
+confirmed the canary then fails instead of skipping.
+**Prevention:** Never treat a live failure as a regression without that independent control, and
+never build the control on the selectors under test.
+
+## 2026-11-08 — Stale transcript button after SPA navigation (#11)
+
+**Symptom:** Navigating to a video without a transcript could reopen the previous video's transcript.
+**Root cause:** Measured on youtube.com: the URL changes first; `ytd-watch-flexy[video-id]` and the
+description (with its transcript button) follow ~0.8 s later, longer than the old 600 ms grace.
+**Fix:** Wait (best effort, 3 s) for `video-id` to match the URL before using the button.
+**Prevention:** Regression e2e test with a delayed `video-id` fixture; it fails without the fix.
+
 ## 2026-11-08 — Off-screen native panel never loads transcript segments
 
 **Symptom:** "Transkript konnte nicht geladen werden." — native panel opened, 0 segments after 10 s.

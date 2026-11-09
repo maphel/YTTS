@@ -14,7 +14,8 @@
     "changelog:section": "node scripts/changelog-section.mjs",
     "test:unit": "node --test \"tests/unit/*.test.mjs\"",
     "test:e2e": "playwright test --config tests/playwright.config.mjs",
-    "locales": "node scripts/locales.mjs"
+    "locales": "node scripts/locales.mjs",
+    "test:live": "playwright test --config tests/live/playwright.live.config.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

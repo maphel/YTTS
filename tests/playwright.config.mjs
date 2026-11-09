@@ -3,6 +3,7 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: '.',
   testMatch: '*.spec.mjs',
+  testIgnore: 'live/**', // network canary, run separately with npm run test:live
   fullyParallel: true,
   workers: 2,
   timeout: 30_000,
