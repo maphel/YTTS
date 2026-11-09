@@ -7,6 +7,8 @@ All notable changes to YTTS are listed here. The format is based on
 
 <!-- Entries go under ### Added / ### Changed / ### Fixed / ### Removed; add only the subsections you need. -->
 
+## 0.1.0 — 2026-11-09
+
 ### Added
 - Transcript card at the top of the watch-page sidebar, styled like YouTube in light and dark themes.
 - One-click copy of the full transcript; chapters become `##` headings.
