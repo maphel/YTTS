@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { fileURLToPath } from 'node:url';
 
+const libPath = fileURLToPath(new URL('../extension/lib.js', import.meta.url));
 const contentPath = fileURLToPath(new URL('../extension/content.js', import.meta.url));
 const cssPath = fileURLToPath(new URL('../extension/content.css', import.meta.url));
 const nativePanel = 'ytd-engagement-panel-section-list-renderer';
@@ -118,6 +119,21 @@ const fixture = `<!doctype html><html><head><meta charset="utf-8">
     document.dispatchEvent(new Event('yt-navigate-finish'));
   };
   if (state.noTranscript) open.parentElement.remove();
+  // Like youtube.com: on SPA navigation ytd-watch-flexy[video-id] follows the URL only after
+  // flexyDelay ms, and until then the previous video's description (button included) stays.
+  if (state.flexyDelay !== undefined) {
+    const flexy = document.createElement('ytd-watch-flexy');
+    flexy.setAttribute('video-id', state.video);
+    document.body.prepend(flexy);
+    const navigate = state.navigate;
+    state.navigate = (video, { transcript = true } = {}) => {
+      navigate(video);
+      setTimeout(() => {
+        flexy.setAttribute('video-id', video);
+        if (!transcript) open.parentElement.remove();
+      }, state.flexyDelay);
+    };
+  }
   if (state.alreadyOpen) { populate(); panel.setAttribute('visibility', '${expanded}'); }
   document.dispatchEvent(new Event('yt-navigate-finish'));
 })();
@@ -149,6 +165,7 @@ async function setup(page, options = {}) {
     } });
     document.execCommand = () => false;
   }, options);
+  await page.addInitScript({ path: libPath });
   await page.addInitScript({ path: contentPath });
   await page.goto('https://www.youtube.com/watch?v=first');
   await page.addStyleTag({ path: cssPath });
@@ -306,6 +323,34 @@ test('a cancelled scrape cannot supply its rendered segments to the next video',
   await ready(page);
   await page.locator('.ytts-copy').click();
   await expect.poll(() => page.evaluate(() => fixture.copied)).toBe('Das dritte Video. Ohne fremden Text.\n');
+});
+
+// Regression for #11: the previous video's transcript button must not be clicked while
+// YouTube still shows the old page data after the URL changed.
+test('navigating to a video without transcript ignores the previous video\'s button', async ({ page }) => {
+  await setup(page, { flexyDelay: 900, settings: { expandedByDefault: true } });
+  await ready(page);
+  const opensBefore = await page.evaluate(() => fixture.opens);
+  await page.evaluate(() => fixture.navigate('second', { transcript: false }));
+  await expect(page.locator('.ytts-status')).toHaveText('Für dieses Video gibt es kein Transkript.', { timeout: 12_000 });
+  expect(await page.evaluate(() => fixture.opens)).toBe(opensBefore);
+  await expect(page.locator('.ytts-copy')).toBeDisabled();
+});
+
+// #12: the poll keeps the card in place on watch pages and removes it after leaving them,
+// even when YouTube fires no navigation event.
+test('the poll re-inserts a card that YouTube re-rendered away', async ({ page }) => {
+  await setup(page);
+  await ready(page);
+  await page.evaluate(() => document.getElementById('ytts-panel').remove());
+  await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel', { timeout: 2_500 });
+});
+
+test('the poll removes the card after leaving the watch page without an event', async ({ page }) => {
+  await setup(page);
+  await ready(page);
+  await page.evaluate(() => history.pushState({}, '', '/'));
+  await expect(page.locator('#ytts-panel')).toHaveCount(0, { timeout: 2_500 });
 });
 
 test('missing transcripts show a clear error without enabling copy', async ({ page }) => {

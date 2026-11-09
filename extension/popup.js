@@ -1,5 +1,5 @@
-// Defaults — keep in sync with content.js.
-const DEFAULTS = { expandedByDefault: false, copyTimestamps: false, view: 'sentences' };
+// Defaults and validation come from lib.js (loaded before this script by popup.html).
+const { DEFAULTS, normalizeSettings } = globalThis.YTTS;
 
 const inputs = document.querySelectorAll('input[data-key]');
 const viewRadios = document.querySelectorAll('input[name="view"]');
@@ -9,14 +9,7 @@ let saveSequence = 0;
 async function init() {
   let settings = DEFAULTS;
   try {
-    const saved = await chrome.storage.sync.get(DEFAULTS);
-    settings = {
-      expandedByDefault: typeof saved.expandedByDefault === 'boolean'
-        ? saved.expandedByDefault : DEFAULTS.expandedByDefault,
-      copyTimestamps: typeof saved.copyTimestamps === 'boolean'
-        ? saved.copyTimestamps : DEFAULTS.copyTimestamps,
-      view: ['lines', 'sentences', 'text'].includes(saved.view) ? saved.view : DEFAULTS.view,
-    };
+    settings = normalizeSettings(await chrome.storage.sync.get(DEFAULTS));
   } catch {
     statusEl.textContent = 'Einstellungen konnten nicht geladen werden.';
   }

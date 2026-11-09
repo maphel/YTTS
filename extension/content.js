@@ -19,18 +19,13 @@
   const ICON_CHECK = 'M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z';
   const ICON_CHEVRON = 'M12 8l6 6-1.41 1.41L12 10.83l-4.59 4.58L6 14z';
 
-  // Defaults — keep in sync with popup.js.
-  // view: 'lines' (YouTube's raw segments) | 'sentences' (merged, from–to) | 'text' (paragraphs, no times)
-  const DEFAULTS = { expandedByDefault: false, copyTimestamps: false, view: 'sentences' };
-  const VIEWS = ['lines', 'sentences', 'text'];
+  // Pure helpers from lib.js (loaded first by the manifest, same isolated world).
+  const {
+    DEFAULTS, validSetting, normalizeSettings, toSeconds, fmtTime,
+    toSentences, toParagraphs, formatTranscript,
+  } = globalThis.YTTS;
   const settings = { ...DEFAULTS };
 
-  // Sentence merging: auto-captions often have no punctuation at all, so a
-  // "sentence" is also closed after this much time / text.
-  const MAX_SENTENCE_SEC = 30;
-  const MAX_SENTENCE_CHARS = 300;
-  const SENTENCES_PER_PARAGRAPH = 4;
-  const SENTENCE_END = /[.!?…]["'”’)\]]*$/;
   const state = {
     videoId: null,
     items: null,
@@ -59,27 +54,15 @@
     return new URLSearchParams(location.search).get('v');
   }
 
-  function toSeconds(ts) {
-    return ts.split(':').reduce((acc, n) => acc * 60 + Number(n), 0);
-  }
-
   const isCollapsed = () => state.collapsed ?? !settings.expandedByDefault;
 
   // ---------- settings ----------
 
   const storage = globalThis.chrome?.storage?.sync;
 
-  function validSetting(key, value) {
-    if (key === 'view') return VIEWS.includes(value);
-    return typeof value === 'boolean';
-  }
-
   async function loadSettings() {
     try {
-      const saved = await storage?.get(DEFAULTS);
-      for (const key of Object.keys(DEFAULTS)) {
-        if (validSetting(key, saved?.[key])) settings[key] = saved[key];
-      }
+      Object.assign(settings, normalizeSettings(await storage?.get(DEFAULTS)));
     } catch { /* keep defaults */ }
   }
 
@@ -130,7 +113,28 @@
       : '';
   }
 
-  async function scrapeTranscript(prevSignature, signal) {
+  // On SPA navigation the URL changes first; ytd-watch-flexy[video-id] follows ~0.8 s later.
+  // Until then the previous video's description, including its transcript button, is still
+  // in the DOM (measured on youtube.com, see #11). Layouts without the attribute pass.
+  function pageShowsVideo(videoId) {
+    const flexy = document.querySelector('ytd-watch-flexy');
+    return !flexy?.hasAttribute('video-id') || flexy.getAttribute('video-id') === videoId;
+  }
+
+  function mediaDuration() {
+    return document.querySelector('video.html5-main-video')?.duration
+      ?? document.querySelector('video')?.duration;
+  }
+
+  async function scrapeTranscript(prevSignature, signal, videoId) {
+    if (document.querySelector('ytd-watch-flexy[video-id]')) {
+      // Best effort: if YouTube ever leaves video-id stale, a stale button still only reopens the
+      // previous transcript, which the prevSignature check below rejects.
+      await waitFor(() => pageShowsVideo(videoId), 3000, 100, signal);
+    } else {
+      await sleep(300); // layouts without the attribute keep the former 600 ms total grace
+    }
+    signal.throwIfAborted();
     const btn = await waitFor(() => document.querySelector(OPEN_BTN_SEL), 8000, 200, signal);
     if (!btn) throw new Error('Für dieses Video gibt es kein Transkript.');
     signal.throwIfAborted();
@@ -178,106 +182,6 @@
         }
       }
     }
-  }
-
-  // ---------- grouping ----------
-
-  function fmtTime(sec) {
-    sec = Math.max(0, Math.floor(sec));
-    const h = Math.floor(sec / 3600);
-    const m = Math.floor((sec % 3600) / 60);
-    const s = String(sec % 60).padStart(2, '0');
-    return h ? `${h}:${String(m).padStart(2, '0')}:${s}` : `${m}:${s}`;
-  }
-
-  // Merge YouTube's caption fragments into sentences: [{type:'sent', sec, end, text} | chapter].
-  function toSentences(items) {
-    const segStarts = items.filter((i) => i.type === 'seg').map((i) => i.sec);
-    const duration = document.querySelector('video')?.duration;
-    const out = [];
-    let cur = null;
-    let segIdx = -1;
-    const close = () => {
-      if (cur?.text) out.push(cur);
-      cur = null;
-    };
-
-    for (const it of items) {
-      if (it.type === 'chapter') {
-        close();
-        out.push(it);
-        continue;
-      }
-      segIdx++;
-      // During ads, the active media duration can be shorter than this transcript.
-      const fallbackEnd = Number.isFinite(duration) && duration >= it.sec ? duration : it.sec + 5;
-      const segEnd = Math.max(it.sec, segStarts[segIdx + 1] ?? fallbackEnd);
-      const pieces = it.text.split(/(?<=[.!?…]["'”’)\]]*)\s+/).filter(Boolean);
-      pieces.forEach((piece, k) => {
-        if (!cur) cur = { type: 'sent', sec: it.sec, end: segEnd, text: '' };
-        cur.text += (cur.text ? ' ' : '') + piece;
-        cur.end = Math.max(cur.sec, segEnd);
-        const isLastPiece = k === pieces.length - 1;
-        if (SENTENCE_END.test(piece)) close();
-        else if (isLastPiece && (cur.end - cur.sec >= MAX_SENTENCE_SEC
-          || cur.text.length >= MAX_SENTENCE_CHARS)) close();
-      });
-    }
-    close();
-    return out;
-  }
-
-  // Group sentences into paragraphs: [{type:'para', sentences:[...]} | chapter].
-  function toParagraphs(sentences) {
-    const out = [];
-    let para = null;
-    for (const it of sentences) {
-      if (it.type === 'chapter') {
-        para = null;
-        out.push(it);
-        continue;
-      }
-      if (!para || para.sentences.length >= SENTENCES_PER_PARAGRAPH) {
-        para = { type: 'para', sentences: [] };
-        out.push(para);
-      }
-      para.sentences.push(it);
-    }
-    return out;
-  }
-
-  // ---------- formatting / copy ----------
-
-  function formatTranscript(items) {
-    const sentences = toSentences(items);
-    const out = [];
-    let lines = [];
-    const flush = () => {
-      if (lines.length) out.push(lines.join('\n'));
-      lines = [];
-    };
-
-    if (!settings.copyTimestamps) {
-      for (const it of toParagraphs(sentences)) {
-        if (it.type === 'chapter') out.push(`## ${it.title}`);
-        else out.push(it.sentences.map((s) => s.text).join(' '));
-      }
-    } else {
-      // Timestamp granularity follows the current view.
-      const source = settings.view === 'lines' ? items : sentences;
-      for (const it of source) {
-        if (it.type === 'chapter') {
-          flush();
-          out.push(`## ${it.title}`);
-        } else if (it.type === 'seg') {
-          lines.push(`[${it.ts}] ${it.text}`);
-        } else {
-          lines.push(`[${fmtTime(it.sec)}–${fmtTime(it.end)}] ${it.text}`);
-        }
-      }
-      flush();
-    }
-    return out.join('\n\n') + '\n';
   }
 
   async function copyText(text) {
@@ -372,7 +276,7 @@
       clearTimeout(copyBtn._t);
       let result;
       try {
-        await copyText(formatTranscript(items));
+        await copyText(formatTranscript(items, { ...settings, duration: mediaDuration() }));
         result = 'copied';
       } catch {
         result = 'error';
@@ -458,7 +362,7 @@
   }
 
   function renderSentences(items) {
-    return toSentences(items).map((it) => (it.type === 'chapter' ? chapterEl(it)
+    return toSentences(items, mediaDuration()).map((it) => (it.type === 'chapter' ? chapterEl(it)
       : seekButton('ytts-sent', it.sec, it.text, [
         el('span', { className: 'ytts-time', textContent: `${fmtTime(it.sec)} – ${fmtTime(it.end)}` }),
         el('span', { className: 'ytts-text', textContent: it.text }),
@@ -466,7 +370,7 @@
   }
 
   function renderText(items) {
-    return toParagraphs(toSentences(items)).map((it) => {
+    return toParagraphs(toSentences(items, mediaDuration())).map((it) => {
       if (it.type === 'chapter') return chapterEl(it);
       const p = el('p', { className: 'ytts-para' });
       it.sentences.forEach((s, i) => {
@@ -539,7 +443,7 @@
     render();
     if (!videoId) return;
 
-    await sleep(600); // let YouTube swap in the new video's page data
+    await sleep(300); // debounce; scrapeTranscript waits for the new page data itself
     if (token !== state.loadToken || currentVideoId() !== videoId) return;
     try {
       const task = scrapeTask.catch(() => {}).then(async () => {
@@ -548,7 +452,7 @@
         // have replaced the native segments even though its card never rendered.
         const prevSignature = lastVideoId === videoId ? '' : lastSignature;
         try {
-          const result = await scrapeTranscript(prevSignature, signal);
+          const result = await scrapeTranscript(prevSignature, signal, videoId);
           // Record the native result even if navigation cancelled its UI update.
           lastSignature = result.signature;
           lastVideoId = videoId;
@@ -582,7 +486,8 @@
 
   loadSettings().then(() => {
     document.addEventListener('yt-navigate-finish', tick);
-    setInterval(tick, 1000);
+    // Late sidebar re-renders need a poll, but only while a watch page is (or was) active.
+    setInterval(() => { if (currentVideoId() || state.videoId) tick(); }, 1000);
     tick();
   });
 })();

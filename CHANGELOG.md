@@ -13,3 +13,7 @@ All notable changes to YTTS are listed here. The format is based on
 - Three views: *Zeilen* (YouTube's caption lines), *Sätze* (merged sentences with from–to times) and *Text* (paragraphs).
 - Click any line or sentence to jump to that point in the video.
 - Settings popup: expand by default, timestamps when copying, view.
+
+### Fixed
+- Switching to a video without a transcript no longer reopens the previous video's transcript or shows a misleading loading error.
+- Sentences ending in German or French closing quotes (“ ‘ « ») are split correctly in the *Sätze* and *Text* views.
