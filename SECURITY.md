@@ -8,7 +8,7 @@
   YouTube's own transcript panel renders and keeps it in the page's memory.
 - The only permission is `storage`, used for three display preferences
   (`chrome.storage.sync`). Transcript text, video IDs and history are never stored.
-- Copying writes to the system clipboard only when you click **Kopieren**; YTTS never reads
+- Copying writes to the system clipboard only when you click **Copy**; YTTS never reads
   the clipboard.
 - All UI is built with DOM APIs and `textContent`; the extension never uses `innerHTML`
   or evaluates remote code.

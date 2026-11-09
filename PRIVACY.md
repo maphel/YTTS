@@ -10,7 +10,7 @@ the current video's ID from the URL and reads the transcript rendered by
 YouTube's native transcript panel. Transcript text is kept in the page's memory
 to display the card and handle copying. It is not written to extension storage.
 
-Clicking **Kopieren** writes the transcript to your system clipboard. YTTS does
+Clicking **Copy** writes the transcript to your system clipboard. YTTS does
 not read the existing clipboard contents. Your operating system or other
 software may manage clipboard history separately.
 

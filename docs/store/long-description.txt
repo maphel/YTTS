@@ -1,0 +1,26 @@
+YouTube transcripts, ready to copy. YTTS puts the transcript of the video you are watching into a small card above the recommendations, styled like YouTube itself in light and dark themes.
+
+COPY IN ONE CLICK
+• Copy the full transcript as plain text; chapters become headings.
+• Optionally include timestamps: original caption times or sentence time ranges.
+
+READ IT YOUR WAY
+• Lines: YouTube's caption lines with timestamps.
+• Sentences: fragments merged into full sentences, with from–to times.
+• Text: continuous paragraphs.
+• Click any line or sentence to jump to that moment in the video.
+
+SMALL ON PURPOSE
+• The card starts collapsed; expand it when you need it, or open it automatically.
+• The interface follows YouTube's language (20 languages, right-to-left for Arabic).
+• No account, API key, AI service or summaries.
+
+PRIVACY
+YTTS has no backend, analytics or telemetry. It reads the transcript YouTube already shows for the current video, keeps it in the page's memory and writes it to the clipboard only when you click Copy. Only three display preferences are saved, in the browser's extension storage. See the privacy policy for details.
+
+GOOD TO KNOW
+The video must have a transcript on YouTube. YTTS shows the track YouTube's own transcript panel offers; it does not generate or translate captions. Changes to YouTube's interface can affect compatibility.
+
+Source code, documentation and issue tracker: https://github.com/maphel/YTTS
+
+YTTS is an independent project and is not affiliated with YouTube or Google.
