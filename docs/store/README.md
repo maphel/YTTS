@@ -20,7 +20,7 @@ repository or the screenshots.
 | Description | [long-description.txt](long-description.txt) (plain text) |
 | Category | Tools (alternatives in the current list: Accessibility, Education) |
 | Language | English. The summary comes from the manifest (`__MSG_extDescription__`, 21 locales); localized descriptions per locale are optional and can be added later |
-| Store icon | `extension/icons/icon128.png` (see [Open items](#open-items)) |
+| Store icon | `extension/icons/icon128.png`: 128 × 128 PNG, 96 × 96 artwork with 16 px transparent padding, blue (not YouTube red) |
 | Screenshots | `screenshots/ytts-wide-light.png`, `screenshots/ytts-wide-dark.png`, `screenshots/ytts-compact-light.png` (1280 × 800 / 640 × 400, full bleed, square corners). At least one is required, up to five allowed |
 | Promo tiles | Optional (440 × 280 small, 1400 × 560 marquee). Without a small tile the item ranks after items that have one; not needed for review |
 | Official URL / Homepage | Homepage URL: https://github.com/maphel/YTTS (Official URL only lists Search-Console-verified sites; leave empty) |
@@ -72,7 +72,7 @@ be published within 30 days).
 
 | Risk (policy / violation ID) | Status |
 | --- | --- |
-| Impersonation, trademark (Impersonation 1 and 5; Red Nickel/Red Silicon) | Listing and PRIVACY.md say "not affiliated with YouTube or Google". Name "YTTS" is descriptive. **Icon: open item.** |
+| Impersonation, trademark (Impersonation 1 and 5; Red Nickel/Red Silicon) | Listing and PRIVACY.md say "not affiliated with YouTube or Google". Name "YTTS" is descriptive. Icon is blue, not YouTube's red; it keeps a play triangle with text lines (residual risk accepted by the maintainer) |
 | Misleading or unexpected behaviour (Misleading 3; Red Nickel "actions not mentioned in the metadata") | The description's "How it works" discloses that YouTube's transcript panel is opened in the background and closed again |
 | Unauthorized download of copyrighted content (Prohibited products) | No media download; only the transcript YouTube itself shows, copied on a user click. Avoid "download", "save video" or "scrape" in any listing text |
 | Keyword spam (Listing 4; Yellow Argon) | No keyword lists; languages mentioned once as a count |
@@ -85,9 +85,6 @@ be published within 30 days).
 
 ## Open items
 
-- **Store icon.** The art is 112 × 112 with 8 px padding; the guideline is 96 × 96 art with 16 px
-  transparent padding. Its red rounded square with a white play triangle resembles YouTube's
-  logo (#3), the most likely impersonation/trademark finding. Maintainer decision.
 - **Older transcript panel.** In automated Chromium, videos whose transcript YouTube loads via
   `get_transcript` were refused (HTTP 400, YouTube's own panel too). Confirm in a normal browser
   that YTTS loads such a video (e.g. `arj7oStGLkU`) before submitting.
