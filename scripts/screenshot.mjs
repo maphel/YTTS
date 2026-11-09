@@ -7,7 +7,8 @@
 // (like tests/live/), so it needs the network and YouTube must deliver the transcript; YouTube
 // throttles transcripts after many automated requests, so run this sparingly. The popup uses the
 // test harness from tests/popup.spec.mjs (pages served from extension/, stubbed chrome API).
-// Interface language: English. Usage: npm run screenshot [-- --store]
+// Interface language: English. Usage: npm run screenshot [-- --store]. Images are overwritten one by
+// one; if a run fails halfway, restore the pair with `git checkout docs/`.
 import { chromium } from '@playwright/test';
 import { mkdirSync, statSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
@@ -43,6 +44,9 @@ async function openWatchPage(page) {
   try {
     await consent.first().click({ timeout: 5_000 });
   } catch { /* no consent dialog */ }
+  if (await page.getByText(/confirm you.re not a bot/i).count()) {
+    throw new Error('YouTube asked for a bot check from this IP; retry later or from another network.');
+  }
   // Ads would show in the player; wait them out, then pause at a fixed frame.
   await page.waitForFunction(() => !document.querySelector('.ad-showing'), null, { timeout: 120_000 });
   await page.evaluate(() => {
@@ -83,7 +87,8 @@ async function cardScreenshots() {
         await page.evaluate(() => window.scrollTo(0, 0));
         await page.mouse.move(0, 0);
         await page.waitForTimeout(1_000); // relayout, lazy thumbnails
-        if (width < 1000) {
+        const belowPlayer = await page.evaluate(() => !document.getElementById('ytts-panel').closest('#secondary'));
+        if (belowPlayer) {
           // Single column: the card sits below the player. Put its header just under the masthead.
           await page.evaluate(() => {
             const top = document.getElementById('ytts-panel').getBoundingClientRect().top;
@@ -109,7 +114,11 @@ async function popupScreenshots() {
       const page = await browser.newPage({ colorScheme: scheme, viewport: { width: 320, height: 100 }, deviceScaleFactor: 1 });
       await page.route('https://ytts.test/**', async (route) => {
         const path = new URL(route.request().url()).pathname.slice(1);
-        await route.fulfill({ contentType: mimeTypes[extname(path)], body: await readFile(join(extensionPath, path)) });
+        try {
+          await route.fulfill({ contentType: mimeTypes[extname(path)], body: await readFile(join(extensionPath, path)) });
+        } catch {
+          await route.abort();
+        }
       });
       await page.addInitScript(() => {
         window.chrome = { i18n: { getUILanguage: () => 'en-US' }, storage: { sync: {
