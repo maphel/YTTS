@@ -64,6 +64,53 @@ For browser automation, follow the Playwright injection routine in
 storage and popup behavior. Include a short description of the checks you ran
 and screenshots for visual changes.
 
+## Branches, commits and pull requests
+
+`main` is always releasable and changes land only through pull requests that pass
+the CI `check` workflow; PRs are squash-merged. Branch from `main` as
+`<type>/<topic>` (types: `feat`, `fix`, `docs`, `test`, `chore`, `refactor`, `ci`,
+`release`). Open an issue first for anything beyond a bug fix or a docs change.
+
+Commits and PR titles follow [Conventional Commits](https://www.conventionalcommits.org/)
+(`type(scope)?: summary`, imperative). The squash commit takes the PR title, so the
+PR description carries the why.
+
+### Definition of done
+
+- Bugs: a regression test first (it fails), then the fix. Features: a test on the right level.
+- `npm run lint`, `npm run check` and `npm test` are green; CI runs the same.
+- Docs follow the change: `README.md` for user-visible behavior, `AGENTS.md` for structure.
+- A line under `## Unreleased` in `CHANGELOG.md` for anything a user would notice.
+- No self-merge: every PR is reviewed by someone or something other than its author.
+
+The pull request template repeats this list as a checklist.
+
+## Versioning and releases
+
+SemVer, currently 0.x: a minor version for new user-visible features, a patch version
+for fixes. `extension/manifest.json`, `package.json` and `package-lock.json` always carry
+the same version; `npm run check` refuses a mismatch between all three and `npm run pack`
+between the manifest and `package.json`.
+
+Release after merged `feat` or `fix` PRs once CI on `main` is green:
+
+```sh
+npm run release 0.2.0     # on a clean, up-to-date main: bumps versions, dates the
+                          # changelog section, commits on release/v0.2.0
+git push -u origin release/v0.2.0 && gh pr create --title "release: v0.2.0" --body "Release 0.2.0; see CHANGELOG.md."
+# after the PR is squash-merged, before any other PR lands:
+git switch main && git pull
+npm run release tag       # creates the annotated tag v0.2.0
+git push origin v0.2.0    # triggers .github/workflows/release.yml
+```
+
+The first release ships the version already in the files (`npm run release 0.1.0`); this is
+allowed only while no `v0.1.0` tag exists. Tags must point at `main`.
+
+The release workflow checks the tag against the version, runs all checks, builds
+`dist/ytts-<version>.zip` (`npm run pack`, the git-tracked files of `extension/` only) and publishes
+a GitHub release with the matching `CHANGELOG.md` section as notes.
+
 ## Reporting problems
 
 Use the bug report template. Include browser and extension versions, steps to
