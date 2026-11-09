@@ -11,16 +11,19 @@ Load `extension/` as an unpacked Chromium extension using the instructions in
 [README.md](README.md). The extension has no build step or runtime dependencies.
 After editing files, reload the extension and refresh the YouTube tab.
 
+- `extension/lib.js`: pure helpers and settings defaults (no DOM, unit-tested).
+- `extension/i18n.js`: all UI strings; `extension/_locales/` is generated from it.
 - `extension/content.js`: transcript scraping, card, copying, and SPA navigation.
 - `extension/content.css`: YouTube-matched light and dark styles.
 - `extension/popup.*`: settings popup.
 - `extension/manifest.json`: extension metadata and permissions.
 
-Use DOM creation methods rather than `innerHTML`; YouTube enforces Trusted Types.
-Keep the settings defaults in `content.js` and `popup.js` synchronized. The
-native transcript panel must stay within the viewport while it is being scraped,
-even though it is transparent. Support both native segment variants. Read
-[AGENTS.md](AGENTS.md) and [LESSONS_LEARNED.md](LESSONS_LEARNED.md) for context.
+The full file map is in [AGENTS.md](AGENTS.md). Use DOM creation methods rather
+than `innerHTML`; YouTube enforces Trusted Types. Settings defaults live only in
+`extension/lib.js`. The native transcript panel must stay within the viewport while
+it is being scraped, even though it is transparent. Support both native segment
+variants. Read [AGENTS.md](AGENTS.md) and [LESSONS_LEARNED.md](LESSONS_LEARNED.md)
+for context.
 
 ## Verification
 
@@ -59,10 +62,12 @@ Test in a real browser before opening a pull request:
 5. Check light and dark themes and all popup settings. Reload the popup to
    confirm settings persist.
 
-For browser automation, follow the Playwright injection routine in
-[AGENTS.md](AGENTS.md); test the unpacked extension separately to cover extension
-storage and popup behavior. Include a short description of the checks you ran
-and screenshots for visual changes.
+`npm test` covers most of these against a YouTube-like fixture, but not the visual
+light/dark check or settings persisting across a real popup reload, so the manual
+pass above is still expected. `npm run test:live` loads
+the real unpacked extension against youtube.com (it skips, rather than fails, when
+YouTube itself does not deliver a transcript). Include a short description of the
+checks you ran and screenshots for visual changes (light and dark).
 
 ## Translations
 

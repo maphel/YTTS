@@ -1,42 +1,91 @@
 # AGENTS.md — YTTS
 
-Chromium MV3 extension: YouTube transcript card in the watch-page sidebar + copy button.
-User-facing UI text is localized via `extension/i18n.js` (20 languages, English fallback).
+Guidance for AI agents and contributors. YTTS is a Chromium Manifest V3 extension that shows
+YouTube's transcript in a card on the watch page, with copy, three views and a small settings
+popup. Vanilla JavaScript classic scripts, no build step, no runtime dependencies.
+`README.md` describes the behaviour; this file describes the code and the rules.
 
-## File map
+## Layout
 
-- `extension/manifest.json` — MV3 manifest (content script on youtube.com, popup, `storage`).
-- `extension/content.js` — scraping, panel UI, copy, SPA navigation handling.
-- `extension/content.css` — panel styles (values measured from YouTube's computed styles).
-- `extension/popup.{html,css,js}` — settings popup (`chrome.storage.sync`).
+| Path | Role |
+|---|---|
+| `extension/manifest.json` | MV3 manifest: content scripts on `https://www.youtube.com/*`, popup, `storage` only. `default_locale: en`; description and button title are `__MSG_*__` |
+| `extension/lib.js` | Pure helpers (no DOM, no `chrome`): `DEFAULTS`, settings validation, time helpers, sentence merging, paragraphs, clipboard formatting. Publishes `globalThis.YTTS` |
+| `extension/i18n.js` | Pure UI strings for 21 locales (`KEYS` + one row per language), locale resolution, RTL flag. Publishes `globalThis.YTTS_I18N` |
+| `extension/content.js` | Scrapes YouTube's native transcript panel, renders the card, copy, seek, SPA navigation. UI language = YouTube's `<html lang>` |
+| `extension/content.css` | Card styles; values measured from YouTube's computed styles; dark theme via `html[dark]`; logical properties for RTL |
+| `extension/popup.{html,css,js}` | Settings popup (`chrome.storage.sync`); language = browser UI language |
+| `extension/_locales/` | **Generated** by `npm run locales` from `i18n.js`; never edit by hand |
+| `extension/icons/`, `extension/THIRD_PARTY_NOTICES.md`, `extension/licenses/` | Icons (16–128 px PNG + SVG source) and Material Icons attribution (Apache-2.0) |
+| `tests/unit/*.test.mjs` | `node:test` unit tests for `lib.js` and `i18n.js`, loaded through `node:vm` like the browser runs them |
+| `tests/extension.spec.mjs`, `tests/popup.spec.mjs` | Playwright e2e against a YouTube-like fixture (Trusted Types CSP, both segment variants, side-rail layout, delayed `video-id`) and the popup with a stubbed `chrome` |
+| `tests/live/` | Live canary: the real unpacked extension in Chromium against youtube.com (`npm run test:live`, own config) |
+| `tests/playwright.config.mjs` | E2E config (ignores `tests/live/`) |
+| `scripts/check.mjs` | Static checks: syntax, manifest, icons, versions (manifest/package/lock), script load order, `_locales` in sync |
+| `scripts/locales.mjs` | Generates/verifies `_locales` from `i18n.js` |
+| `scripts/pack.mjs`, `release.mjs`, `changelog-section.mjs` | Release zip (git-tracked files of `extension/` only), two-step release, release notes |
+| `.github/workflows/` | `check.yml` (lint, check, unit, e2e, pack artifact), `release.yml` (build with read-only token, publish job with write), `live.yml` (nightly canary, issue on failure) |
+| `.github/` templates, `dependabot.yml` | Bug report, security contact, PR checklist (definition of done); monthly updates (npm grouped, SHA-pinned actions) |
+| `package.json`, `eslint.config.js`, `.editorconfig`, `.gitignore` | Scripts and exact-pinned dev dependencies; lint rules (classic scripts in `extension/`, ESM elsewhere); editor settings |
+| `docs/screenshots/` | README images (card and popup, light and dark) |
+| `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `SECURITY.md`, `PRIVACY.md`, `LICENSE` | User docs, release notes, contributor guide, security and privacy policy, MIT |
+| `AGENTS.md`, `CLAUDE.md`, `LESSONS_LEARNED.md` | This file (`CLAUDE.md` is a symlink); append-only incident log, newest first |
 
-## Hard rules
+Load order (enforced by `check.mjs`): `lib.js` → `i18n.js` → `content.js` (one content-script
+entry, same isolated world) and `lib.js` → `i18n.js` → `popup.js` in `popup.html`.
 
-1. **Scope is deliberately minimal.** No summaries, AI integration, search, video
-   title, line counters, or "follow playback" highlighting — user explicitly rejected them.
-2. **Match YouTube's look ~1:1** in light and dark (`html[dark]`). Take sizes/colors from
-   YouTube's computed styles, don't guess.
-3. **No `innerHTML`** — youtube.com enforces Trusted Types. Build DOM with `createElement`.
-4. **Transcript source = YouTube's native transcript panel (DOM scrape).** `timedtext`
-   and `youtubei/v1/get_transcript` do not work for third parties (see LESSONS_LEARNED.md).
-5. **While scraping, the native panel must stay on-screen** (opacity 0), never off-screen,
-   or YouTube never loads the segments.
-6. Support both segment DOM variants: `ytd-transcript-segment-renderer` and
-   `transcript-segment-view-model`.
-7. Settings defaults live in both `content.js` and `popup.js` — keep them in sync.
+## Rules
 
-## Verification routine
+1. **Scope is deliberately small:** a transcript card, copying and display preferences. No
+   summaries, AI integration, search, video title, line counters or "follow playback"
+   highlighting. Discuss anything larger in an issue first.
+2. **Look like YouTube** in light and dark: take sizes and colours from YouTube's computed
+   styles, don't guess. Use logical CSS properties so the card mirrors in RTL.
+3. **No `innerHTML`**: youtube.com enforces Trusted Types. Build DOM with `createElement` and
+   `textContent`.
+4. **Transcript source = YouTube's native transcript panel (DOM scrape).** `timedtext` and
+   `youtubei/v1/get_transcript` do not work for third parties (LESSONS_LEARNED.md). Re-test
+   before trying to "simplify" back to them.
+5. **The scraped native panel stays on-screen** (opacity 0), never off-screen: YouTube
+   lazy-loads segments only when the panel intersects the viewport.
+6. **Support both segment DOM variants** (`ytd-transcript-segment-renderer`,
+   `transcript-segment-view-model`) and both layouts (classic sidebar, side-rail).
+7. **Before using the description's transcript button, wait for `ytd-watch-flexy[video-id]`
+   to match the URL** (best effort): after SPA navigation the previous video's button
+   lingers ~0.8 s (#11).
+8. **`lib.js` and `i18n.js` stay pure** (unit tests enforce it). Defaults live only in `lib.js`.
+9. **Every user-visible string goes through `i18n.js`**, in every language; run
+   `npm run locales` after changing `extDescription` or `actionTitle`. Transcript text gets
+   `dir="auto"`, time chips `dir="ltr"`.
+10. **Everything read from `chrome.storage` is validated** (`normalizeSettings`).
+11. **A live-canary skip means YouTube delivered no transcript data; a failure means it did and
+    YTTS did not show it.** The canary decides this without YTTS's selectors (button by
+    accessible name, data from the `get_panel` / `get_transcript` responses). Keep that control
+    independent of the code under test.
 
-Without loading the extension, via Playwright:
-1. `page.addInitScript({ path: 'extension/content.js' })`, open a watch page, then
-   `page.addStyleTag({ path: 'extension/content.css' })`.
-2. Check: card in `#secondary-inner`, collapsed, copy button enabled within a few
-   seconds, native panel back to `ENGAGEMENT_PANEL_VISIBILITY_HIDDEN`, `html.ytts-busy` removed.
-   On `ytd-watch-flexy[side-rail-dismissible-panels]`, the card goes immediately
-   before the visible `#primary #related` instead; verify it remains visible after
-   YouTube closes its temporary side rail.
-3. Click copy (stub `navigator.clipboard.writeText`) → full text captured.
-4. Click a related video (SPA navigation) → new transcript, not the previous one.
-5. Screenshot light, and dark (`document.documentElement.setAttribute('dark','')`).
+## Workflow
 
-Finally load unpacked in real Chrome and check the popup toggles.
+`CONTRIBUTING.md` is the source of truth for branching, commits, the definition of done and
+releases. For agents, in addition:
+
+- Issue first for any behaviour change, bug fixes included (stricter than CONTRIBUTING.md on
+  purpose: agents work unattended, and the issue is the human-readable trail); branch
+  `<type>/<topic>` from `main`.
+- Regression test first for bugs, and confirm it fails without the fix.
+- Open a PR and get an independent review (a second agent or a human) before merge. Never merge
+  your own PR unreviewed.
+- Ask a human before: adding manifest `permissions`, host matches or new content-script
+  targets; changing the storage keys or their meaning; cutting a release; force-pushing
+  `main` or rewriting its history; dependency upgrades other than merging Dependabot PRs;
+  changing CI `permissions`.
+
+## Verification
+
+```bash
+npm run lint && npm run check && npm test   # static checks, unit, e2e (fixture)
+npm run test:live                           # optional: real extension against youtube.com
+```
+
+Before a release, also load `extension/` unpacked in a real browser: a video with and without
+a transcript, all three views, copy with and without timestamps, light and dark, one RTL
+language (e.g. YouTube in Arabic), and the popup settings.
