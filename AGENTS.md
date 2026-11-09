@@ -16,7 +16,7 @@ popup. Vanilla JavaScript classic scripts, no build step, no runtime dependencie
 | `extension/content.css` | Card styles; values measured from YouTube's computed styles; dark theme via `html[dark]`; logical properties for RTL |
 | `extension/popup.{html,css,js}` | Settings popup (`chrome.storage.sync`); language = browser UI language |
 | `extension/_locales/` | **Generated** by `npm run locales` from `i18n.js`; never edit by hand |
-| `extension/icons/`, `extension/THIRD_PARTY_NOTICES.md`, `extension/licenses/` | Icons (16–128 px PNG + SVG source) and Material Icons attribution (Apache-2.0) |
+| `extension/icons/`, `extension/THIRD_PARTY_NOTICES.md`, `extension/licenses/` | Icons (16–128 px PNG rendered by `npm run icons` from `icon.svg`; the 128 px store icon keeps 96 × 96 artwork + 16 px padding) and Material Icons attribution (Apache-2.0) |
 | `tests/unit/*.test.mjs` | `node:test` unit tests for `lib.js` and `i18n.js`, loaded through `node:vm` like the browser runs them |
 | `tests/extension.spec.mjs`, `tests/popup.spec.mjs` | Playwright e2e against a YouTube-like fixture (Trusted Types CSP, both segment variants, side-rail and single-column layouts, delayed `video-id`) and the popup with a stubbed `chrome` |
 | `tests/live/` | Live canary: the real unpacked extension in Chromium against youtube.com (`npm run test:live`, own config) |
@@ -24,6 +24,7 @@ popup. Vanilla JavaScript classic scripts, no build step, no runtime dependencie
 | `scripts/check.mjs` | Static checks: syntax, manifest, icons, versions (manifest/package/lock), script load order, `_locales` in sync |
 | `scripts/locales.mjs` | Generates/verifies `_locales` from `i18n.js` |
 | `scripts/pack.mjs`, `release.mjs`, `changelog-section.mjs` | Release zip (git-tracked files of `extension/` only), two-step release, release notes |
+| `scripts/icons.mjs` | `npm run icons`: renders the PNG icons from `extension/icons/icon.svg` |
 | `scripts/screenshot.mjs` | `npm run screenshot [-- --store]`: README and store images from the real extension on youtube.com (card) and the popup harness |
 | `.github/workflows/` | `check.yml` (lint, check, unit, e2e, pack artifact), `release.yml` (build with read-only token, publish job with write), `live.yml` (nightly canary, issue on failure) |
 | `.github/` templates, `dependabot.yml` | Bug report, security contact, PR checklist (definition of done); monthly updates (npm grouped, SHA-pinned actions) |
