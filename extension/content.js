@@ -26,6 +26,20 @@
   } = globalThis.YTTS;
   const settings = { ...DEFAULTS };
 
+  // UI language follows YouTube's interface language (<html lang>), see i18n.js.
+  let translator = null;
+  function currentTranslator() {
+    const lang = document.documentElement.lang || navigator.language;
+    if (translator?.tag !== lang) translator = { tag: lang, ...globalThis.YTTS_I18N.createTranslator(lang) };
+    return translator;
+  }
+  const t = (key, vars) => currentTranslator().t(key, vars);
+  // The card's lang is the language actually shown (e.g. "en" for an unsupported YouTube
+  // language), so screen readers pick the right voice for fallback text.
+  const uiLocale = () => currentTranslator().locale;
+  // Errors travel as message keys and are translated when rendered.
+  const ERROR_KEYS = new Set(['noTranscript', 'loadFailed', 'empty']);
+
   const state = {
     videoId: null,
     items: null,
@@ -136,7 +150,7 @@
     }
     signal.throwIfAborted();
     const btn = await waitFor(() => document.querySelector(OPEN_BTN_SEL), 8000, 200, signal);
-    if (!btn) throw new Error('Für dieses Video gibt es kein Transkript.');
+    if (!btn) throw new Error('noTranscript');
     signal.throwIfAborted();
 
     const existing = transcriptPanel();
@@ -157,11 +171,11 @@
         last = sig;
         return stableTicks >= 2;
       }, 15000, 200, signal);
-      if (!ok) throw new Error('Transkript konnte nicht geladen werden.');
+      if (!ok) throw new Error('loadFailed');
 
       const panel = transcriptPanel();
       const items = parsePanel(panel);
-      if (!items.some((i) => i.type === 'seg')) throw new Error('Transkript ist leer.');
+      if (!items.some((i) => i.type === 'seg')) throw new Error('empty');
 
       return { items, signature: segSignature() };
     } finally {
@@ -200,7 +214,7 @@
       document.body.appendChild(ta);
       try {
         ta.select();
-        if (!document.execCommand('copy')) throw new Error('Kopieren fehlgeschlagen.');
+        if (!document.execCommand('copy')) throw new Error('execCommand copy failed');
       } finally {
         ta.remove();
         if (active instanceof HTMLElement && active.isConnected) active.focus({ preventScroll: true });
@@ -213,6 +227,8 @@
   }
 
   // ---------- UI (DOM APIs only: youtube.com enforces Trusted Types) ----------
+  // Transcript text carries dir="auto": its language is independent of YouTube's UI language
+  // (an English transcript inside Arabic YouTube must not mirror). Time chips are always LTR.
 
   function el(tag, props = {}, children = []) {
     const n = Object.assign(document.createElement(tag), props);
@@ -236,10 +252,9 @@
     const copied = result === 'copied';
     const failed = result === 'error';
     btn.replaceChildren(icon(copied ? ICON_CHECK : ICON_COPY),
-      copied ? 'Kopiert' : failed ? 'Kopierfehler' : 'Kopieren');
-    btn.setAttribute('aria-label', copied ? 'Transkript kopiert'
-      : failed ? 'Kopieren fehlgeschlagen. Erneut versuchen' : 'Transkript kopieren');
-    btn.title = failed ? 'Kopieren fehlgeschlagen. Bitte erneut versuchen.' : 'Transkript kopieren';
+      t(copied ? 'copied' : failed ? 'copyError' : 'copy'));
+    btn.setAttribute('aria-label', t(copied ? 'copiedAnnounce' : failed ? 'copyFailed' : 'copyAria'));
+    btn.title = t(failed ? 'copyFailed' : 'copyAria');
   }
 
   function buildPanel() {
@@ -250,7 +265,7 @@
     }, [icon(ICON_CHEVRON)]);
     chevron.setAttribute('aria-controls', 'ytts-body');
     const header = el('div', { className: 'ytts-header' }, [
-      el('span', { id: 'ytts-title', className: 'ytts-title', textContent: 'Transkript' }),
+      el('span', { id: 'ytts-title', className: 'ytts-title', dir: 'auto', textContent: t('title') }),
       copyBtn,
       chevron,
     ]);
@@ -258,7 +273,7 @@
     const announcement = el('div', { className: 'ytts-announcement' });
     announcement.setAttribute('role', 'status');
     announcement.setAttribute('aria-live', 'polite');
-    const panel = el('section', { id: PANEL_ID }, [header, body, announcement]);
+    const panel = el('section', { id: PANEL_ID, lang: uiLocale() }, [header, body, announcement]);
     panel.setAttribute('aria-labelledby', 'ytts-title');
 
     // Whole header toggles, except the copy button.
@@ -285,8 +300,7 @@
       }
       if (token !== state.loadToken || currentVideoId() !== state.videoId || !copyBtn.isConnected) return;
       setCopyLabel(copyBtn, result);
-      announcement.textContent = result === 'copied'
-        ? 'Transkript kopiert.' : 'Kopieren fehlgeschlagen. Bitte erneut versuchen.';
+      announcement.textContent = t(result === 'copied' ? 'copiedAnnounce' : 'copyFailed');
       copyBtn._t = setTimeout(() => {
         setCopyLabel(copyBtn);
         announcement.textContent = '';
@@ -342,37 +356,37 @@
   let rendered = { items: null, view: null };
 
   function chapterEl(it) {
-    return el('h3', { className: 'ytts-chapter', textContent: it.title });
+    return el('h3', { className: 'ytts-chapter', dir: 'auto', textContent: it.title });
   }
 
   // Clickable row/sentence that seeks the video (a <button> for keyboard access).
   function seekButton(className, sec, label, children) {
     const b = el('button', { className, type: 'button' }, children);
     b.dataset.sec = sec;
-    b.setAttribute('aria-label', `Zu ${fmtTime(sec)} springen: ${label}`);
+    b.setAttribute('aria-label', t('seekTo', { time: fmtTime(sec), text: label }));
     return b;
   }
 
   function renderLines(items) {
     return items.map((it) => (it.type === 'chapter' ? chapterEl(it)
       : seekButton('ytts-seg', it.sec, it.text, [
-        el('span', { className: 'ytts-time', textContent: it.ts }),
-        el('span', { className: 'ytts-text', textContent: it.text }),
+        el('span', { className: 'ytts-time', dir: 'ltr', textContent: it.ts }),
+        el('span', { className: 'ytts-text', dir: 'auto', textContent: it.text }),
       ])));
   }
 
   function renderSentences(items) {
     return toSentences(items, mediaDuration()).map((it) => (it.type === 'chapter' ? chapterEl(it)
       : seekButton('ytts-sent', it.sec, it.text, [
-        el('span', { className: 'ytts-time', textContent: `${fmtTime(it.sec)} – ${fmtTime(it.end)}` }),
-        el('span', { className: 'ytts-text', textContent: it.text }),
+        el('span', { className: 'ytts-time', dir: 'ltr', textContent: `${fmtTime(it.sec)} – ${fmtTime(it.end)}` }),
+        el('span', { className: 'ytts-text', dir: 'auto', textContent: it.text }),
       ])));
   }
 
   function renderText(items) {
     return toParagraphs(toSentences(items, mediaDuration())).map((it) => {
       if (it.type === 'chapter') return chapterEl(it);
-      const p = el('p', { className: 'ytts-para' });
+      const p = el('p', { className: 'ytts-para', dir: 'auto' });
       it.sentences.forEach((s, i) => {
         if (i) p.append(' ');
         // A real <button> is always an atomic inline-block in Chrome and cannot wrap
@@ -380,7 +394,7 @@
         const span = el('span', { className: 'ytts-s', tabIndex: 0, textContent: s.text });
         span.dataset.sec = s.sec;
         span.setAttribute('role', 'button');
-        span.setAttribute('aria-label', `Zu ${fmtTime(s.sec)} springen: ${s.text}`);
+        span.setAttribute('aria-label', t('seekTo', { time: fmtTime(s.sec), text: s.text }));
         p.append(span);
       });
       return p;
@@ -395,7 +409,7 @@
     panel.classList.toggle('ytts-collapsed', collapsed);
     const chevron = panel.querySelector('.ytts-chevron');
     chevron.setAttribute('aria-expanded', String(!collapsed));
-    chevron.title = collapsed ? 'Transkript ausklappen' : 'Transkript einklappen';
+    chevron.title = t(collapsed ? 'expand' : 'collapse');
     chevron.setAttribute('aria-label', chevron.title);
     const copyBtn = panel.querySelector('.ytts-copy');
     copyBtn.disabled = !state.items;
@@ -405,7 +419,7 @@
       panel.querySelector('.ytts-announcement').textContent = '';
       copyBtn._items = state.items;
     }
-    if (!state.items) copyBtn.title = state.error || 'Transkript wird geladen…';
+    if (!state.items) copyBtn.title = t(state.error || 'loading');
 
     const body = panel.querySelector('.ytts-body');
     body.setAttribute('aria-busy', String(!state.items && !state.error));
@@ -417,7 +431,8 @@
     if (state.error || !state.items) {
       body.append(el('div', {
         className: 'ytts-status',
-        textContent: state.error || 'Transkript wird geladen…',
+        dir: 'auto', // English fallback text inside RTL YouTube (he, fa, ur) must not mirror
+        textContent: t(state.error || 'loading'),
       }));
       return;
     }
@@ -473,7 +488,7 @@
       state.items = items;
     } catch (e) {
       if (token !== state.loadToken || currentVideoId() !== videoId) return;
-      state.error = e.message;
+      state.error = ERROR_KEYS.has(e.message) ? e.message : 'loadFailed';
     }
     render();
   }

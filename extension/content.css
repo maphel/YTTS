@@ -35,7 +35,8 @@ html[dark] #ytts-panel {
   align-items: center;
   gap: 8px;
   height: 48px;
-  padding: 4px 4px 4px 16px;
+  padding-block: 4px;
+  padding-inline: 16px 4px;
   cursor: pointer;
   user-select: none;
 }
@@ -43,6 +44,9 @@ html[dark] #ytts-panel {
 #ytts-panel .ytts-title {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 20px;
   line-height: 28px;
   font-weight: 700;
@@ -69,7 +73,8 @@ html[dark] #ytts-panel {
   flex: none;
   gap: 6px;
   height: 36px;
-  padding: 0 16px 0 12px;
+  padding-block: 0;
+  padding-inline: 12px 16px;
   border-radius: 18px;
   background: var(--ytts-tonal);
   font-size: 14px;
@@ -150,7 +155,7 @@ html[dark] #ytts-panel {
   gap: 16px;
   padding: 8px 16px;
   background: transparent;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
@@ -187,12 +192,21 @@ html[dark] #ytts-panel {
   box-sizing: border-box;
   padding: 8px 16px;
   background: transparent;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 
 #ytts-panel .ytts-sent:hover {
   background: var(--ytts-hover);
+}
+
+/* Text follows its own direction (dir="auto"), even inside right-to-left YouTube */
+#ytts-panel .ytts-sent .ytts-text {
+  align-self: stretch;
+}
+
+#ytts-panel .ytts-seg .ytts-text {
+  flex: 1;
 }
 
 /* View "Text": paragraphs, each sentence clickable */

@@ -1,5 +1,17 @@
-// Defaults and validation come from lib.js (loaded before this script by popup.html).
+// Defaults and validation come from lib.js, strings from i18n.js (both loaded before this script).
 const { DEFAULTS, normalizeSettings } = globalThis.YTTS;
+
+// The popup follows the browser UI language (the card follows YouTube's, see content.js).
+const { locale, dir, t } = globalThis.YTTS_I18N.createTranslator(
+  globalThis.chrome?.i18n?.getUILanguage?.() || navigator.language,
+);
+document.documentElement.lang = locale;
+document.documentElement.dir = dir;
+document.title = `YTTS – ${t('settings')}`;
+for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n);
+for (const node of document.querySelectorAll('[data-i18n-aria-label]')) {
+  node.setAttribute('aria-label', t(node.dataset.i18nAriaLabel));
+}
 
 const inputs = document.querySelectorAll('input[data-key]');
 const viewRadios = document.querySelectorAll('input[name="view"]');
@@ -11,7 +23,7 @@ async function init() {
   try {
     settings = normalizeSettings(await chrome.storage.sync.get(DEFAULTS));
   } catch {
-    statusEl.textContent = 'Einstellungen konnten nicht geladen werden.';
+    statusEl.textContent = t('settingsLoadFailed');
   }
 
   for (const input of inputs) {
@@ -24,11 +36,11 @@ async function init() {
       input.disabled = true;
       try {
         await chrome.storage.sync.set({ [input.dataset.key]: value });
-        if (sequence === saveSequence) statusEl.textContent = 'Einstellungen gespeichert.';
+        if (sequence === saveSequence) statusEl.textContent = t('saved');
       } catch {
         input.checked = !value;
         if (sequence === saveSequence) {
-          statusEl.textContent = 'Speichern fehlgeschlagen. Bitte erneut versuchen.';
+          statusEl.textContent = t('saveFailed');
         }
       } finally {
         input.disabled = false;
@@ -50,12 +62,12 @@ async function init() {
       try {
         await chrome.storage.sync.set({ view: radio.value });
         currentView = radio.value;
-        if (sequence === saveSequence) statusEl.textContent = 'Einstellungen gespeichert.';
+        if (sequence === saveSequence) statusEl.textContent = t('saved');
       } catch {
         currentView = previous;
         for (const r of viewRadios) r.checked = r.value === previous;
         if (sequence === saveSequence) {
-          statusEl.textContent = 'Speichern fehlgeschlagen. Bitte erneut versuchen.';
+          statusEl.textContent = t('saveFailed');
         }
       } finally {
         for (const r of viewRadios) r.disabled = false;

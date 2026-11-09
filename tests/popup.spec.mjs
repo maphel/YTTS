@@ -17,7 +17,7 @@ async function setup(page, options = {}) {
   await page.addInitScript((options) => {
     window.savedSettings = { ...options.settings };
     window.storageWrites = [];
-    window.chrome = { storage: { sync: {
+    window.chrome = { i18n: { getUILanguage: () => options.uiLanguage ?? 'de' }, storage: { sync: {
       get: async (defaults) => {
         await new Promise((resolve) => setTimeout(resolve, options.readDelay ?? 20));
         return { ...defaults, ...window.savedSettings };
@@ -101,4 +101,26 @@ test('write failures restore checkbox and radio states with German feedback', as
   await expect(text).toBeFocused();
   await expect(page.getByRole('status')).toHaveText('Speichern fehlgeschlagen. Bitte erneut versuchen.');
   expect(await page.evaluate(() => savedSettings)).toEqual({});
+});
+
+// #10: the popup follows the browser UI language; unknown languages fall back to English.
+for (const [uiLanguage, lang, title, sentences, autoSave] of [
+  ['en-US', 'en', 'YTTS – Settings', 'Sentences', 'Settings are saved automatically.'],
+  ['ja', 'ja', 'YTTS – 設定', '文', '設定は自動的に保存されます。'],
+  ['pt-BR', 'pt', 'YTTS – Configurações', 'Frases', 'As configurações são salvas automaticamente.'],
+  ['zz', 'en', 'YTTS – Settings', 'Sentences', 'Settings are saved automatically.'],
+]) {
+  test(`popup is localized for ${uiLanguage}`, async ({ page }) => {
+    await setup(page, { uiLanguage });
+    await expect(page).toHaveTitle(title);
+    await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    await expect(page.getByRole('radio', { name: sentences, exact: true })).toBeChecked();
+    await expect(page.getByRole('status')).toHaveText(autoSave);
+  });
+}
+
+test('popup switches to right-to-left for Arabic', async ({ page }) => {
+  await setup(page, { uiLanguage: 'ar' });
+  await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
+  await expect(page.getByRole('main')).toHaveAttribute('aria-label', 'الإعدادات');
 });
