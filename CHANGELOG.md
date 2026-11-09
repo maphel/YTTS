@@ -18,3 +18,4 @@ All notable changes to YTTS are listed here. The format is based on
 ### Fixed
 - Switching to a video without a transcript no longer reopens the previous video's transcript or shows a misleading loading error.
 - Sentences ending in German or French closing quotes (“ ‘ « ») are split correctly in the *Sentences* and *Text* views.
+- In narrow windows (YouTube's single-column layout) the card moves above the recommendations below the video instead of disappearing.

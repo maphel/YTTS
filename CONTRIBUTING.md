@@ -48,8 +48,9 @@ Test in a real browser before opening a pull request:
    again, with no visible flash or lingering hidden overlay. On the classic
    layout, the card belongs at the top of `#secondary-inner`. On the newer
    `ytd-watch-flexy[side-rail-dismissible-panels]` layout, it belongs immediately
-   before `#primary #related`, below the video. Confirm it remains visible after
-   the native panel closes.
+   before `#primary #related`, below the video; the same applies to a narrow
+   window (under about 1000 px), where YouTube shows a single column. Confirm it
+   remains visible after the native panel closes and when resizing the window.
 2. Check all three views: **Lines**, **Sentences**, and **Text**. Copy and inspect the
    full text, chapter headings, and optional timestamps. Line view uses original
    segment timestamps; the other views use heuristic sentence ranges. Without

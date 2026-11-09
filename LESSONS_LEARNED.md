@@ -1,5 +1,19 @@
 # Lessons Learned
 
+## 2026-11-09 — Card invisible in narrow windows (#23)
+
+**Symptom:** Below about 1000 px viewport width the card disappeared; found while rendering the
+640 × 400 store screenshot.
+**Root cause:** YouTube's single-column layout sets `#secondary` to `display: none` and moves
+`#related` into `#primary #below`; the card stayed in the hidden `#secondary-inner`. Only the wide
+classic and side-rail layouts had been checked.
+**Fix:** When `#secondary` is not rendered, the card goes before the visible `#primary #related`
+(like the side-rail layout) and back to the sidebar when the window widens; fixture test with
+`setColumns(1|2)`.
+**Prevention:** Check every placement change at a narrow width too (CONTRIBUTING.md manual pass).
+Also measured: in automated Chromium, videos whose panel loads via `get_panel` deliver transcripts
+while many `get_transcript` videos get HTTP 400; pick live and screenshot videos accordingly.
+
 ## 2026-11-08 — YouTube sometimes does not load its own transcript panel
 
 **Symptom:** Live canary: card stuck on "Loading", then "could not be loaded"; YouTube's native panel

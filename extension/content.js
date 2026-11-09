@@ -329,19 +329,22 @@
       document.getElementById(PANEL_ID)?.remove();
       return;
     }
-    let host;
+    let host = document.querySelector('#secondary-inner') || document.querySelector('#secondary');
     let related;
-    const sideRail = document.querySelector('ytd-watch-flexy[side-rail-dismissible-panels]');
-    if (sideRail) {
-      // This layout reserves #secondary for temporary engagement panels and
-      // hides it when they close. Its recommendations live below the player.
-      related = Array.from(sideRail.querySelectorAll('#primary #related')).find((node) =>
+    const flexy = document.querySelector('ytd-watch-flexy');
+    const sideRail = flexy?.hasAttribute('side-rail-dismissible-panels');
+    // The side-rail layout reserves #secondary for temporary engagement panels and hides it when
+    // they close; the single-column layout (narrow windows) does not render #secondary at all
+    // (#23). In both, the recommendations live below the player: sit right above them.
+    const singleColumn = flexy && host && !host.getClientRects().length;
+    if (sideRail || singleColumn) {
+      related = Array.from(flexy.querySelectorAll('#primary #related')).find((node) =>
         node.getClientRects().length && node.getBoundingClientRect().width > 0
         && getComputedStyle(node).visibility !== 'hidden');
       if (!related) return; // Wait for the active recommendations, not a skeleton.
-    } else {
-      host = document.querySelector('#secondary-inner') || document.querySelector('#secondary');
-      if (!host) return;
+      host = null;
+    } else if (!host) {
+      return;
     }
     let panel = document.getElementById(PANEL_ID);
     if (!panel) {

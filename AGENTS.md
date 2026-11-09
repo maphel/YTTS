@@ -18,7 +18,7 @@ popup. Vanilla JavaScript classic scripts, no build step, no runtime dependencie
 | `extension/_locales/` | **Generated** by `npm run locales` from `i18n.js`; never edit by hand |
 | `extension/icons/`, `extension/THIRD_PARTY_NOTICES.md`, `extension/licenses/` | Icons (16–128 px PNG + SVG source) and Material Icons attribution (Apache-2.0) |
 | `tests/unit/*.test.mjs` | `node:test` unit tests for `lib.js` and `i18n.js`, loaded through `node:vm` like the browser runs them |
-| `tests/extension.spec.mjs`, `tests/popup.spec.mjs` | Playwright e2e against a YouTube-like fixture (Trusted Types CSP, both segment variants, side-rail layout, delayed `video-id`) and the popup with a stubbed `chrome` |
+| `tests/extension.spec.mjs`, `tests/popup.spec.mjs` | Playwright e2e against a YouTube-like fixture (Trusted Types CSP, both segment variants, side-rail and single-column layouts, delayed `video-id`) and the popup with a stubbed `chrome` |
 | `tests/live/` | Live canary: the real unpacked extension in Chromium against youtube.com (`npm run test:live`, own config) |
 | `tests/playwright.config.mjs` | E2E config (ignores `tests/live/`) |
 | `scripts/check.mjs` | Static checks: syntax, manifest, icons, versions (manifest/package/lock), script load order, `_locales` in sync |
@@ -49,7 +49,9 @@ entry, same isolated world) and `lib.js` → `i18n.js` → `popup.js` in `popup.
 5. **The scraped native panel stays on-screen** (opacity 0), never off-screen: YouTube
    lazy-loads segments only when the panel intersects the viewport.
 6. **Support both segment DOM variants** (`ytd-transcript-segment-renderer`,
-   `transcript-segment-view-model`) and both layouts (classic sidebar, side-rail).
+   `transcript-segment-view-model`) and all layouts: classic sidebar, single column (narrow
+   windows, `#secondary` not rendered) and side-rail. Outside the sidebar the card sits directly
+   before the visible `#primary #related`.
 7. **Before using the description's transcript button, wait for `ytd-watch-flexy[video-id]`
    to match the URL** (best effort): after SPA navigation the previous video's button
    lingers ~0.8 s (#11).
