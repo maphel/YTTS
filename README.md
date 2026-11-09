@@ -16,12 +16,12 @@ Chapters are preserved as Markdown headings. Copied text contains only the
 transcript, with optional timestamps. You can also choose whether the card opens
 expanded by default.
 
-| Light | Dark |
-| --- | --- |
-| ![YTTS settings in light mode](docs/screenshots/popup-light.png) | ![YTTS settings in dark mode](docs/screenshots/popup-dark.png) |
+![The YTTS transcript card above the recommendations on a YouTube watch page, expanded in the Sentences view with from–to times and a Copy button](docs/screenshots/youtube-light.png)
 
-Transcript card: [light theme](docs/screenshots/youtube-light.png) ·
-[dark theme](docs/screenshots/youtube-dark.png).
+<img src="docs/screenshots/popup-light.png" alt="YTTS settings popup: view (Lines, Sentences or Text), show transcript expanded, timestamps when copying" width="320">
+
+The same in the dark theme: [watch page](docs/screenshots/youtube-dark.png),
+[settings](docs/screenshots/popup-dark.png).
 
 ## Install
 
@@ -92,6 +92,11 @@ limited to `https://www.youtube.com/*`. There are no runtime dependencies. See
 
 Edit the files in `extension/`, reload the unpacked extension, and refresh the
 YouTube tab. Please read [Contributing](CONTRIBUTING.md) before making changes.
+
+```sh
+npm run screenshot             # docs/screenshots/*.png for this README (needs youtube.com)
+npm run screenshot -- --store  # docs/store/screenshots/*.png for the Chrome Web Store
+```
 
 ## License
 
