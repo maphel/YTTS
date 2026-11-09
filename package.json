@@ -1,6 +1,6 @@
 {
   "name": "ytts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "type": "module",
   "description": "Development checks for the YTTS Chromium extension",
