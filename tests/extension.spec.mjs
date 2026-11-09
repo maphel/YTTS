@@ -73,6 +73,35 @@ const fixture = `<!doctype html><html><head><meta charset="utf-8">
     };
     state.setRailOpen(false);
   }
+  // Classic layout as on youtube.com: two columns, or one column below ~1000 px, where YouTube
+  // hides #secondary and moves #related below the video into #primary #below (#23).
+  if (state.classicLayout) {
+    const watch = document.createElement('ytd-watch-flexy');
+    watch.style.display = 'block';
+    const primary = document.createElement('div');
+    primary.id = 'primary';
+    const below = document.createElement('div');
+    below.id = 'below';
+    const relatedSlot = document.createElement('div');
+    below.append(relatedSlot);
+    primary.append(below);
+    const secondary = document.createElement('div');
+    secondary.id = 'secondary';
+    const sidebar = document.querySelector('#secondary-inner');
+    sidebar.before(watch);
+    secondary.append(sidebar);
+    const related = document.createElement('div');
+    related.id = 'related';
+    related.style.cssText = 'width:400px;height:100px';
+    related.textContent = 'Recommendations';
+    sidebar.append(related);
+    watch.append(primary, secondary);
+    // YouTube reflows in two steps: #secondary hides first, #related moves afterwards.
+    state.setColumns = (count, { moveRelated = true } = {}) => {
+      secondary.style.display = count === 1 ? 'none' : '';
+      if (moveRelated) (count === 1 ? relatedSlot : sidebar).append(related);
+    };
+  }
   Object.defineProperty(video, 'duration', { value: state.duration ?? 60 });
   Object.defineProperty(video, 'currentTime', { get: () => state.seek, set: (value) => { state.seek = value; } });
   const first = [
@@ -222,6 +251,35 @@ test('modern side rails keep the card visible beside active recommendations', as
   await expect(card).toBeVisible();
   expect(await activeRelated.evaluate((node) => node.previousElementSibling?.id)).toBe('ytts-panel');
   expect(await card.boundingBox()).toEqual(position);
+});
+
+test('single-column layout keeps the card visible above the recommendations (#23)', async ({ page }) => {
+  await setup(page, { classicLayout: true });
+  await ready(page);
+  const card = page.locator('#ytts-panel');
+  const precedesRelated = () => page.locator('#related').evaluate((node) => node.previousElementSibling?.id);
+  await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel');
+
+  // Mid-reflow: #secondary hidden, recommendations not moved yet. The card waits, no error.
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error));
+  await page.evaluate(() => fixture.setColumns(1, { moveRelated: false }));
+  await page.waitForTimeout(1_500);
+  expect(await page.locator('#secondary-inner #ytts-panel').count()).toBe(1);
+
+  // Narrow window: YouTube hides #secondary and moves the recommendations below the video.
+  await page.evaluate(() => fixture.setColumns(1));
+  await expect(card).toBeVisible({ timeout: 3_000 });
+  expect(await precedesRelated()).toBe('ytts-panel');
+  expect(await page.locator('#primary #ytts-panel').count()).toBe(1);
+  await card.locator('.ytts-copy').click();
+  await expect.poll(() => page.evaluate(() => fixture.copied)).toBe(plainText);
+
+  // Wide again: back to the top of the sidebar.
+  await page.evaluate(() => fixture.setColumns(2));
+  await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel', { timeout: 3_000 });
+  await expect(card).toBeVisible();
+  expect(errors).toEqual([]);
 });
 
 test('copies line timestamps when enabled', async ({ page }) => {

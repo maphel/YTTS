@@ -33,7 +33,7 @@ Transcript card: [light theme](docs/screenshots/youtube-light.png) ·
 4. Choose **Load unpacked** and select the `extension/` folder.
 5. Open a YouTube video with a transcript. The **Transcript** card appears above
    the related videos: in the sidebar on the classic layout, or below the video
-   on YouTube's newer layout.
+   in narrow windows and on YouTube's newer layout.
 
 Pin YTTS in the browser toolbar to reach its settings. After updating the files,
 reload YTTS on the extensions page and refresh your YouTube tab.

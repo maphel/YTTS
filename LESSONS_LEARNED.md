@@ -1,5 +1,28 @@
 # Lessons Learned
 
+## 2026-11-09 — Card invisible in narrow windows (#23)
+
+**Symptom:** Below about 1000 px viewport width the card disappeared; found while rendering the
+640 × 400 store screenshot.
+**Root cause:** YouTube's single-column layout sets `#secondary` to `display: none` and moves
+`#related` into `#primary #below`; the card stayed in the hidden `#secondary-inner`. Only the wide
+classic and side-rail layouts had been checked.
+**Fix:** When `#secondary` is not rendered, the card goes before the visible `#primary #related`
+(like the side-rail layout) and back to the sidebar when the window widens; fixture test with
+`setColumns(1|2)`.
+**Prevention:** Check every placement change at a narrow width too (CONTRIBUTING.md manual pass).
+
+## 2026-11-09 — Automated Chromium: `get_transcript` videos refused, `get_panel` videos work
+
+**Symptom:** The screenshot script's long talk never loaded; YouTube's own panel stayed empty too.
+**Root cause:** Per video, YouTube loads the transcript via `/youtubei/v1/get_panel` (view-model
+panel) or the legacy `/youtubei/v1/get_transcript`. In automated Chromium many `get_transcript`
+videos got HTTP 400 while `get_panel` videos loaded (4 of 4 vs. 2 of 2 measured).
+**Fix:** The screenshot script uses a `get_panel` video (`rfscVS0vtbw`). The live canary keeps its
+`get_transcript` chapters video (`zjkBMFhNj_g`): the measured `get_panel` videos had no chapter
+headers, and a refused request already counts as inconclusive there.
+**Prevention:** When a live run fails, check which endpoint the video uses before suspecting YTTS.
+
 ## 2026-11-08 — YouTube sometimes does not load its own transcript panel
 
 **Symptom:** Live canary: card stuck on "Loading", then "could not be loaded"; YouTube's native panel
