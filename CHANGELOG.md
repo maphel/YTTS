@@ -7,6 +7,8 @@ All notable changes to YTTS are listed here. The format is based on
 
 <!-- Entries go under ### Added / ### Changed / ### Fixed / ### Removed; add only the subsections you need. -->
 
+## 0.1.1 — 2026-11-09
+
 ### Changed
 - Blue icon instead of red, with the Chrome Web Store icon geometry (96 × 96 artwork, 16 px padding).
 - Privacy policy: lists each kind of data handled, adds the Chrome Web Store Limited Use statement, an effective date and contact.
