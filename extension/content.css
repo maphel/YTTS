@@ -138,6 +138,36 @@ html[dark] #ytts-panel {
   color: var(--ytts-fg2);
 }
 
+#ytts-panel .ytts-consent {
+  padding-block: 12px;
+  padding-inline: 16px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ytts-fg);
+}
+
+#ytts-panel .ytts-consent p {
+  margin: 0;
+  margin-block-end: 8px;
+}
+
+#ytts-panel .ytts-load {
+  max-width: 100%;
+  min-height: 36px;
+  padding-block: 6px;
+  padding-inline: 16px;
+  border-radius: 18px;
+  background: var(--ytts-chip-bg);
+  color: var(--ytts-chip-fg);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+#ytts-panel .ytts-load:hover {
+  background: var(--ytts-tonal-hover);
+}
+
 #ytts-panel .ytts-chapter {
   margin: 0;
   padding: 16px 16px 4px;

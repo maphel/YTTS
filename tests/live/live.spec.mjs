@@ -84,6 +84,10 @@ async function youtubeDeliveredTranscript(page) {
 // about the extension: skip as inconclusive. If YouTube did deliver and YTTS did not: fail.
 async function waitForTranscript(page) {
   await expect(page.locator('#ytts-panel')).toBeVisible({ timeout: 20_000 });
+  await expect(page.locator('#ytts-panel .ytts-copy')).toBeDisabled();
+  const toggle = page.locator('#ytts-panel .ytts-chevron');
+  if ((await toggle.getAttribute('aria-expanded')) === 'false') await toggle.click();
+  await page.locator('#ytts-panel .ytts-load').click();
   try {
     await expect(page.locator('#ytts-panel .ytts-copy')).toBeEnabled({ timeout: 30_000 });
   } catch (error) {
@@ -108,7 +112,6 @@ test('loads, renders and copies a transcript from the live site', async ({ page,
   await openWatchPage(page, VIDEOS.short);
   await waitForTranscript(page);
 
-  await page.locator('#ytts-panel .ytts-title').click();
   await expect(page.locator('#ytts-panel [data-sec]').first()).toBeVisible();
 
   await page.locator('#ytts-panel .ytts-copy').click();
@@ -120,7 +123,6 @@ test('loads, renders and copies a transcript from the live site', async ({ page,
 test('reads chapters and a long transcript, then follows SPA navigation', async ({ page }) => {
   await openWatchPage(page, VIDEOS.chapters);
   await waitForTranscript(page);
-  await page.locator('#ytts-panel .ytts-title').click();
   expect(await page.locator('#ytts-panel .ytts-chapter').count()).toBeGreaterThan(5);
   expect(await page.locator('#ytts-panel [data-sec]').count()).toBeGreaterThan(100);
   const oldSignature = await cardSignature(page);

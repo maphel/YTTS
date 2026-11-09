@@ -1,29 +1,9 @@
-YouTube transcripts, ready to copy. YTTS puts the transcript of the video you are watching into a small card above the recommendations, matching the page in light and dark themes.
+YTTS shows the transcript next to the video so you can read it and copy it in one click. Read the original caption lines, grouped sentences or continuous text. Click a line or sentence to jump to that point in the video. Copy the full transcript as plain text, with optional timestamps.
 
-COPY IN ONE CLICK
-• Copy the full transcript as plain text; chapters become headings.
-• Optionally include timestamps: caption times (Lines) or time ranges (Sentences, Text).
+On a watch page, expand the Transcript card if needed, read the disclosure and click Allow transcripts. YTTS then opens YouTube’s transcript panel in the background when needed, reads the text it shows and closes the panel if YTTS opened it. Your browser remembers that choice for this installation, so transcripts load on later watch pages.
 
-READ IT YOUR WAY
-• Lines: the original caption lines with timestamps.
-• Sentences: fragments merged into full sentences, with from–to times.
-• Text: continuous paragraphs.
-• Click any line or sentence to jump to that moment in the video.
+Transcripts stay in the tab’s memory. YTTS writes to the clipboard only when you click Copy. Your browser stores your consent locally and saves three display preferences. YTTS has no account, backend, analytics or telemetry.
 
-SMALL ON PURPOSE
-• The card starts collapsed; expand it when you need it, or set it to start expanded.
-• The interface follows the site's language (19 languages, right-to-left for Arabic).
-• No account, API key, AI service or summaries.
-
-HOW IT WORKS
-On a watch page, YTTS opens the site's built-in transcript panel in the background, reads the transcript it shows, closes the panel again if YTTS opened it, and displays the text in its card. It only runs on youtube.com.
-
-PRIVACY
-YTTS has no backend, analytics or telemetry and sends no data to its developer or third parties. The transcript stays in the page's memory and is written to the clipboard only when you click Copy. Only three display preferences are saved, in the browser's extension storage. See the privacy policy for details.
-
-GOOD TO KNOW
-The video must have a transcript. YTTS shows the track the built-in transcript panel offers; it does not generate or translate captions. Changes to the site's interface can affect compatibility.
-
-Source code, documentation and issue tracker: https://github.com/maphel/YTTS
+A video needs captions that YouTube makes available as a transcript. The card follows the site’s interface language and matches its light and dark themes.
 
 YTTS is an independent project and is not affiliated with YouTube or Google.

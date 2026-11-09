@@ -13,6 +13,7 @@
     'tagline', 'settings', 'view', 'viewHint', 'viewLines', 'viewSentences', 'viewText',
     'expandedByDefault', 'expandedHint', 'copyTimestamps', 'copyTimestampsHint',
     'autoSave', 'saved', 'saveFailed', 'settingsLoadFailed', 'extDescription', 'actionTitle',
+    'loadTranscript', 'transcriptDisclosure',
   ];
 
   // Each row lists the values in KEYS order.
@@ -24,6 +25,7 @@
       'Show transcript expanded', 'As soon as a video opens', 'Timestamps when copying', 'Include times in the copied text',
       'Settings are saved automatically.', 'Settings saved.', 'Saving failed. Please try again.', 'Settings could not be loaded.',
       'Read YouTube transcripts next to the video and copy them with one click.', 'YTTS – Copy transcript',
+      'Allow transcripts', 'YTTS opens and reads YouTube’s transcripts for videos you open. The text stays in your browser unless you copy it. YTTS remembers this choice on this device.',
     ],
     de: [
       'Transkript', 'Kopieren', 'Kopiert', 'Kopierfehler', 'Transkript kopieren', 'Transkript kopiert.', 'Kopieren fehlgeschlagen. Bitte erneut versuchen.',
@@ -32,6 +34,7 @@
       'Transkript ausgeklappt anzeigen', 'Direkt beim Öffnen eines Videos', 'Zeitstempel beim Kopieren', 'Zeitangaben im kopierten Text',
       'Einstellungen werden automatisch gespeichert.', 'Einstellungen gespeichert.', 'Speichern fehlgeschlagen. Bitte erneut versuchen.', 'Einstellungen konnten nicht geladen werden.',
       'YouTube-Transkripte direkt neben dem Video lesen und mit einem Klick kopieren.', 'YTTS – Transkript kopieren',
+      'Transkripte erlauben', 'YTTS öffnet und liest die YouTube-Transkripte der Videos, die du öffnest. Der Text bleibt in deinem Browser, außer du kopierst ihn. YTTS merkt sich diese Entscheidung auf diesem Gerät.',
     ],
     es: [
       'Transcripción', 'Copiar', 'Copiado', 'Error al copiar', 'Copiar transcripción', 'Transcripción copiada.', 'No se pudo copiar. Inténtalo de nuevo.',
@@ -40,6 +43,7 @@
       'Mostrar la transcripción expandida', 'Al abrir un video', 'Marcas de tiempo al copiar', 'Incluir tiempos en el texto copiado',
       'La configuración se guarda automáticamente.', 'Configuración guardada.', 'No se pudo guardar. Inténtalo de nuevo.', 'No se pudo cargar la configuración.',
       'Lee las transcripciones de YouTube junto al video y cópialas con un clic.', 'YTTS – Copiar transcripción',
+      'Permitir transcripciones', 'YTTS abre y lee las transcripciones de YouTube de los videos que abras. El texto se queda en tu navegador a menos que lo copies. YTTS recuerda esta elección en este dispositivo.',
     ],
     fr: [
       'Transcription', 'Copier', 'Copié', 'Échec de la copie', 'Copier la transcription', 'Transcription copiée.', 'La copie a échoué. Veuillez réessayer.',
@@ -48,6 +52,7 @@
       'Afficher la transcription dépliée', 'Dès l’ouverture d’une vidéo', 'Horodatage lors de la copie', 'Inclure les horodatages dans le texte copié',
       'Les paramètres sont enregistrés automatiquement.', 'Paramètres enregistrés.', 'Échec de l’enregistrement. Veuillez réessayer.', 'Impossible de charger les paramètres.',
       'Lisez les transcriptions YouTube à côté de la vidéo et copiez-les en un clic.', 'YTTS – Copier la transcription',
+      'Autoriser les transcriptions', 'YTTS ouvre et lit les transcriptions YouTube des vidéos que vous ouvrez. Le texte reste dans votre navigateur à moins que vous le copiiez. YTTS mémorise ce choix sur cet appareil.',
     ],
     it: [
       'Trascrizione', 'Copia', 'Copiato', 'Errore di copia', 'Copia trascrizione', 'Trascrizione copiata.', 'Copia non riuscita. Riprova.',
@@ -56,6 +61,7 @@
       'Mostra la trascrizione espansa', 'All’apertura di un video', 'Timestamp nella copia', 'Includi i timestamp nel testo copiato',
       'Le impostazioni vengono salvate automaticamente.', 'Impostazioni salvate.', 'Salvataggio non riuscito. Riprova.', 'Impossibile caricare le impostazioni.',
       'Leggi le trascrizioni di YouTube accanto al video e copiale con un clic.', 'YTTS – Copia trascrizione',
+      'Consenti le trascrizioni', 'YTTS apre e legge le trascrizioni YouTube dei video che apri. Il testo rimane nel browser, a meno che tu non lo copi. YTTS ricorda questa scelta sul dispositivo.',
     ],
     pt: [
       'Transcrição', 'Copiar', 'Copiado', 'Erro ao copiar', 'Copiar transcrição', 'Transcrição copiada.', 'Não foi possível copiar. Tente novamente.',
@@ -64,6 +70,7 @@
       'Mostrar transcrição expandida', 'Ao abrir um vídeo', 'Marcações de tempo ao copiar', 'Incluir tempos no texto copiado',
       'As configurações são salvas automaticamente.', 'Configurações salvas.', 'Não foi possível salvar. Tente novamente.', 'Não foi possível carregar as configurações.',
       'Leia transcrições do YouTube ao lado do vídeo e copie-as com um clique.', 'YTTS – Copiar transcrição',
+      'Permitir transcrições', 'O YTTS abre e lê as transcrições do YouTube dos vídeos que você abrir. O texto fica no navegador, a menos que você o copie. O YTTS lembra essa escolha neste dispositivo.',
     ],
     'pt-PT': [
       'Transcrição', 'Copiar', 'Copiado', 'Erro ao copiar', 'Copiar transcrição', 'Transcrição copiada.', 'Não foi possível copiar. Tente novamente.',
@@ -72,6 +79,7 @@
       'Mostrar a transcrição expandida', 'Ao abrir um vídeo', 'Marcas de tempo ao copiar', 'Incluir as marcas de tempo no texto copiado',
       'As definições são guardadas automaticamente.', 'Definições guardadas.', 'Não foi possível guardar. Tente novamente.', 'Não foi possível carregar as definições.',
       'Leia transcrições do YouTube ao lado do vídeo e copie-as com um clique.', 'YTTS – Copiar transcrição',
+      'Permitir transcrições', 'O YTTS abre e lê as transcrições do YouTube dos vídeos que abrir. O texto fica no navegador, a menos que o copie. O YTTS guarda esta escolha neste dispositivo.',
     ],
     nl: [
       'Transcript', 'Kopiëren', 'Gekopieerd', 'Kopiëren mislukt', 'Transcript kopiëren', 'Transcript gekopieerd.', 'Kopiëren mislukt. Probeer het opnieuw.',
@@ -80,6 +88,7 @@
       'Transcript uitgevouwen tonen', 'Zodra een video wordt geopend', 'Tijdstempels bij kopiëren', 'Tijden opnemen in de gekopieerde tekst',
       'Instellingen worden automatisch opgeslagen.', 'Instellingen opgeslagen.', 'Opslaan mislukt. Probeer het opnieuw.', 'Instellingen konden niet worden geladen.',
       'Lees YouTube-transcripten naast de video en kopieer ze met één klik.', 'YTTS – Transcript kopiëren',
+      'Transcripties toestaan', 'YTTS opent en leest de YouTube-transcripties van video’s die je opent. De tekst blijft in je browser, tenzij je die kopieert. YTTS onthoudt je keuze op dit apparaat.',
     ],
     pl: [
       'Transkrypcja', 'Kopiuj', 'Skopiowano', 'Błąd kopiowania', 'Kopiuj transkrypcję', 'Transkrypcja skopiowana.', 'Nie udało się skopiować. Spróbuj ponownie.',
@@ -88,6 +97,7 @@
       'Pokazuj rozwiniętą transkrypcję', 'Od razu po otwarciu filmu', 'Sygnatury czasowe przy kopiowaniu', 'Dołączaj znaczniki czasu do kopiowanego tekstu',
       'Ustawienia są zapisywane automatycznie.', 'Zapisano ustawienia.', 'Nie udało się zapisać. Spróbuj ponownie.', 'Nie udało się wczytać ustawień.',
       'Czytaj transkrypcje YouTube obok filmu i kopiuj je jednym kliknięciem.', 'YTTS – Kopiuj transkrypcję',
+      'Zezwól na transkrypcje', 'YTTS otwiera i odczytuje transkrypcje YouTube filmów, które otwierasz. Tekst pozostaje w przeglądarce, chyba że go skopiujesz. YTTS zapamiętuje ten wybór na tym urządzeniu.',
     ],
     tr: [
       'Transkript', 'Kopyala', 'Kopyalandı', 'Kopyalama hatası', 'Transkripti kopyala', 'Transkript kopyalandı.', 'Kopyalanamadı. Lütfen tekrar deneyin.',
@@ -96,6 +106,7 @@
       'Transkripti genişletilmiş göster', 'Bir video açılır açılmaz', 'Kopyalarken zaman damgaları', 'Kopyalanan metne zaman bilgisini ekle',
       'Ayarlar otomatik olarak kaydedilir.', 'Ayarlar kaydedildi.', 'Kaydedilemedi. Lütfen tekrar deneyin.', 'Ayarlar yüklenemedi.',
       'YouTube transkriptlerini videonun yanında okuyun ve tek tıkla kopyalayın.', 'YTTS – Transkripti kopyala',
+      'Transkriptlere izin ver', 'YTTS, açtığınız videoların YouTube transkriptlerini açar ve okur. Siz kopyalamadıkça metin tarayıcınızda kalır. YTTS bu tercihi bu cihazda hatırlar.',
     ],
     ru: [
       'Расшифровка', 'Копировать', 'Скопировано', 'Ошибка копирования', 'Копировать расшифровку', 'Расшифровка скопирована.', 'Не удалось скопировать. Повторите попытку.',
@@ -104,6 +115,7 @@
       'Показывать расшифровку развёрнутой', 'Сразу при открытии видео', 'Метки времени при копировании', 'Добавлять время в скопированный текст',
       'Настройки сохраняются автоматически.', 'Настройки сохранены.', 'Не удалось сохранить. Повторите попытку.', 'Не удалось загрузить настройки.',
       'Читайте расшифровки YouTube рядом с видео и копируйте их одним щелчком.', 'YTTS – Копировать расшифровку',
+      'Разрешить расшифровки', 'YTTS открывает и читает расшифровки YouTube для видео, которые вы открываете. Текст остаётся в браузере, если вы его не скопируете. YTTS запоминает этот выбор на этом устройстве.',
     ],
     uk: [
       'Транскрипція', 'Копіювати', 'Скопійовано', 'Помилка копіювання', 'Копіювати транскрипцію', 'Транскрипцію скопійовано.', 'Не вдалося скопіювати. Спробуйте ще раз.',
@@ -112,6 +124,7 @@
       'Показувати транскрипцію розгорнутою', 'Одразу після відкриття відео', 'Позначки часу під час копіювання', 'Додавати час до скопійованого тексту',
       'Налаштування зберігаються автоматично.', 'Налаштування збережено.', 'Не вдалося зберегти. Спробуйте ще раз.', 'Не вдалося завантажити налаштування.',
       'Читайте транскрипції YouTube поруч із відео й копіюйте їх одним клацанням.', 'YTTS – Копіювати транскрипцію',
+      'Дозволити розшифровки', 'YTTS відкриває і читає розшифровки YouTube для відео, які ви відкриваєте. Текст залишається в браузері, якщо ви його не скопіюєте. YTTS запам’ятовує цей вибір на цьому пристрої.',
     ],
     ja: [
       '文字起こし', 'コピー', 'コピーしました', 'コピーに失敗', '文字起こしをコピー', '文字起こしをコピーしました。', 'コピーできませんでした。もう一度お試しください。',
@@ -120,6 +133,7 @@
       '文字起こしを展開して表示', '動画を開いたらすぐに', 'コピー時にタイムスタンプを含める', 'コピーしたテキストに時間を含めます',
       '設定は自動的に保存されます。', '設定を保存しました。', '保存できませんでした。もう一度お試しください。', '設定を読み込めませんでした。',
       'YouTube の文字起こしを動画の横で読み、ワンクリックでコピーできます。', 'YTTS – 文字起こしをコピー',
+      '文字起こしを許可する', 'YTTS は、開いた動画の YouTube の文字起こしを開いて読み取ります。コピーしない限り、テキストはブラウザ内にとどまります。YTTS はこのデバイスにこの選択を記憶します。',
     ],
     ko: [
       '스크립트', '복사', '복사됨', '복사 실패', '스크립트 복사', '스크립트가 복사되었습니다.', '복사하지 못했습니다. 다시 시도하세요.',
@@ -128,6 +142,7 @@
       '스크립트를 펼친 상태로 표시', '동영상을 열면 바로', '복사할 때 타임스탬프 포함', '복사한 텍스트에 시간 포함',
       '설정이 자동으로 저장됩니다.', '설정이 저장되었습니다.', '저장하지 못했습니다. 다시 시도하세요.', '설정을 불러올 수 없습니다.',
       '동영상 옆에서 YouTube 스크립트를 읽고 클릭 한 번으로 복사하세요.', 'YTTS – 스크립트 복사',
+      '스크립트 허용', 'YTTS는 사용자가 여는 동영상의 YouTube 스크립트를 열고 읽습니다. 복사하지 않으면 텍스트는 브라우저에만 남습니다. YTTS는 이 기기에 이 선택을 저장합니다.',
     ],
     'zh-CN': [
       '转写文稿', '复制', '已复制', '复制失败', '复制转写文稿', '已复制转写文稿。', '复制失败，请重试。',
@@ -136,6 +151,7 @@
       '默认展开转写文稿', '打开视频时立即展开', '复制时包含时间戳', '在复制的文本中包含时间',
       '设置会自动保存。', '设置已保存。', '保存失败，请重试。', '无法加载设置。',
       '在视频旁阅读 YouTube 转写文稿，一键复制。', 'YTTS – 复制转写文稿',
+      '允许读取转写文稿', 'YTTS 会打开并读取你打开的视频的 YouTube 转写文稿。除非你复制文本，否则文本只会留在浏览器中。YTTS 会在此设备上记住此选择。',
     ],
     'zh-TW': [
       '轉錄稿', '複製', '已複製', '複製失敗', '複製轉錄稿', '已複製轉錄稿。', '複製失敗，請再試一次。',
@@ -144,6 +160,7 @@
       '預設展開轉錄稿', '開啟影片時立即展開', '複製時包含時間戳記', '在複製的文字中包含時間',
       '設定會自動儲存。', '已儲存設定。', '儲存失敗，請再試一次。', '無法載入設定。',
       '在影片旁閱讀 YouTube 轉錄稿，一鍵複製。', 'YTTS – 複製轉錄稿',
+      '允許讀取轉錄稿', 'YTTS 會開啟並讀取你開啟的影片的 YouTube 轉錄稿。除非你複製文字，否則文字只會留在瀏覽器中。YTTS 會在這部裝置上記住這項選擇。',
     ],
     hi: [
       'ट्रांसक्रिप्ट', 'कॉपी करें', 'कॉपी हो गया', 'कॉपी नहीं हुआ', 'ट्रांसक्रिप्ट कॉपी करें', 'ट्रांसक्रिप्ट कॉपी हो गया।', 'कॉपी नहीं हो सका। कृपया फिर से कोशिश करें।',
@@ -152,6 +169,7 @@
       'ट्रांसक्रिप्ट खुला हुआ दिखाएं', 'वीडियो खुलते ही', 'कॉपी करते समय टाइमस्टैंप', 'कॉपी किए गए टेक्स्ट में समय शामिल करें',
       'सेटिंग अपने-आप सेव हो जाती हैं।', 'सेटिंग सेव हो गईं।', 'सेव नहीं हो सका। कृपया फिर से कोशिश करें।', 'सेटिंग लोड नहीं हो सकीं।',
       'वीडियो के बगल में YouTube ट्रांसक्रिप्ट पढ़ें और एक क्लिक में कॉपी करें।', 'YTTS – ट्रांसक्रिप्ट कॉपी करें',
+      'ट्रांसक्रिप्ट की अनुमति दें', 'YTTS आपके खोले गए वीडियो के YouTube ट्रांसक्रिप्ट खोलकर पढ़ता है। जब तक आप उसे कॉपी नहीं करते, टेक्स्ट ब्राउज़र में ही रहता है। YTTS इस डिवाइस पर आपकी पसंद याद रखता है।',
     ],
     id: [
       'Transkrip', 'Salin', 'Disalin', 'Gagal menyalin', 'Salin transkrip', 'Transkrip disalin.', 'Gagal menyalin. Coba lagi.',
@@ -160,6 +178,7 @@
       'Tampilkan transkrip dalam keadaan diluaskan', 'Begitu video dibuka', 'Stempel waktu saat menyalin', 'Sertakan waktu dalam teks yang disalin',
       'Setelan disimpan secara otomatis.', 'Setelan disimpan.', 'Gagal menyimpan. Coba lagi.', 'Setelan tidak dapat dimuat.',
       'Baca transkrip YouTube di samping video dan salin dengan sekali klik.', 'YTTS – Salin transkrip',
+      'Izinkan transkrip', 'YTTS membuka dan membaca transkrip YouTube dari video yang Anda buka. Teks tetap berada di browser kecuali Anda menyalinnya. YTTS mengingat pilihan ini di perangkat ini.',
     ],
     vi: [
       'Bản chép lời', 'Sao chép', 'Đã sao chép', 'Lỗi sao chép', 'Sao chép bản chép lời', 'Đã sao chép bản chép lời.', 'Không sao chép được. Vui lòng thử lại.',
@@ -168,6 +187,7 @@
       'Hiển thị bản chép lời ở dạng mở rộng', 'Ngay khi mở video', 'Dấu thời gian khi sao chép', 'Thêm dấu thời gian vào văn bản đã sao chép',
       'Cài đặt được lưu tự động.', 'Đã lưu cài đặt.', 'Không lưu được. Vui lòng thử lại.', 'Không tải được cài đặt.',
       'Đọc bản chép lời YouTube ngay cạnh video và sao chép chỉ bằng một lần nhấp.', 'YTTS – Sao chép bản chép lời',
+      'Cho phép đọc bản chép lời', 'YTTS mở và đọc bản chép lời trên YouTube của các video bạn mở. Văn bản chỉ nằm trong trình duyệt, trừ khi bạn sao chép. YTTS ghi nhớ lựa chọn này trên thiết bị này.',
     ],
     ar: [
       'نص الفيديو', 'نسخ', 'تم النسخ', 'تعذّر النسخ', 'نسخ النص', 'تم نسخ النص.', 'تعذّر النسخ. يُرجى المحاولة مرة أخرى.',
@@ -176,6 +196,7 @@
       'عرض النص موسّعًا', 'فور فتح الفيديو', 'الطوابع الزمنية عند النسخ', 'تضمين الأوقات في النص المنسوخ',
       'يتم حفظ الإعدادات تلقائيًا.', 'تم حفظ الإعدادات.', 'تعذّر الحفظ. يُرجى المحاولة مرة أخرى.', 'تعذّر تحميل الإعدادات.',
       'اقرأ نصوص YouTube بجانب الفيديو وانسخها بنقرة واحدة.', 'YTTS – نسخ النص',
+      'السماح بقراءة نصوص الفيديو', 'يفتح YTTS نصوص فيديوهات YouTube التي تفتحها ويقرأها. يبقى النص في متصفحك ما لم تنسخه. يتذكّر YTTS هذا الاختيار على هذا الجهاز.',
     ],
     sv: [
       'Transkription', 'Kopiera', 'Kopierat', 'Kopieringen misslyckades', 'Kopiera transkription', 'Transkriptionen har kopierats.', 'Det gick inte att kopiera. Försök igen.',
@@ -184,6 +205,7 @@
       'Visa transkriptionen utfälld', 'Så fort en video öppnas', 'Tidsstämplar vid kopiering', 'Ta med tider i den kopierade texten',
       'Inställningarna sparas automatiskt.', 'Inställningarna har sparats.', 'Det gick inte att spara. Försök igen.', 'Det gick inte att läsa in inställningarna.',
       'Läs YouTube-transkriptioner bredvid videon och kopiera dem med ett klick.', 'YTTS – Kopiera transkription',
+      'Tillåt transkriptioner', 'YTTS öppnar och läser YouTube-transkriptioner för videor du öppnar. Texten stannar i webbläsaren om du inte kopierar den. YTTS kommer ihåg ditt val på den här enheten.',
     ],
   };
 

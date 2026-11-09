@@ -12,7 +12,7 @@ popup. Vanilla JavaScript classic scripts, no build step, no runtime dependencie
 | `extension/manifest.json` | MV3 manifest: content scripts on `https://www.youtube.com/*`, popup, `storage` only. `default_locale: en`; description and button title are `__MSG_*__` |
 | `extension/lib.js` | Pure helpers (no DOM, no `chrome`): `DEFAULTS`, settings validation, time helpers, sentence merging, paragraphs, clipboard formatting. Publishes `globalThis.YTTS` |
 | `extension/i18n.js` | Pure UI strings for 21 locales (`KEYS` + one row per language), locale resolution, RTL flag. Publishes `globalThis.YTTS_I18N` |
-| `extension/content.js` | Scrapes YouTube's native transcript panel, renders the card, copy, seek, SPA navigation. UI language = YouTube's `<html lang>` |
+| `extension/content.js` | Shows the disclosure and loads YouTube's native transcript on request, renders the card, handles copy, seek and SPA navigation. UI language = YouTube's `<html lang>` |
 | `extension/content.css` | Card styles; values measured from YouTube's computed styles; dark theme via `html[dark]`; logical properties for RTL |
 | `extension/popup.{html,css,js}` | Settings popup (`chrome.storage.sync`); language = browser UI language |
 | `extension/_locales/` | **Generated** by `npm run locales` from `i18n.js`; never edit by hand |
@@ -68,6 +68,10 @@ entry, same isolated world) and `lib.js` → `i18n.js` → `popup.js` in `popup.
     YTTS did not show it.** The canary decides this without YTTS's selectors (button by
     accessible name, data from the `get_panel` / `get_transcript` responses). Keep that control
     independent of the code under test.
+12. **Wait for a user action after the disclosure before opening or reading the native transcript
+    panel.** Save only `transcriptConsent: true` locally. The same installation can use that
+    choice in other tabs and after reload. A change of video cancels the pending request. Keep
+    the transcript in tab memory and gate clipboard writes on the user's Copy action.
 
 ## Workflow
 
@@ -92,6 +96,7 @@ npm run lint && npm run check && npm test   # static checks, unit, e2e (fixture)
 npm run test:live                           # optional: real extension against youtube.com
 ```
 
-Before a release, also load `extension/` unpacked in a real browser: a video with and without
-a transcript, all three views, copy with and without timestamps, light and dark, one RTL
-language (e.g. YouTube in Arabic), and the popup settings.
+Before a release, also load `extension/` unpacked in a real browser. Verify that a fresh
+installation waits for **Allow transcripts** and remembers consent after reload and in another
+tab. Then try videos with and without a transcript, all three views, copy with and without
+timestamps, light and dark, one RTL language such as Arabic, and the popup settings.
