@@ -151,6 +151,39 @@ test.describe('published YTTS website', () => {
     expect(errors).toEqual([]);
   });
 
+  test('the header keeps its brand and controls separate at 320px in every language', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    for (const [code, , path] of locales) {
+      await page.goto(`${address}${path}`);
+      const header = await page.locator('.topbar .wrap').evaluate((node) => {
+        const bounds = node.getBoundingClientRect();
+        return {
+          left: bounds.left,
+          right: bounds.right,
+          items: Array.from(node.children).map((item) => {
+            const rect = item.getBoundingClientRect();
+            return {
+              name: item.className,
+              left: rect.left,
+              right: rect.right,
+              width: item.clientWidth,
+              contentWidth: item.scrollWidth,
+            };
+          }),
+        };
+      });
+      for (const item of header.items) {
+        expect(item.width, `${code}: ${item.name} must not squeeze its content into another control`).toBeGreaterThanOrEqual(item.contentWidth - 1);
+        expect(item.left, `${code}: ${item.name} must stay inside the header`).toBeGreaterThanOrEqual(header.left - 1);
+        expect(item.right, `${code}: ${item.name} must stay inside the header`).toBeLessThanOrEqual(header.right + 1);
+      }
+      const ordered = [...header.items].sort((a, b) => a.left - b.left);
+      for (let index = 1; index < ordered.length; index++) {
+        expect(ordered[index - 1].right, `${code}: header elements must not overlap`).toBeLessThanOrEqual(ordered[index].left + 1);
+      }
+    }
+  });
+
   test('language selection navigates to translated Arabic and German pages', async ({ page }) => {
     await page.goto(address);
     await page.locator('#language').selectOption('/ar/');
