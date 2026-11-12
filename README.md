@@ -7,6 +7,8 @@ transcript above the watch page's recommendations and matches YouTube's light
 and dark themes. The interface follows YouTube's language, with English as a
 fallback.
 
+**[Install from the Chrome Web Store](https://chromewebstore.google.com/detail/ytts/ipkipmmdaicpfijcddghjpfjpacgdphe)**
+
 - **One click to copy** the full transcript as plain text.
 - **Collapsed by default**, with an expandable transcript and clickable timestamps.
 - **Three views:** YouTube's caption lines, grouped sentences, or continuous text.
@@ -25,22 +27,32 @@ The same in the dark theme: [watch page](docs/screenshots/youtube-dark.png),
 
 ## Install
 
+Open [YTTS in the Chrome Web Store](https://chromewebstore.google.com/detail/ytts/ipkipmmdaicpfijcddghjpfjpacgdphe),
+click **Add to Chrome** and confirm the installation.
+
+Open a YouTube video with a transcript. The **Transcript** card appears above
+the related videos. Look in the sidebar on the classic layout, or below the
+video in narrow windows and on YouTube's newer layout.
+
+Expand the card if needed, read its disclosure and click **Allow transcripts**.
+Click **Copy** when the transcript is ready. YTTS remembers your choice in
+this browser profile, so transcripts load as you switch videos, reload or
+open another tab.
+
+Pin YTTS in the browser toolbar to reach its settings.
+
+### Manual installation
+
 1. [Download the source](https://github.com/maphel/YTTS/archive/refs/heads/main.zip)
    and unzip it, or clone this repository.
 2. Open `chrome://extensions` in Chrome, `edge://extensions` in Edge, or
    `brave://extensions` in Brave.
 3. Turn on **Developer mode**.
 4. Choose **Load unpacked** and select the `extension/` folder.
-5. Open a YouTube video with a transcript. The **Transcript** card appears above
-   the related videos. Look in the sidebar on the classic layout, or below the
-   video in narrow windows and on YouTube's newer layout.
-6. Expand the card if needed, read its disclosure and click **Allow transcripts**.
-   Click **Copy** when the transcript is ready. YTTS remembers your choice in
-   this browser profile, so transcripts load as you switch videos, reload or
-   open another tab.
 
-Pin YTTS in the browser toolbar to reach its settings. After updating the files,
-reload YTTS on the extensions page and refresh your YouTube tab.
+Then open a YouTube video and allow transcript access as described above.
+After updating the files, reload YTTS on the extensions page and refresh your
+YouTube tab.
 
 ## Settings
 

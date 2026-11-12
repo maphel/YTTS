@@ -7,6 +7,9 @@ All notable changes to YTTS are listed here. The format is based on
 
 <!-- Entries go under ### Added / ### Changed / ### Fixed / ### Removed; add only the subsections you need. -->
 
+### Added
+- Chrome Web Store installation link in the README, with manual installation kept as an alternative.
+
 ## 0.1.2 — 2026-11-09
 
 ### Changed
