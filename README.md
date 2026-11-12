@@ -9,6 +9,8 @@ fallback.
 
 **[Install from the Chrome Web Store](https://chromewebstore.google.com/detail/ytts/ipkipmmdaicpfijcddghjpfjpacgdphe)**
 
+[See the demo and explore YTTS in your language](https://ytts.christophel.io/).
+
 - **One click to copy** the full transcript as plain text.
 - **Collapsed by default**, with an expandable transcript and clickable timestamps.
 - **Three views:** YouTube's caption lines, grouped sentences, or continuous text.
