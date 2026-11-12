@@ -1,6 +1,6 @@
 # YTTS Launch-Paket
 
-Vorbereitet am 12. November 2026. **Entwürfe, noch keine Einreichung.**
+Stand 12. November 2026. **Veröffentlichungsstatus siehe Tabelle.**
 Die Texte sind Englisch, damit sie auf den vier internationalen Plattformen passen.
 Vor dem Absenden kurz persönlich lesen und gegebenenfalls anpassen.
 
@@ -8,18 +8,18 @@ Vor dem Absenden kurz persönlich lesen und gegebenenfalls anpassen.
 
 | Plattform | Material | Status | Öffentlicher Eintrag |
 | --- | --- | --- | --- |
-| Indie Hackers | [Produkteintrag und erster Beitrag](indie-hackers.md) | Produkteintrag im Account als Entwurf gespeichert; Entwicklungsstart noch offen. Community-Beitrag nur als Text vorbereitet | — |
-| Product Hunt | [Felder und Maker-Kommentar](product-hunt.md) | Im Account gespeichert (In Progress); kein Veröffentlichungstermin | — |
+| Indie Hackers | [Produkteintrag und erster Beitrag](indie-hackers.md) | Produkteintrag am 12. November veröffentlicht; Startjahr 2026 bestätigt. Community-Beitrag nur als Text vorbereitet | [YTTS](https://www.indiehackers.com/product/ytts) |
+| Product Hunt | [Felder und Maker-Kommentar](product-hunt.md) | Für 13. November 2026, 09:01 Uhr Berlin (00:01 PT) eingeplant; noch nicht live | [Launch-Ziel](https://www.producthunt.com/products/ytts?launch=ytts) |
 | Show HN | [Eckdaten für deinen eigenen Text](show-hn-notes.md) | Fakten vorbereitet; Beitrag von Marcel zu schreiben | — |
-| AlternativeTo | [Produkteintrag und passende Alternativen](alternativeto.md) | Formular im Brave-Tab ausgefüllt; noch nicht abgesendet, kein dauerhafter Entwurf bestätigt | — |
+| AlternativeTo | [Produkteintrag und passende Alternativen](alternativeto.md) | Am 12. November mit zwei passenden Alternativen in die kostenlose Prüfwarteschlange eingereicht; noch nicht öffentlich | — |
 
-Die Browser-Vorbereitung wurde am 12. November 2026 durchgeführt. Das ausgefüllte
-AlternativeTo-Formular vorerst im vorhandenen Tab lassen; ein neuer Aufruf ist kein gespeicherter
-Entwurfslink. Die Texte und Bilder in diesem Paket bleiben die Sicherung zum erneuten Ausfüllen.
-
-Nach dem Veröffentlichen Datum und öffentlichen Link hier ergänzen. Bei AlternativeTo gilt
-eine Einreichung noch nicht als veröffentlichter Eintrag; die kostenlose Prüfung kann sehr
-lange dauern. Für dieses Paket wurden keine Accounts angelegt oder Beiträge veröffentlicht.
+Die Status wurden nach der Veröffentlichung beziehungsweise Einreichung in der Browser-UI
+geprüft. Product Hunt bestätigt den Termin im Pre-Launch-Dashboard als **Scheduled**.
+AlternativeTo zeigt **Your submission is waiting to be reviewed** und weist darauf hin,
+dass aktuell nur der Einreicher die App sehen kann. Status unter
+[My submissions](https://alternativeto.net/my-submissions/) prüfen; den App-Link erst nach
+Freigabe teilen. Eine zeitnahe Prüfung ist nicht garantiert. Es wurde keine kostenpflichtige
+Prüfung gebucht.
 
 ## Gemeinsame Angaben
 

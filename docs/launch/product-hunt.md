@@ -1,9 +1,11 @@
 # Product Hunt
 
-Entwurf zur persönlichen Durchsicht; noch nicht eingereicht.
-[Einreichung starten](https://www.producthunt.com/posts/new).
-Persönliches Konto mit bestätigter E-Mail verwenden. Der normale Launch ist kostenlos.
-Zuerst als Entwurf speichern; einen Termin erst nach Durchsicht auswählen.
+**Eingeplant für 13. November 2026, 09:01 Uhr Berlin (00:01 PT).**
+[Launch-Ziel](https://www.producthunt.com/products/ytts?launch=ytts).
+Das Pre-Launch-Dashboard bestätigt **Scheduled**. Noch nicht als live oder als bereits
+indexiert behandeln; geplante Launches können vor Veröffentlichung geprüft werden.
+Der normale Launch ist kostenlos. Im Account sind vier Galeriebilder, die Produkttexte,
+Links, drei Launch-Tags, Preis **Free**, Maker-Rolle und erster Kommentar gespeichert.
 
 ## Name
 
@@ -36,13 +38,18 @@ YTTS adds a transcript card directly to YouTube's watch page, matching its light
 | Open source | Ja; Repository verlinken |
 | Launch tags | Chrome Extensions, Productivity, Open Source; die nächstpassenden angebotenen Tags wählen, maximal drei |
 | Logo | [assets/icon-240.png](assets/icon-240.png) |
-| Gallery | Die drei Bilder unten in dieser Reihenfolge |
+| Gallery | Vier Bilder im Account; die drei lokalen Upload-Vorlagen stehen unten |
 
 Keine Rabattaktion eintragen: YTTS ist ohnehin vollständig kostenlos. Die Demo ist über die
 Website erreichbar. Ein zusätzliches Video ist optional; die vorhandene MP4-Datei ist kein
 bereits angelegter YouTube- oder Vimeo-Link.
 
 ## Gallery und Alt-Texte
+
+Im Account wurden das vorhandene Website-Sharebild und ein vorhandener YouTube-Screenshot
+beibehalten und um `01-native-themes.png` und `03-preferences.png` ergänzt. Die Liste enthält
+zusätzlich `02-watch-page.png` als weitere lokale Vorlage; sie beschreibt nicht die aktuelle
+Reihenfolge der vier gespeicherten Bilder.
 
 1. [01-native-themes.png](assets/01-native-themes.png):
    `YTTS transcript cards matching YouTube's light and dark themes, with timestamps and a Copy button.`

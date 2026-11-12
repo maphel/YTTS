@@ -1,14 +1,16 @@
 # AlternativeTo
 
-Entwurf zur persönlichen Durchsicht; noch nicht eingereicht.
+**Am 12. November 2026 eingereicht; wartet auf Prüfung.**
 [AlternativeTo öffnen](https://alternativeto.net/). Anmelden, E-Mail bestätigen, dann im
 Profilmenü **Suggest new application** wählen. Die normale Einreichung ist kostenlos;
 keine kostenpflichtige Priority Review auswählen.
 
-Das Formular ist im bestehenden Brave-Tab ausgefüllt. Eine dauerhafte Entwurfsfunktion wird
-nicht angezeigt. **Submit the application** sendet es zur Prüfung und kann zur späteren
-Veröffentlichung führen; dieser Knopf wurde nicht betätigt. Den vorhandenen Tab zur Durchsicht
-verwenden, nicht als gespeicherten Entwurf neu aufrufen.
+**Submit the application** wurde betätigt, anschließend wurden Ditto Transcript Generator und
+Copy Youtube Transcript als Alternativen eingereicht. Die App-Seite bestätigt die kostenlose
+Prüfwarteschlange und zeigt zwei zugeordnete Alternativen. Das kostenpflichtige Prüfangebot wurde
+mit **No thanks, continue** abgelehnt. Aktuell ist die App nur für den Einreicher sichtbar.
+Den Status unter [My submissions](https://alternativeto.net/my-submissions/) prüfen und den
+App-Link erst nach Freigabe teilen.
 
 Laut [FAQ](https://alternativeto.net/faq/#how-long-does-it-take-to-get-my-app-reviewed)
 warten mehrere Tausend Apps auf Prüfung. Eine zeitnahe Prüfung oder Aufnahme ist nicht
@@ -72,9 +74,9 @@ Tag-Auswahl im ausgefüllten Formular ist oben festgehalten.
 
 ## Als Alternative vorschlagen
 
-Nach Aufnahme auf der jeweiligen Produktseite **Contribute to this page → Suggest Alternatives**
-verwenden. Sachliche Überschneidungen nennen; keine Konkurrenz bewerten, die du nicht selbst
-getestet hast.
+Die ersten beiden wurden bereits zugeordnet. Für spätere Ergänzungen auf der jeweiligen
+Produktseite **Contribute to this page → Suggest Alternatives** verwenden. Sachliche
+Überschneidungen nennen; keine Konkurrenz bewerten, die du nicht selbst getestet hast.
 
 1. [Ditto Transcript Generator](https://alternativeto.net/software/ditto-transcript-generator/about/):
    lokale Open-Source-Chrome-Extension zum Kopieren vorhandener Transkripte. Ditto unterstützt

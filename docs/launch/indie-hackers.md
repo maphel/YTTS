@@ -1,13 +1,12 @@
 # Indie Hackers
 
-Entwurf zur persönlichen Durchsicht; noch nicht eingereicht.
-[Produkt anlegen](https://www.indiehackers.com/products/new).
-Die Basisnutzung ist kostenlos; Anmeldung erforderlich.
+**Am 12. November 2026 veröffentlicht:** [YTTS](https://www.indiehackers.com/product/ytts).
+Der Produkteintrag enthält Text, Logo und drei Bilder. Das bestätigte Startjahr **2026** wurde
+gespeichert und auf der veröffentlichten Seite geprüft; Monat und Tag bleiben offen.
+Die Basisnutzung ist kostenlos. Der Community-Beitrag unten ist weiterhin nur als Text vorbereitet.
 
-Im aktuellen Formular wird der Produkteintrag automatisch als privater Entwurf gespeichert;
-**PUBLISH** ist ein separater Schritt. Die Produktangaben, das Logo und die Bilder sind im
-Account vorbereitet. Vor Publish fehlt noch das Startdatum: wann die Entwicklung begann,
-ausdrücklich nicht das Launchdatum. Jahr allein ist zulässig; kein Datum aus einem Commit ableiten.
+Das Produktformular speichert Änderungen automatisch. Bei einer neuen Seite ist **PUBLISH**
+ein separater Schritt. Das Startdatum bezeichnet den Entwicklungsbeginn, nicht den Launch.
 
 ## Produkteintrag
 
@@ -19,6 +18,7 @@ ausdrücklich nicht das Launchdatum. Jahr allein ist zulässig; kein Datum aus e
 | Product type | Software |
 | Platforms | Browser extension: Chrome, Edge |
 | Business model | Free |
+| Started | 2026; kein genauer Monat oder Tag |
 | Maker | Marcel Christophel |
 | Logo | [assets/icon-512.png](assets/icon-512.png) |
 | Bild, falls angeboten | [assets/01-native-themes.png](assets/01-native-themes.png) |
