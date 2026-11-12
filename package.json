@@ -6,6 +6,7 @@
   "description": "Development checks for the YTTS Chromium extension",
   "license": "MIT",
   "scripts": {
+    "site:build": "node scripts/build-website.mjs",
     "lint": "eslint .",
     "check": "node scripts/check.mjs",
     "test": "npm run test:unit && npm run test:e2e",

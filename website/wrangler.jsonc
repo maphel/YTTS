@@ -1,0 +1,14 @@
+{
+  "name": "ytts-website",
+  "account_id": "797d943d27ace4077e5565f63e24ab7e",
+  "compatibility_date": "2026-11-12",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    { "pattern": "ytts.christophel.io", "custom_domain": true }
+  ]
+}

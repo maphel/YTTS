@@ -1,0 +1,54 @@
+# YTTS website
+
+Public product website: https://ytts.christophel.io/
+
+This is a small static site, served by Cloudflare Workers Static Assets in the
+existing christophel.io account. It has no backend, analytics, third-party fonts,
+third-party video players, cookies or browser storage. The theme choice lasts only for
+the current page view. Cloudflare receives normal web requests when serving the site;
+the footer links the publisher's hosting privacy information separately from
+the extension's privacy policy.
+
+## Build and preview
+
+From the repository root, using Node.js 24+:
+
+```sh
+npm run site:build
+python3 -m http.server 4173 --directory website/dist
+```
+
+Open http://localhost:4173/. English is the default at `/`; the other 20 locales
+have their own paths (`/de/`, `/ar/`, `/pt-br/`, etc.). Every page has a canonical
+URL and reciprocal language alternates. `sitemap.xml` lists all 21 pages.
+
+- `copy/*.json`: translated page content, keyed by the extension's locale codes. Every locale
+  must have exactly the keys of `en.json`; the build fails otherwise.
+- `styles.css`, `client.js`: theme toggle, language selection and in-place demo playback.
+- `assets/`: YTTS icon, the transcript card in light and dark (`card-*.webp`), the demo in
+  landscape (`demo.mp4`, 1920 × 1080) and portrait for phones (`demo-portrait.mp4`,
+  1080 × 1350), their posters and the share image (`og.jpg`, 1200 × 630).
+- `dist/`: generated pages and copied assets; ignored by Git.
+- `wrangler.jsonc`: static assets and the custom domain; contains no credentials.
+
+The page is deliberately short: headline, install button, demo, three claims, three questions,
+install button. Before adding a section, check that it helps a visitor decide to install.
+
+The demo poster is a plain link to the video file; with JavaScript it plays in place and phones
+get the portrait cut. The demo is English-only (voice-over and captions) for every locale, and
+the card images show the English interface. Stylesheet, script and assets are served with a
+one-year cache; the build appends a content hash (`?v=…`) to every reference.
+
+## Deploy
+
+After independent review, all repository checks and website tests pass:
+
+```sh
+npm run site:build
+npx --yes --package wrangler@4.92.0 wrangler deploy --config website/wrangler.jsonc
+```
+
+Wrangler must be authenticated to the account that owns christophel.io. The custom
+domain is configured only for `ytts.christophel.io`; no other domains or existing
+Workers are changed. Deployment uses static assets only. Updating the website
+does not require a new browser-extension release.

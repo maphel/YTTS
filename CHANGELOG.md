@@ -9,6 +9,7 @@ All notable changes to YTTS are listed here. The format is based on
 
 ### Added
 - Chrome Web Store installation link in the README, with manual installation kept as an alternative.
+- A lightweight website at ytts.christophel.io with the product demo, light/dark previews and all 21 supported interface languages.
 
 ## 0.1.2 — 2026-11-09
 
