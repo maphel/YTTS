@@ -184,6 +184,20 @@ test.describe('published YTTS website', () => {
     }
   });
 
+  test('long translated headings fit narrow screens with wider system fonts', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 850 });
+    await page.goto(`${address}/es/`);
+    await page.evaluate(() => { document.body.style.fontFamily = 'Verdana, sans-serif'; });
+    const sizes = await page.evaluate(() => ({
+      content: document.documentElement.scrollWidth,
+      viewport: document.documentElement.clientWidth,
+      heading: document.querySelector('h1').getBoundingClientRect().width,
+      container: document.querySelector('.hero').getBoundingClientRect().width,
+    }));
+    expect(sizes.content).toBeLessThanOrEqual(sizes.viewport + 1);
+    expect(sizes.heading).toBeLessThanOrEqual(sizes.container + 1);
+  });
+
   test('language selection navigates to translated Arabic and German pages', async ({ page }) => {
     await page.goto(address);
     await page.locator('#language').selectOption('/ar/');
