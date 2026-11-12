@@ -4,24 +4,32 @@ Entwurf zur persönlichen Durchsicht; noch nicht eingereicht.
 [Produkt anlegen](https://www.indiehackers.com/products/new).
 Die Basisnutzung ist kostenlos; Anmeldung erforderlich.
 
+Im aktuellen Formular wird der Produkteintrag automatisch als privater Entwurf gespeichert;
+**PUBLISH** ist ein separater Schritt. Die Produktangaben, das Logo und die Bilder sind im
+Account vorbereitet. Vor Publish fehlt noch das Startdatum: wann die Entwicklung begann,
+ausdrücklich nicht das Launchdatum. Jahr allein ist zulässig; kein Datum aus einem Commit ableiten.
+
 ## Produkteintrag
 
 | Feld | Wert |
 | --- | --- |
 | Name | YTTS |
 | Website | https://ytts.christophel.io/ |
-| Category | Open Source; zusätzlich Productivity, falls mehrere Kategorien angeboten werden |
+| Focus areas | Education & learning; Productivity & organization |
+| Product type | Software |
+| Platforms | Browser extension: Chrome, Edge |
 | Business model | Free |
 | Maker | Marcel Christophel |
 | Logo | [assets/icon-512.png](assets/icon-512.png) |
 | Bild, falls angeboten | [assets/01-native-themes.png](assets/01-native-themes.png) |
 
-Keine Nutzer-, Umsatz- oder Wachstumszahlen erfinden. Optionale Finanzfelder leer lassen.
+Keine Nutzer-, Umsatz- oder Wachstumszahlen erfinden. Das Umsatzfeld steht auf **Keep it private**.
+Das Formular verlangt diese Auswahl oder öffentliche Zahlen, bevor Publish möglich wird.
 
-### Description
+### Description — 151 / 160 Zeichen
 
 ```text
-A free, open-source Chromium extension that puts YouTube's existing transcript in a card on the watch page. It follows YouTube's light and dark themes, offers lines, sentences or text views, and copies the full transcript with optional timestamps. No ads, account, analytics or backend. The interface supports 21 locales.
+A free, open-source extension to read and copy YouTube transcripts in a card that matches YouTube's light and dark themes. No ads, account or tracking.
 ```
 
 ## Erster Community-Beitrag

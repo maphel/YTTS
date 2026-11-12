@@ -5,6 +5,11 @@ Entwurf zur persönlichen Durchsicht; noch nicht eingereicht.
 Profilmenü **Suggest new application** wählen. Die normale Einreichung ist kostenlos;
 keine kostenpflichtige Priority Review auswählen.
 
+Das Formular ist im bestehenden Brave-Tab ausgefüllt. Eine dauerhafte Entwurfsfunktion wird
+nicht angezeigt. **Submit the application** sendet es zur Prüfung und kann zur späteren
+Veröffentlichung führen; dieser Knopf wurde nicht betätigt. Den vorhandenen Tab zur Durchsicht
+verwenden, nicht als gespeicherten Entwurf neu aufrufen.
+
 Laut [FAQ](https://alternativeto.net/faq/#how-long-does-it-take-to-get-my-app-reviewed)
 warten mehrere Tausend Apps auf Prüfung. Eine zeitnahe Prüfung oder Aufnahme ist nicht
 garantiert. Wartende Einträge sind nur für den Einreicher sichtbar.
@@ -46,17 +51,24 @@ wählen. Keine Speech-to-Text-, Übersetzungs- oder KI-Funktion auswählen.
 | --- | --- |
 | Pricing | Free, nicht Freemium |
 | Source / license | Open Source; MIT |
-| Platform | Google Chrome; Chromium-Desktopbrowser; Edge und Brave, falls angeboten |
-| OS | Windows, macOS, Linux über einen kompatiblen Desktopbrowser |
-| Categories | Productivity; Education; Browser Extensions, soweit angeboten |
-| Tags | youtube, transcript, video-captions, copy-paste, browser-extension, productivity |
+| Platform | Google Chrome; keine nativen Windows-, macOS- oder Linux-Apps angeben |
+| Categories | Office & Productivity (aus dem Tag productivity-tool) |
+| Tags | youtube, productivity-tool, browser-extension |
 | Features | Ad-free, No Tracking, No registration required, Dark Mode, Lightweight |
+| Supported languages | English, German, Spanish, French, Italian, Portuguese, Dutch, Polish, Turkish, Russian, Ukrainian, Japanese, Korean, Chinese, Hindi, Indonesian, Vietnamese, Arabic, Swedish |
+| Company / Author | Maphel; Website https://www.christophel.io |
+| Release date | 2026-11-09; erste öffentliche [GitHub-Release v0.1.0](https://github.com/maphel/YTTS/releases/tag/v0.1.0) |
 | Official website | https://ytts.christophel.io/ |
 | Chrome Web Store | https://chromewebstore.google.com/detail/ytts/ipkipmmdaicpfijcddghjpfjpacgdphe |
 | Source code | https://github.com/maphel/YTTS |
 | Privacy | https://github.com/maphel/YTTS/blob/main/PRIVACY.md |
 | Icon | [assets/icon-512.png](assets/icon-512.png) |
 | Screenshots | [Hauptbild](assets/01-native-themes.png), [Watch-Seite](assets/02-watch-page.png), [Einstellungen](assets/03-preferences.png) |
+
+Das Sprachfeld fasst brasilianisches und europäisches Portugiesisch sowie die chinesischen
+Varianten jeweils zusammen: 19 Verzeichniseinträge decken die 21 Oberflächen-Locales ab.
+Die Features sind belegbare Eigenschaften für passende Formularoptionen; die tatsächliche
+Tag-Auswahl im ausgefüllten Formular ist oben festgehalten.
 
 ## Als Alternative vorschlagen
 

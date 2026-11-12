@@ -8,10 +8,14 @@ Vor dem Absenden kurz persönlich lesen und gegebenenfalls anpassen.
 
 | Plattform | Material | Status | Öffentlicher Eintrag |
 | --- | --- | --- | --- |
-| Indie Hackers | [Produkteintrag und erster Beitrag](indie-hackers.md) | Vorbereitet; Anmeldung und persönliche Freigabe ausstehend | — |
-| Product Hunt | [Felder und Maker-Kommentar](product-hunt.md) | Vorbereitet; Anmeldung und Launch-Datum ausstehend | — |
+| Indie Hackers | [Produkteintrag und erster Beitrag](indie-hackers.md) | Produkteintrag im Account als Entwurf gespeichert; Entwicklungsstart noch offen. Community-Beitrag nur als Text vorbereitet | — |
+| Product Hunt | [Felder und Maker-Kommentar](product-hunt.md) | Im Account gespeichert (In Progress); kein Veröffentlichungstermin | — |
 | Show HN | [Eckdaten für deinen eigenen Text](show-hn-notes.md) | Fakten vorbereitet; Beitrag von Marcel zu schreiben | — |
-| AlternativeTo | [Produkteintrag und passende Alternativen](alternativeto.md) | Vorbereitet; Anmeldung und Einreichung ausstehend | — |
+| AlternativeTo | [Produkteintrag und passende Alternativen](alternativeto.md) | Formular im Brave-Tab ausgefüllt; noch nicht abgesendet, kein dauerhafter Entwurf bestätigt | — |
+
+Die Browser-Vorbereitung wurde am 12. November 2026 durchgeführt. Das ausgefüllte
+AlternativeTo-Formular vorerst im vorhandenen Tab lassen; ein neuer Aufruf ist kein gespeicherter
+Entwurfslink. Die Texte und Bilder in diesem Paket bleiben die Sicherung zum erneuten Ausfüllen.
 
 Nach dem Veröffentlichen Datum und öffentlichen Link hier ergänzen. Bei AlternativeTo gilt
 eine Einreichung noch nicht als veröffentlichter Eintrag; die kostenlose Prüfung kann sehr
