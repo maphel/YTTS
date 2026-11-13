@@ -1,5 +1,15 @@
 # Lessons Learned
 
+## 2026-11-13 — Chapter headings missing with the view-model transcript panel (#45)
+
+**Symptom:** Live canary: 0 chapter headings in the card for a video with 21 chapters; segments fine.
+**Root cause:** The view-model panel renders chapters as `timeline-chapter-view-model > h3`, not as
+`ytd-transcript-section-header-renderer`. The fixture used the legacy chapter header for both segment
+variants, so only the live canary could notice.
+**Fix:** `CHAPTER_SEL` matches both; the fixture renders each variant's own chapter markup.
+**Prevention:** When YouTube ships a second DOM variant, give the fixture that variant's markup for
+every element YTTS reads, not only the one that first broke.
+
 ## 2026-11-09 — Card invisible in narrow windows (#23)
 
 **Symptom:** Below about 1000 px viewport width the card disappeared; found while rendering the
