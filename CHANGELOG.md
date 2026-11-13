@@ -17,6 +17,7 @@ All notable changes to YTTS are listed here. The format is based on
 
 ### Fixed
 - Chapter headings now appear, in the card and in copied text, on videos where YouTube shows its newer transcript panel.
+- In the Sentences view, sentences that share one caption line no longer all show that line's time range. Each gets its own estimated range, in the card and in copied text, and clicking one jumps closer to where it is spoken.
 
 ## 0.1.2 — 2026-11-09
 

@@ -73,10 +73,22 @@
       const fallbackEnd = Number.isFinite(duration) && duration >= it.sec ? duration : it.sec + 5;
       const segEnd = Math.max(it.sec, segStarts[segIdx + 1] ?? fallbackEnd);
       const pieces = it.text.split(SENTENCE_SPLIT).filter(Boolean);
+      // YouTube times segments, not sentences. Inside a segment, a sentence's start is estimated
+      // from its character offset, in whole seconds like YouTube's own timestamps (#27).
+      const starts = [];
+      let offset = 0;
+      for (const piece of pieces) {
+        const at = it.text.indexOf(piece, offset);
+        starts.push(starts.length
+          ? it.sec + Math.floor((at / it.text.length) * (segEnd - it.sec))
+          : it.sec);
+        offset = at + piece.length;
+      }
       pieces.forEach((piece, k) => {
-        if (!cur) cur = { type: 'sent', sec: it.sec, end: segEnd, text: '' };
+        const pieceEnd = starts[k + 1] ?? segEnd;
+        if (!cur) cur = { type: 'sent', sec: starts[k], end: pieceEnd, text: '' };
         cur.text += (cur.text ? ' ' : '') + piece;
-        cur.end = Math.max(cur.sec, segEnd);
+        cur.end = Math.max(cur.sec, pieceEnd);
         const isLastPiece = k === pieces.length - 1;
         if (SENTENCE_END.test(piece)) close();
         else if (isLastPiece && (cur.end - cur.sec >= MAX_SENTENCE_SEC

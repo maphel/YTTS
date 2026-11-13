@@ -62,6 +62,30 @@ test('a segment containing several sentences is split', () => {
   assert.deepEqual(plain(sentences.map((s) => s.text)), ['Eins.', 'Zwei!', 'Drei?']);
 });
 
+// #27: sentences inside one caption segment used to share the segment's whole range.
+test('sentences inside one segment get estimated, consecutive ranges', () => {
+  const items = [seg('0:00', 'Eins zwei. Drei vier! Fünf'), seg('0:10', 'sechs. Ende.')];
+  assert.deepEqual(plain(lib.toSentences(items, 20)), [
+    { type: 'sent', sec: 0, end: 4, text: 'Eins zwei.' },
+    { type: 'sent', sec: 4, end: 8, text: 'Drei vier!' },
+    { type: 'sent', sec: 8, end: 15, text: 'Fünf sechs.' },
+    { type: 'sent', sec: 15, end: 20, text: 'Ende.' },
+  ]);
+});
+
+test('estimated ranges stay inside their segment and never run backwards', () => {
+  const items = [seg('0:00', 'A. B. C. D. E. F.'), seg('0:02', 'G. H.'), seg('0:02', 'I. J.'), seg('0:09', 'K.')];
+  const sentences = lib.toSentences(items, 12);
+  let previous = 0;
+  for (const s of sentences) {
+    assert.ok(Number.isInteger(s.sec) && Number.isInteger(s.end), `whole seconds: ${s.sec}–${s.end}`);
+    assert.ok(s.sec >= previous && s.end >= s.sec, `monotonic: ${s.sec}–${s.end}`);
+    previous = s.sec;
+  }
+  assert.equal(sentences[0].sec, 0);
+  assert.equal(sentences.at(-1).end, 12);
+});
+
 test('quotes and brackets after punctuation still end the sentence', () => {
   const items = [seg('0:00', 'Er sagte „Hallo.“ Dann ging er.'), seg('0:05', '(Applaus.) Weiter.')];
   const texts = lib.toSentences(items, 9).map((s) => s.text);
