@@ -10,7 +10,8 @@
   const PANEL_ID = 'ytts-panel';
   // Two DOM variants exist in the wild (YouTube A/B tests both).
   const SEG_SEL = 'transcript-segment-view-model, ytd-transcript-segment-renderer';
-  const CHAPTER_SEL = 'ytd-transcript-section-header-renderer';
+  // Legacy panel: section header with an h2. View-model panel: timeline-chapter-view-model > h3 (#45).
+  const CHAPTER_SEL = 'ytd-transcript-section-header-renderer, timeline-chapter-view-model';
   const OPEN_BTN_SEL = 'ytd-video-description-transcript-section-renderer button';
   const NATIVE_PANEL_SEL = 'ytd-engagement-panel-section-list-renderer';
   const EXPANDED = 'ENGAGEMENT_PANEL_VISIBILITY_EXPANDED';
@@ -153,7 +154,7 @@
     const items = [];
     for (const el of panel.querySelectorAll(`${SEG_SEL}, ${CHAPTER_SEL}`)) {
       if (el.matches(CHAPTER_SEL)) {
-        const title = (el.querySelector('h2')?.textContent
+        const title = (el.querySelector('h2, h3')?.textContent
           || el.querySelector('[aria-label]')?.getAttribute('aria-label') || '').trim();
         if (title) items.push({ type: 'chapter', title });
         continue;
