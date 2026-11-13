@@ -62,6 +62,55 @@ test('a segment containing several sentences is split', () => {
   assert.deepEqual(plain(sentences.map((s) => s.text)), ['Eins.', 'Zwei!', 'Drei?']);
 });
 
+// #27: sentences inside one caption segment used to share the segment's whole range.
+test('sentences inside one segment get estimated, consecutive ranges', () => {
+  const first = 'Das hier ist der erste ganze Satz. Danach folgt sofort der zweite Satz! Und der dritte beginnt hier';
+  const items = [seg('0:00', first), seg('0:10', 'und endet erst in der Zeile danach. Ende.')];
+  assert.deepEqual(plain(lib.toSentences(items, 20)), [
+    { type: 'sent', sec: 0, end: 2, text: 'Das hier ist der erste ganze Satz.' },
+    { type: 'sent', sec: 2, end: 4, text: 'Danach folgt sofort der zweite Satz!' },
+    { type: 'sent', sec: 4, end: 12, text: 'Und der dritte beginnt hier und endet erst in der Zeile danach.' },
+    { type: 'sent', sec: 12, end: 20, text: 'Ende.' },
+  ]);
+});
+
+const ranges = (items, duration) => plain(lib.toSentences(items, duration).map((s) => `${s.sec}–${s.end}`));
+
+test('identical sentences in one segment are told apart by position', () => {
+  const again = 'Nein, das stimmt nicht.';
+  assert.deepEqual(ranges([seg('0:00', `${again} ${again} ${again}`), seg('0:08', 'E.')], 20), ['0–1', '1–3', '3–8', '8–20']);
+});
+
+// A late estimate would skip speech when seeking, so silence after a line is not spread over it.
+test('a pause or the rest of the video after a line does not delay its sentences', () => {
+  const music = [seg('0:00', 'Hello and welcome to the show. Today we talk.'), seg('0:30', 'After music.')];
+  assert.deepEqual(ranges(music, 60), ['0–2', '2–30', '30–60']);
+  const outro = [seg('10:00', 'Thanks for watching this video. Bye for now.')];
+  assert.deepEqual(ranges(outro, 900), ['600–602', '602–900']);
+  // The estimate does not depend on the duration, which is unknown while the video loads.
+  assert.equal(lib.toSentences(outro)[1].sec, 602);
+});
+
+test('sentences that whole seconds cannot tell apart share the segment range', () => {
+  assert.deepEqual(ranges([seg('0:00', 'Ja. Nein. Doch.'), seg('0:02', 'Weiter.')], 10), ['0–2', '0–2', '0–2', '2–10']);
+  const short = [seg('0:00', 'Ok. This one is a much longer sentence that goes on for a while here.'), seg('0:06', 'Next.')];
+  assert.deepEqual(ranges(short, 10), ['0–6', '0–6', '6–10']);
+});
+
+test('estimated ranges stay inside their segment and never run backwards', () => {
+  const long = 'Der erste Satz ist lang genug. Der zweite Satz ist es ebenfalls. Der dritte auch.';
+  const items = [seg('0:00', long), seg('0:07', 'G. H.'), seg('0:07', long), seg('0:20', long)];
+  const sentences = lib.toSentences(items, 22);
+  const bounds = [[0, 7], [0, 7], [0, 7], [7, 7], [7, 7], [7, 20], [7, 20], [7, 20], [20, 22], [20, 22], [20, 22]];
+  assert.equal(sentences.length, bounds.length);
+  sentences.forEach((s, k) => {
+    assert.ok(Number.isInteger(s.sec) && Number.isInteger(s.end), `whole seconds: ${s.sec}–${s.end}`);
+    assert.ok(s.sec >= bounds[k][0] && s.end <= bounds[k][1] && s.end >= s.sec, `inside its segment: ${s.sec}–${s.end}`);
+    if (k) assert.ok(s.sec >= sentences[k - 1].sec, `monotonic: ${s.sec}`);
+  });
+  assert.ok(sentences[1].sec > 0 && sentences[2].sec > sentences[1].sec, 'long segment is estimated');
+});
+
 test('quotes and brackets after punctuation still end the sentence', () => {
   const items = [seg('0:00', 'Er sagte „Hallo.“ Dann ging er.'), seg('0:05', '(Applaus.) Weiter.')];
   const texts = lib.toSentences(items, 9).map((s) => s.text);

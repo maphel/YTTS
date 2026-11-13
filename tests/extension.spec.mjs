@@ -115,10 +115,14 @@ const fixture = `<!doctype html><html><head><meta charset="utf-8">
     const rows = state.rows || (state.video === 'first' ? first : state.video === 'second' ? second : third);
     for (const [time, text] of rows) {
       const chapter = time === 'chapter';
-      const row = document.createElement(chapter ? 'ytd-transcript-section-header-renderer'
+      // Measured on youtube.com (#45): the view-model panel renders a chapter as
+      // timeline-chapter-view-model > h3, the legacy panel as a section header with an h2.
+      const row = document.createElement(chapter
+        ? (state.variant === 'legacy' ? 'ytd-transcript-section-header-renderer' : 'timeline-chapter-view-model')
         : state.variant === 'legacy' ? 'ytd-transcript-segment-renderer' : 'transcript-segment-view-model');
       if (chapter) {
-        const heading = document.createElement('h2');
+        const heading = document.createElement(state.variant === 'legacy' ? 'h2' : 'h3');
+        if (state.variant !== 'legacy') heading.className = 'ytwTimelineChapterViewModelTitle';
         heading.textContent = text;
         row.append(heading);
       } else {
@@ -363,6 +367,60 @@ test('single-column layout keeps the card visible above the recommendations (#23
   await expect(page.locator('#secondary-inner > :first-child')).toHaveId('ytts-panel', { timeout: 3_000 });
   await expect(card).toBeVisible();
   expect(errors).toEqual([]);
+});
+
+test('expanded card is as tall as YouTube\'s own panels in each layout (#43)', async ({ page }) => {
+  // Measured on youtube.com: ytd-watch-flexy publishes --ytd-watch-flexy-panel-max-height (the
+  // player's height in two columns, 460 px in single column and theater mode).
+  const rows = Array.from({ length: 80 }, (_, i) => [`${Math.floor(i / 6)}:${String((i % 6) * 10).padStart(2, '0')}`, `Zeile ${i}.`]);
+  await setup(page, { classicLayout: true, rows, settings: { expandedByDefault: true } });
+  await page.locator('.ytts-load').click();
+  await ready(page);
+  const card = page.locator('#ytts-panel');
+  const body = card.locator('.ytts-body');
+  const setPanelHeight = (value) => page.evaluate((height) => document.querySelector('ytd-watch-flexy')
+    .style.setProperty('--ytd-watch-flexy-panel-max-height', height), value);
+  const height = async (locator) => (await locator.boundingBox()).height;
+
+  // Without YouTube's variable the card keeps its former size.
+  expect(await height(card)).toBe(511);
+
+  for (const px of [360, 784]) {
+    await setPanelHeight(`${px}px`);
+    expect(await height(card)).toBe(px);
+    expect(await height(card.locator('.ytts-header'))).toBe(56);
+    // The header stays put; the transcript scrolls inside the card.
+    expect(await body.evaluate((node) => node.scrollHeight > node.clientHeight)).toBe(true);
+    expect(await body.evaluate((node) => node.getBoundingClientRect().bottom
+      <= node.parentElement.getBoundingClientRect().bottom)).toBe(true);
+  }
+
+  // A zero or tiny value must not swallow the card.
+  await setPanelHeight('0px');
+  expect(await height(card)).toBe(240);
+
+  // Single column: the card moves into #primary and still inherits the variable.
+  await setPanelHeight('460px');
+  await page.evaluate(() => fixture.setColumns(1));
+  await expect(page.locator('#primary #ytts-panel')).toBeVisible({ timeout: 3_000 });
+  expect(await height(card)).toBe(460);
+
+  // Collapsed: only the header.
+  await card.locator('.ytts-chevron').click();
+  await expect(card).toHaveClass(/ytts-collapsed/);
+  expect(await height(card)).toBe(58);
+});
+
+// Guards the choice of max-height over height; it also passed with the former fixed size.
+test('a short transcript does not stretch the card to the panel height (#43)', async ({ page }) => {
+  await setup(page, { classicLayout: true, settings: { expandedByDefault: true } });
+  await page.locator('.ytts-load').click();
+  await ready(page);
+  await page.evaluate(() => document.querySelector('ytd-watch-flexy').style
+    .setProperty('--ytd-watch-flexy-panel-max-height', '784px'));
+  const card = page.locator('#ytts-panel');
+  expect((await card.boundingBox()).height).toBeLessThan(400);
+  expect(await card.locator('.ytts-body').evaluate((node) => node.scrollHeight <= node.clientHeight)).toBe(true);
 });
 
 test('copies line timestamps when enabled', async ({ page }) => {

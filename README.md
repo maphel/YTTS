@@ -34,7 +34,14 @@ click **Add to Chrome** and confirm the installation.
 
 Open a YouTube video with a transcript. The **Transcript** card appears above
 the related videos. Look in the sidebar on the classic layout, or below the
-video in narrow windows and on YouTube's newer layout.
+video in narrow windows and on YouTube's newer layout. When expanded, the card
+is at most as tall as YouTube's own side panels, so in the sidebar of a large
+screen a long transcript ends about level with the player.
+
+YTTS works on desktop YouTube (`www.youtube.com`) at any window size. The
+mobile site (`m.youtube.com`), which phones and most tablets
+are sent to, is not supported: it is a different app and gave YTTS no
+transcript to read when it was checked.
 
 Expand the card if needed, read its disclosure and click **Allow transcripts**.
 Click **Copy** when the transcript is ready. YTTS remembers your choice in
@@ -67,8 +74,11 @@ YouTube tab.
 **Lines** shows YouTube's caption segments. **Sentences** groups fragments using
 punctuation and length/time limits; this is a heuristic, especially for automatic
 captions without punctuation. **Text** displays these groups as paragraphs.
-Sentence time ranges are approximate, using the next segment's start or the
-video duration, with an estimated fallback if the duration is unavailable.
+Sentence time ranges are approximate: YouTube times caption segments, not
+sentences. A range ends at the next segment's start or the video duration, with
+an estimated fallback if the duration is unavailable. When one segment holds
+several sentences, YTTS estimates where each begins from its position in the
+text, assuming an even speaking pace.
 
 Copying without timestamps always produces paragraph text. With timestamps,
 **Lines** preserves the original segment timestamps; **Sentences** and **Text** use

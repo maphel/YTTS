@@ -1,5 +1,15 @@
 # Lessons Learned
 
+## 2026-11-13 — Chapter headings missing with the view-model transcript panel (#45)
+
+**Symptom:** Live canary: 0 chapter headings in the card for a video with 21 chapters; segments fine.
+**Root cause:** The view-model panel renders chapters as `timeline-chapter-view-model > h3`, not as
+`ytd-transcript-section-header-renderer`. The fixture used the legacy chapter header for both segment
+variants, so only the live canary could notice.
+**Fix:** `CHAPTER_SEL` matches both; the fixture renders each variant's own chapter markup.
+**Prevention:** When YouTube ships a second DOM variant, give the fixture that variant's markup for
+every element YTTS reads, not only the one that first broke.
+
 ## 2026-11-09 — Card invisible in narrow windows (#23)
 
 **Symptom:** Below about 1000 px viewport width the card disappeared; found while rendering the
@@ -18,6 +28,8 @@ classic and side-rail layouts had been checked.
 **Root cause:** Per video, YouTube loads the transcript via `/youtubei/v1/get_panel` (view-model
 panel) or the legacy `/youtubei/v1/get_transcript`. In automated Chromium many `get_transcript`
 videos got HTTP 400 while `get_panel` videos loaded (4 of 4 vs. 2 of 2 measured).
+In a normal Chrome both kinds load (maintainer check, 2026-11-09): the refusal is specific to
+automated browsers, not a problem for users.
 **Fix:** The screenshot script uses a `get_panel` video (`rfscVS0vtbw`). The live canary keeps its
 `get_transcript` chapters video (`zjkBMFhNj_g`): the measured `get_panel` videos had no chapter
 headers, and a refused request already counts as inconclusive there.
