@@ -55,7 +55,8 @@ entry, same isolated world) and `lib.js` → `i18n.js` → `popup.js` in `popup.
 5. **The scraped native panel stays on-screen** (opacity 0), never off-screen: YouTube
    lazy-loads segments only when the panel intersects the viewport.
 6. **Support both segment DOM variants** (`ytd-transcript-segment-renderer`,
-   `transcript-segment-view-model`) and all layouts: classic sidebar, single column (narrow
+   `transcript-segment-view-model`), each with its own chapter heading
+   (`ytd-transcript-section-header-renderer`, `timeline-chapter-view-model`), and all layouts: classic sidebar, single column (narrow
    windows, `#secondary` not rendered) and side-rail. Outside the sidebar the card sits directly
    before the visible `#primary #related`. The expanded card's height is YouTube's own
    `--ytd-watch-flexy-panel-max-height` (inherited from `ytd-watch-flexy`), not a fixed number.

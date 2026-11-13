@@ -15,6 +15,9 @@ All notable changes to YTTS are listed here. The format is based on
 - The expanded card is as tall as YouTube's own side panels instead of always 511 px: about level with the player on wide screens, 460 px (smaller than before) in narrow windows and theater mode. Short transcripts still shrink it.
 - On devices whose main input is touch, a tapped line no longer stays highlighted.
 
+### Fixed
+- Chapter headings now appear, in the card and in copied text, on videos where YouTube shows its newer transcript panel.
+
 ## 0.1.2 — 2026-11-09
 
 ### Changed

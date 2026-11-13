@@ -130,7 +130,10 @@ test('reads chapters and a long transcript, then follows SPA navigation', async 
   expect(panelHeight).toMatch(/^\d+(\.\d+)?px$/);
   expect(parseFloat(panelHeight)).toBeGreaterThanOrEqual(240);
   expect((await page.locator('#ytts-panel').boundingBox()).height).toBeCloseTo(parseFloat(panelHeight), 0);
-  expect(await page.locator('#ytts-panel .ytts-chapter').count()).toBeGreaterThan(5);
+  // Each chapter once: YouTube's panel also has a Chapters tab built from the same elements (#45).
+  const chapters = await page.locator('#ytts-panel .ytts-chapter').allTextContents();
+  expect(chapters.length).toBeGreaterThan(5);
+  expect(new Set(chapters).size).toBe(chapters.length);
   expect(await page.locator('#ytts-panel [data-sec]').count()).toBeGreaterThan(100);
   const oldSignature = await cardSignature(page);
 

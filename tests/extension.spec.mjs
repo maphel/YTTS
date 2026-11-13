@@ -115,10 +115,14 @@ const fixture = `<!doctype html><html><head><meta charset="utf-8">
     const rows = state.rows || (state.video === 'first' ? first : state.video === 'second' ? second : third);
     for (const [time, text] of rows) {
       const chapter = time === 'chapter';
-      const row = document.createElement(chapter ? 'ytd-transcript-section-header-renderer'
+      // Measured on youtube.com (#45): the view-model panel renders a chapter as
+      // timeline-chapter-view-model > h3, the legacy panel as a section header with an h2.
+      const row = document.createElement(chapter
+        ? (state.variant === 'legacy' ? 'ytd-transcript-section-header-renderer' : 'timeline-chapter-view-model')
         : state.variant === 'legacy' ? 'ytd-transcript-segment-renderer' : 'transcript-segment-view-model');
       if (chapter) {
-        const heading = document.createElement('h2');
+        const heading = document.createElement(state.variant === 'legacy' ? 'h2' : 'h3');
+        if (state.variant !== 'legacy') heading.className = 'ytwTimelineChapterViewModelTitle';
         heading.textContent = text;
         row.append(heading);
       } else {
