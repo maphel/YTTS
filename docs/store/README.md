@@ -90,8 +90,6 @@ be published within 30 days).
   transcripts. [Browser check notes](https://github.com/maphel/YTTS/pull/32)
 - **Privacy contact.** PRIVACY.md points to GitHub issues (needs an account). Optionally add the
   dashboard's verified contact email there.
-- **Sentence time ranges** (#27): several sentences inside one caption segment show the same
-  range, visible in the screenshots. Not a policy issue; fix or switch the store shots to Lines.
 
 ## Manual checklist
 

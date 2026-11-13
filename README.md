@@ -74,8 +74,11 @@ YouTube tab.
 **Lines** shows YouTube's caption segments. **Sentences** groups fragments using
 punctuation and length/time limits; this is a heuristic, especially for automatic
 captions without punctuation. **Text** displays these groups as paragraphs.
-Sentence time ranges are approximate, using the next segment's start or the
-video duration, with an estimated fallback if the duration is unavailable.
+Sentence time ranges are approximate: YouTube times caption segments, not
+sentences. A range ends at the next segment's start or the video duration, with
+an estimated fallback if the duration is unavailable. When one segment holds
+several sentences, YTTS estimates where each begins from its position in the
+text, assuming an even speaking pace.
 
 Copying without timestamps always produces paragraph text. With timestamps,
 **Lines** preserves the original segment timestamps; **Sentences** and **Text** use
