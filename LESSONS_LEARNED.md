@@ -28,6 +28,8 @@ classic and side-rail layouts had been checked.
 **Root cause:** Per video, YouTube loads the transcript via `/youtubei/v1/get_panel` (view-model
 panel) or the legacy `/youtubei/v1/get_transcript`. In automated Chromium many `get_transcript`
 videos got HTTP 400 while `get_panel` videos loaded (4 of 4 vs. 2 of 2 measured).
+In a normal Chrome both kinds load (maintainer check, 2026-11-09): the refusal is specific to
+automated browsers, not a problem for users.
 **Fix:** The screenshot script uses a `get_panel` video (`rfscVS0vtbw`). The live canary keeps its
 `get_transcript` chapters video (`zjkBMFhNj_g`): the measured `get_panel` videos had no chapter
 headers, and a refused request already counts as inconclusive there.
