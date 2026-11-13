@@ -125,6 +125,7 @@ YouTube tab. Please read [Contributing](CONTRIBUTING.md) before making changes.
 ```sh
 npm run screenshot             # docs/screenshots/*.png for this README (needs youtube.com)
 npm run screenshot -- --store  # docs/store/screenshots/*.png for the Chrome Web Store
+npm run screenshot -- --site   # website/assets/card-*.webp for the product website
 ```
 
 ## License

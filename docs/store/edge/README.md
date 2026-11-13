@@ -135,10 +135,8 @@ certification. There is no assumed second manual go-live gate.
 
 ## Open items
 
-- **Descriptions differ by language.** `descriptions/en.txt` is the Chrome Web Store text and
-  does not mention Edge. Other languages name Microsoft Edge, and some add "free and open
-  source", "no ads" or the settings-sync sentence. All of these statements are true, but align
-  the 21 texts to one English source before submitting.
+- **Descriptions:** `descriptions/en.txt` is the source text; the other 20 files follow it
+  sentence by sentence. They were aligned by an agent and not checked by native speakers.
 - **Edge sideload check** (see above) and the saved dashboard draft.
 - **Privacy policy URL:** after this file is on `main`, open its public URL before using it in
   the listing.

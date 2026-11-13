@@ -1,9 +1,9 @@
-YTTS visar transkriptionen bredvid videon så att du kan läsa och kopiera den med ett klick. Läs de ursprungliga undertextraderna, grupperade meningar eller löpande text. Klicka på en rad eller mening för att hoppa till den tidpunkten i videon. Kopiera hela transkriptionen som vanlig text, med valfria tidsstämplar.
+YTTS för Microsoft Edge visar transkriptionen bredvid videon så att du kan läsa och kopiera den med ett klick. Läs de ursprungliga undertextraderna, grupperade meningar eller löpande text. Klicka på en rad eller mening för att hoppa till den tidpunkten i videon. Kopiera hela transkriptionen som vanlig text, med valfria tidsstämplar.
 
 På en videosida fäller du vid behov ut kortet ”Transkription”, läser informationen och klickar på ”Tillåt transkriptioner”. YTTS öppnar sedan YouTubes transkriptionspanel i bakgrunden när det behövs, läser texten som visas och stänger panelen om YTTS öppnade den. Microsoft Edge kommer ihåg det här valet för den här installationen, så att transkriptioner läses in på videosidor som du öppnar senare.
 
-Transkriptionerna stannar i flikens minne. YTTS skriver till urklipp endast när du klickar på ”Kopiera”. Microsoft Edge sparar ditt samtycke lokalt och lagrar tre visningsinställningar. YTTS kräver inget konto och har ingen backend, reklam, användningsanalys eller telemetri.
+Transkriptionerna stannar i flikens minne. YTTS skriver till urklipp endast när du klickar på ”Kopiera”. Microsoft Edge sparar ditt samtycke lokalt och lagrar tre visningsinställningar, som kan synkroniseras via ditt webbläsarkonto om synkronisering av inställningar är aktiverad. YTTS är gratis och har öppen källkod, utan reklam, konto, backend, användningsanalys eller telemetri.
 
 En video måste ha undertexter som YouTube gör tillgängliga som transkription. Kortet följer webbplatsens gränssnittsspråk och passar ihop med dess ljusa och mörka teman.
 
-YTTS är ett oberoende projekt och är inte knutet till YouTube eller Google.
+YTTS är ett oberoende projekt och är inte knutet till YouTube, Google eller Microsoft.
