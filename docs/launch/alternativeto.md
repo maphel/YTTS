@@ -1,20 +1,20 @@
 # AlternativeTo
 
-**Am 12. November 2026 eingereicht; wartet auf Prüfung.**
-[AlternativeTo öffnen](https://alternativeto.net/). Anmelden, E-Mail bestätigen, dann im
-Profilmenü **Suggest new application** wählen. Die normale Einreichung ist kostenlos;
-keine kostenpflichtige Priority Review auswählen.
+**Submitted on 12 November 2026; waiting for review.**
+[Open AlternativeTo](https://alternativeto.net/). Sign in, confirm your email, then choose
+**Suggest new application** in the profile menu. The normal submission is free;
+do not select the paid Priority Review.
 
-**Submit the application** wurde betätigt, anschließend wurden Ditto Transcript Generator und
-Copy Youtube Transcript als Alternativen eingereicht. Die App-Seite bestätigt die kostenlose
-Prüfwarteschlange und zeigt zwei zugeordnete Alternativen. Das kostenpflichtige Prüfangebot wurde
-mit **No thanks, continue** abgelehnt. Aktuell ist die App nur für den Einreicher sichtbar.
-Den Status unter [My submissions](https://alternativeto.net/my-submissions/) prüfen und den
-App-Link erst nach Freigabe teilen.
+**Submit the application** was pressed, then Ditto Transcript Generator and
+Copy Youtube Transcript were submitted as alternatives. The app page confirms the free
+review queue and shows two assigned alternatives. The paid review offer was
+declined with **No thanks, continue**. Currently the app is visible only to the submitter.
+Check the status under [My submissions](https://alternativeto.net/my-submissions/) and share the
+app link only after approval.
 
-Laut [FAQ](https://alternativeto.net/faq/#how-long-does-it-take-to-get-my-app-reviewed)
-warten mehrere Tausend Apps auf Prüfung. Eine zeitnahe Prüfung oder Aufnahme ist nicht
-garantiert. Wartende Einträge sind nur für den Einreicher sichtbar.
+According to the [FAQ](https://alternativeto.net/faq/#how-long-does-it-take-to-get-my-app-reviewed),
+several thousand apps are waiting for review. A timely review or inclusion is not
+guaranteed. Waiting entries are visible only to the submitter.
 
 ## Name
 
@@ -30,7 +30,7 @@ Read and copy YouTube transcripts in a card that matches YouTube's light and dar
 
 ## Description
 
-Keine URLs in dieses Feld kopieren; die Linkfelder unten verwenden.
+Do not copy any URLs into this field; use the link fields below.
 
 ```text
 YTTS is a free, open-source Chromium extension that places a transcript card directly on the YouTube watch page. The card follows YouTube's light and dark themes and interface language, keeping transcripts close to the video.
@@ -44,49 +44,49 @@ The interface supports 21 locales, including right-to-left Arabic. Videos must a
 YTTS is an independent project and is not affiliated with YouTube or Google.
 ```
 
-## Weitere Felder
+## Other fields
 
-Kategorien und Feature-Namen sind Vorschläge; die tatsächlich im Formular vorhandenen Werte
-wählen. Keine Speech-to-Text-, Übersetzungs- oder KI-Funktion auswählen.
+Categories and feature names are suggestions; choose the values actually available in the
+form. Do not select any speech-to-text, translation or AI feature.
 
-| Feld | Wert |
+| Field | Value |
 | --- | --- |
-| Pricing | Free, nicht Freemium |
+| Pricing | Free, not Freemium |
 | Source / license | Open Source; MIT |
-| Platform | Google Chrome; keine nativen Windows-, macOS- oder Linux-Apps angeben |
-| Categories | Office & Productivity (aus dem Tag productivity-tool) |
+| Platform | Google Chrome; do not list native Windows, macOS or Linux apps |
+| Categories | Office & Productivity (from the tag productivity-tool) |
 | Tags | youtube, productivity-tool, browser-extension |
 | Features | Ad-free, No Tracking, No registration required, Dark Mode, Lightweight |
 | Supported languages | English, German, Spanish, French, Italian, Portuguese, Dutch, Polish, Turkish, Russian, Ukrainian, Japanese, Korean, Chinese, Hindi, Indonesian, Vietnamese, Arabic, Swedish |
-| Company / Author | Maphel; Website https://www.christophel.io |
-| Release date | 2026-11-09; erste öffentliche [GitHub-Release v0.1.0](https://github.com/maphel/YTTS/releases/tag/v0.1.0) |
+| Company / Author | Maphel; Website https://christophel.io |
+| Release date | 2026-11-09; first public [GitHub release v0.1.0](https://github.com/maphel/YTTS/releases/tag/v0.1.0) |
 | Official website | https://ytts.christophel.io/ |
 | Chrome Web Store | https://chromewebstore.google.com/detail/ytts/ipkipmmdaicpfijcddghjpfjpacgdphe |
 | Source code | https://github.com/maphel/YTTS |
 | Privacy | https://github.com/maphel/YTTS/blob/main/PRIVACY.md |
 | Icon | [assets/icon-512.png](assets/icon-512.png) |
-| Screenshots | [Hauptbild](assets/01-native-themes.png), [Watch-Seite](assets/02-watch-page.png), [Einstellungen](assets/03-preferences.png) |
+| Screenshots | [Main image](assets/01-native-themes.png), [Watch page](assets/02-watch-page.png), [Settings](assets/03-preferences.png) |
 
-Das Sprachfeld fasst brasilianisches und europäisches Portugiesisch sowie die chinesischen
-Varianten jeweils zusammen: 19 Verzeichniseinträge decken die 21 Oberflächen-Locales ab.
-Die Features sind belegbare Eigenschaften für passende Formularoptionen; die tatsächliche
-Tag-Auswahl im ausgefüllten Formular ist oben festgehalten.
+The language field combines Brazilian and European Portuguese, and likewise the Chinese
+variants, into one entry each: 19 directory entries cover the 21 interface locales.
+The features are verifiable properties for matching form options; the actual
+tag selection in the completed form is recorded above.
 
-## Als Alternative vorschlagen
+## Suggesting as an alternative
 
-Die ersten beiden wurden bereits zugeordnet. Für spätere Ergänzungen auf der jeweiligen
-Produktseite **Contribute to this page → Suggest Alternatives** verwenden. Sachliche
-Überschneidungen nennen; keine Konkurrenz bewerten, die du nicht selbst getestet hast.
+The first two have already been assigned. For later additions, use
+**Contribute to this page → Suggest Alternatives** on the respective product page. State factual
+overlaps; do not rate competitors that you have not tested yourself.
 
 1. [Ditto Transcript Generator](https://alternativeto.net/software/ditto-transcript-generator/about/):
-   lokale Open-Source-Chrome-Extension zum Kopieren vorhandener Transkripte. Ditto unterstützt
-   weitere Plattformen; YTTS konzentriert sich auf YouTube.
+   local open-source Chrome extension for copying existing transcripts. Ditto supports
+   further platforms; YTTS focuses on YouTube.
 2. [Copy Youtube Transcript](https://alternativeto.net/software/copy-youtube-transcript/about/):
-   direkter Bezug zu Kopieren von YouTube-Transkripten und Zeitstempeln.
+   directly related to copying YouTube transcripts and timestamps.
 3. [Youtube to Transcript](https://alternativeto.net/software/youtube-to-transcript/about/):
-   nur für das Auslesen und Kopieren vorhandener YouTube-Transkripte vergleichbar. Die dort
-   beworbenen zusätzlichen KI- und Transkriptionsfunktionen bietet YTTS nicht.
+   comparable only for reading out and copying existing YouTube transcripts. YTTS does not
+   offer the additional AI and transcription features advertised there.
 
-Quellen: [Einreichung, Sprache und Linkfelder](https://alternativeto.net/faq/),
-[Bedingungen](https://alternativeto.net/about/terms/). Das Verzeichnis ist vor allem für
-passende Suchende relevant; ein Rankinggewinn durch den Eintrag ist nicht garantiert.
+Sources: [submission, language and link fields](https://alternativeto.net/faq/),
+[terms](https://alternativeto.net/about/terms/). The directory is relevant mainly to
+people searching for a matching tool; a ranking gain from the entry is not guaranteed.

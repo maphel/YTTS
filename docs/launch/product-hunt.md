@@ -1,11 +1,11 @@
 # Product Hunt
 
-**Eingeplant für 13. November 2026, 09:01 Uhr Berlin (00:01 PT).**
-[Launch-Ziel](https://www.producthunt.com/products/ytts?launch=ytts).
-Das Pre-Launch-Dashboard bestätigt **Scheduled**. Noch nicht als live oder als bereits
-indexiert behandeln; geplante Launches können vor Veröffentlichung geprüft werden.
-Der normale Launch ist kostenlos. Im Account sind vier Galeriebilder, die Produkttexte,
-Links, drei Launch-Tags, Preis **Free**, Maker-Rolle und erster Kommentar gespeichert.
+**Scheduled for 13 November 2026, 09:01 Berlin time (00:01 PT).**
+[Launch target](https://www.producthunt.com/products/ytts?launch=ytts).
+The pre-launch dashboard confirms **Scheduled**. Do not treat it as live or as already
+indexed yet; scheduled launches can be reviewed before publication.
+The normal launch is free. Saved in the account are four gallery images, the product texts,
+links, three launch tags, price **Free**, maker role and first comment.
 
 ## Name
 
@@ -13,21 +13,21 @@ Links, drei Launch-Tags, Preis **Free**, Maker-Rolle und erster Kommentar gespei
 YTTS
 ```
 
-## Tagline — 38 / 60 Zeichen
+## Tagline — 38 / 60 characters
 
 ```text
 YouTube transcripts that look built-in
 ```
 
-## Description — 406 / 500 Zeichen
+## Description — 406 / 500 characters
 
 ```text
 YTTS adds a transcript card directly to YouTube's watch page, matching its light and dark themes. Read existing transcripts as lines, sentences or text, jump using timestamps, and copy everything with or without timestamps. Free and open source, with no ads, account or tracking. The interface supports 21 locales. Uses YouTube's available transcript; it does not transcribe, translate or summarize videos.
 ```
 
-## Weitere Felder
+## Other fields
 
-| Feld | Wert |
+| Field | Value |
 | --- | --- |
 | Product URL | https://ytts.christophel.io/ |
 | Additional link: Chrome Web Store | https://chromewebstore.google.com/detail/ytts/ipkipmmdaicpfijcddghjpfjpacgdphe |
@@ -35,21 +35,21 @@ YTTS adds a transcript card directly to YouTube's watch page, matching its light
 | Pricing | Free |
 | Role | I made this |
 | Maker | Marcel Christophel |
-| Open source | Ja; Repository verlinken |
-| Launch tags | Chrome Extensions, Productivity, Open Source; die nächstpassenden angebotenen Tags wählen, maximal drei |
+| Open source | Yes; link the repository |
+| Launch tags | Chrome Extensions, Productivity, Open Source; choose the closest matching tags offered, three at most |
 | Logo | [assets/icon-240.png](assets/icon-240.png) |
-| Gallery | Vier Bilder im Account; die drei lokalen Upload-Vorlagen stehen unten |
+| Gallery | Four images in the account; the three local upload templates are listed below |
 
-Keine Rabattaktion eintragen: YTTS ist ohnehin vollständig kostenlos. Die Demo ist über die
-Website erreichbar. Ein zusätzliches Video ist optional; die vorhandene MP4-Datei ist kein
-bereits angelegter YouTube- oder Vimeo-Link.
+Do not enter a discount promotion: YTTS is completely free anyway. The demo is reachable via the
+website. An additional video is optional; the existing MP4 file is not an
+already created YouTube or Vimeo link.
 
-## Gallery und Alt-Texte
+## Gallery and alt texts
 
-Im Account wurden das vorhandene Website-Sharebild und ein vorhandener YouTube-Screenshot
-beibehalten und um `01-native-themes.png` und `03-preferences.png` ergänzt. Die Liste enthält
-zusätzlich `02-watch-page.png` als weitere lokale Vorlage; sie beschreibt nicht die aktuelle
-Reihenfolge der vier gespeicherten Bilder.
+In the account, the existing website share image and an existing YouTube screenshot were
+kept, and `01-native-themes.png` and `03-preferences.png` were added. The list also contains
+`02-watch-page.png` as a further local template; it does not describe the current
+order of the four saved images.
 
 1. [01-native-themes.png](assets/01-native-themes.png):
    `YTTS transcript cards matching YouTube's light and dark themes, with timestamps and a Copy button.`
@@ -74,8 +74,8 @@ It's open source under MIT: https://github.com/maphel/YTTS
 If you use YouTube transcripts, I'd like to hear whether this fits your workflow and whether the card feels like part of YouTube.
 ```
 
-Nach dem Launch für Rückfragen erreichbar sein. Um ehrliches Feedback bitten; keine Upvotes
-anfordern. Ein kostenloser Launch garantiert keine Platzierung auf der kuratierten Startseite.
+Be reachable for questions after the launch. Ask for honest feedback; do not request
+upvotes. A free launch does not guarantee placement on the curated homepage.
 
-Quellen: [Felder und Medien](https://help.producthunt.com/en/articles/17834537-4-build-your-product-page),
-[Launch-FAQ](https://help.producthunt.com/en/articles/17734646-8-launch-faq-and-myths).
+Sources: [fields and media](https://help.producthunt.com/en/articles/17834537-4-build-your-product-page),
+[launch FAQ](https://help.producthunt.com/en/articles/17734646-8-launch-faq-and-myths).

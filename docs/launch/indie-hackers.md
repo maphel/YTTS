@@ -1,16 +1,16 @@
 # Indie Hackers
 
-**Am 12. November 2026 veröffentlicht:** [YTTS](https://www.indiehackers.com/product/ytts).
-Der Produkteintrag enthält Text, Logo und drei Bilder. Das bestätigte Startjahr **2026** wurde
-gespeichert und auf der veröffentlichten Seite geprüft; Monat und Tag bleiben offen.
-Die Basisnutzung ist kostenlos. Der Community-Beitrag unten ist weiterhin nur als Text vorbereitet.
+**Published on 12 November 2026:** [YTTS](https://www.indiehackers.com/product/ytts).
+The product entry contains text, logo and three images. The confirmed start year **2026** was
+saved and checked on the published page; month and day remain open.
+Basic use is free. The community post below is still prepared as text only.
 
-Das Produktformular speichert Änderungen automatisch. Bei einer neuen Seite ist **PUBLISH**
-ein separater Schritt. Das Startdatum bezeichnet den Entwicklungsbeginn, nicht den Launch.
+The product form saves changes automatically. For a new page, **PUBLISH**
+is a separate step. The start date denotes the start of development, not the launch.
 
-## Produkteintrag
+## Product entry
 
-| Feld | Wert |
+| Field | Value |
 | --- | --- |
 | Name | YTTS |
 | Website | https://ytts.christophel.io/ |
@@ -18,24 +18,24 @@ ein separater Schritt. Das Startdatum bezeichnet den Entwicklungsbeginn, nicht d
 | Product type | Software |
 | Platforms | Browser extension: Chrome, Edge |
 | Business model | Free |
-| Started | 2026; kein genauer Monat oder Tag |
+| Started | 2026; no exact month or day |
 | Maker | Marcel Christophel |
 | Logo | [assets/icon-512.png](assets/icon-512.png) |
-| Bild, falls angeboten | [assets/01-native-themes.png](assets/01-native-themes.png) |
+| Image, if offered | [assets/01-native-themes.png](assets/01-native-themes.png) |
 
-Keine Nutzer-, Umsatz- oder Wachstumszahlen erfinden. Das Umsatzfeld steht auf **Keep it private**.
-Das Formular verlangt diese Auswahl oder öffentliche Zahlen, bevor Publish möglich wird.
+Do not invent user, revenue or growth figures. The revenue field is set to **Keep it private**.
+The form requires this selection or public figures before Publish becomes possible.
 
-### Description — 151 / 160 Zeichen
+### Description — 151 / 160 characters
 
 ```text
 A free, open-source extension to read and copy YouTube transcripts in a card that matches YouTube's light and dark themes. No ads, account or tracking.
 ```
 
-## Erster Community-Beitrag
+## First community post
 
-Zusätzlich zum Produkteintrag geeignet. Neue Accounts können beim Posten eingeschränkt sein;
-keinen sofortigen Forumpost oder festen Freischaltungs-Punktestand voraussetzen.
+Suitable in addition to the product entry. New accounts can be restricted when posting;
+do not assume an immediate forum post or a fixed unlock point score.
 
 ### Title
 
@@ -62,6 +62,6 @@ Source: https://github.com/maphel/YTTS
 If you regularly use transcripts, what feels awkward about your current workflow?
 ```
 
-Quellen: [Produktdatenbank](https://www.indiehackers.com/products),
-[Basisnutzung](https://www.indiehackers.com/terms),
-[Empfehlungen des Gründers für Beiträge](https://www.indiehackers.com/post/tips-for-making-successful-posts-on-indie-hackers-b04454a57a).
+Sources: [product database](https://www.indiehackers.com/products),
+[basic use](https://www.indiehackers.com/terms),
+[the founder's recommendations for posts](https://www.indiehackers.com/post/tips-for-making-successful-posts-on-indie-hackers-b04454a57a).

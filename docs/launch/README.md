@@ -1,105 +1,110 @@
-# YTTS Launch-Paket
+# YTTS launch kit
 
-Stand 13. November 2026. **Veröffentlichungsstatus siehe Tabelle.**
-Die Texte sind Englisch, damit sie auf den internationalen Plattformen passen.
-Vor dem Absenden kurz persönlich lesen und gegebenenfalls anpassen.
+As of 13 November 2026. **For publication status, see the table.**
+The texts are in English so that they fit the international platforms.
+Before submitting, read them briefly yourself and adjust them if needed.
 
-## Reihenfolge und Status
+## Order and status
 
-| Plattform | Material | Status | Öffentlicher Eintrag |
+| Platform | Material | Status | Public entry |
 | --- | --- | --- | --- |
-| Indie Hackers | [Produkteintrag und erster Beitrag](indie-hackers.md) | Produkteintrag am 12. November veröffentlicht; Startjahr 2026 bestätigt. Community-Beitrag nur als Text vorbereitet | [YTTS](https://www.indiehackers.com/product/ytts) |
-| Product Hunt | [Felder und Maker-Kommentar](product-hunt.md) | Am 12. November für 13. November 2026, 09:01 Uhr Berlin (00:01 PT) eingeplant; Live-Status noch nicht erneut geprüft | [Launch-Ziel](https://www.producthunt.com/products/ytts?launch=ytts) |
-| Show HN | [Eckdaten für deinen eigenen Text](show-hn-notes.md) | Fakten vorbereitet; Beitrag von Marcel zu schreiben | — |
-| AlternativeTo | [Produkteintrag und passende Alternativen](alternativeto.md) | Am 12. November mit zwei passenden Alternativen in die kostenlose Prüfwarteschlange eingereicht; noch nicht öffentlich | — |
-| Reddit r/SideProject | [Beitrag mit Demo](https://www.reddit.com/r/SideProject/comments/1xut1in/i_wanted_a_youtube_transcript_tool_that_actually/) | Am 13. November mit dem freigegebenen Text und englischer Demo eingereicht; von Reddit-Filtern entfernt. Bitte um manuelle Freigabe an die Moderatoren gesendet; UI bestätigt „Message sent“ | Noch nicht regulär sichtbar |
-| Microsoft Edge Add-ons | [Paket, 21 Beschreibungen, Bilder und Datenschutz](../store/edge/README.md) | Lokal vorbereitet; Microsoft-Sicherheitsbestätigung durch Kontoinhaber und echter Edge-Test noch offen. Kein Dashboard-Entwurf gespeichert, nicht eingereicht | — |
+| Indie Hackers | [Product entry and first post](indie-hackers.md) | Product entry published on 12 November; start year 2026 confirmed. Community post prepared as text only | [YTTS](https://www.indiehackers.com/product/ytts) |
+| Product Hunt | [Fields and maker comment](product-hunt.md) | Scheduled on 12 November for 13 November 2026, 09:01 Berlin time (00:01 PT); live status not yet checked again | [Launch target](https://www.producthunt.com/products/ytts?launch=ytts) |
+| Show HN | [Key facts for your own text](show-hn-notes.md) | Facts prepared; post to be written by Marcel | — |
+| AlternativeTo | [Product entry and matching alternatives](alternativeto.md) | Submitted on 12 November with two matching alternatives to the free review queue; not yet public | — |
+| Reddit r/SideProject | [Post with demo](https://www.reddit.com/r/SideProject/comments/1xut1in/i_wanted_a_youtube_transcript_tool_that_actually/) | Submitted on 13 November with the approved text and English demo; removed by Reddit filters; manual approval requested from the moderators | Not yet regularly visible |
+| Microsoft Edge Add-ons | [Package, 21 descriptions, images and privacy](../store/edge/README.md) | Prepared locally; developer account setup and a real Edge test still open. No dashboard draft saved, not submitted | — |
 
-Die Status wurden nach der Veröffentlichung beziehungsweise Einreichung in der Browser-UI
-geprüft. Product Hunt bestätigte den Termin am 12. November im Pre-Launch-Dashboard als **Scheduled**.
-AlternativeTo zeigte bei der Einreichung **Your submission is waiting to be reviewed** und wies darauf hin,
-dass aktuell nur der Einreicher die App sehen kann. Status unter
-[My submissions](https://alternativeto.net/my-submissions/) prüfen; den App-Link erst nach
-Freigabe teilen. Eine zeitnahe Prüfung ist nicht garantiert. Es wurde keine kostenpflichtige
-Prüfung gebucht.
+Each status was checked in the browser UI after publication or submission, respectively.
+Product Hunt confirmed the date on 12 November in the pre-launch dashboard as **Scheduled**.
+AlternativeTo showed **Your submission is waiting to be reviewed** on submission and pointed out
+that currently only the submitter can see the app. Check the status under
+[My submissions](https://alternativeto.net/my-submissions/); share the app link only after
+approval. A timely review is not guaranteed. No paid review was booked.
 
-## Gemeinsame Angaben
+`assets/01-native-themes.png` is built from the website's card images
+(`website/assets/card-*.webp`), which predate v0.2.0: it still shows repeated time ranges and
+no chapter heading. Regenerate it with `node scripts/launch-assets.mjs` once those images are
+replaced. `02-watch-page.png` and `03-preferences.png` were regenerated from the v0.2.0
+screenshots.
 
-| Feld | Wert |
+## Shared details
+
+| Field | Value |
 | --- | --- |
 | Name | YTTS |
-| Entwickler / Maker | Marcel Christophel |
-| Website und Demo | https://ytts.christophel.io/ |
+| Developer / Maker | Marcel Christophel |
+| Website and demo | https://ytts.christophel.io/ |
 | Chrome Web Store | https://chromewebstore.google.com/detail/ytts/ipkipmmdaicpfijcddghjpfjpacgdphe |
-| Quellcode | https://github.com/maphel/YTTS |
+| Source code | https://github.com/maphel/YTTS |
 | Support | https://github.com/maphel/YTTS/issues |
-| Datenschutz der Extension | https://github.com/maphel/YTTS/blob/main/PRIVACY.md |
-| Preis | Free; keine Werbung, kein Abo, kein erforderlicher Account |
-| Lizenz | MIT; Open Source |
-| Plattform | Desktop: Chrome und kompatible Chromium-Browser |
+| Privacy of the extension | https://github.com/maphel/YTTS/blob/main/PRIVACY.md |
+| Price | Free; no ads, no subscription, no required account |
+| License | MIT; open source |
+| Platform | Desktop: Chrome and compatible Chromium browsers |
 
-Die Positionierung bleibt gleich: eine Transkriptkarte, die sich in YouTubes Design einfügt,
-in Hell und Dunkel, komplett kostenlos. Keine Zusammenfassungen oder KI-Funktionen versprechen.
-Die **21 Locales betreffen die Oberfläche**, nicht die Übersetzung von Transkripten.
-Ein Video braucht bereits ein bei YouTube verfügbares Transkript. YTTS ist unabhängig von Google.
+The positioning stays the same: a transcript card that blends into YouTube's design,
+in light and dark, completely free. Do not promise summaries or AI features.
+The **21 locales concern the interface**, not the translation of transcripts.
+A video needs a transcript that is already available on YouTube. YTTS is independent of Google.
 
-## Upload-Dateien
+## Upload files
 
-| Datei | Verwendung |
+| File | Use |
 | --- | --- |
-| [icon-240.png](assets/icon-240.png) | Product-Hunt-Logo, 240 × 240, transparenter Hintergrund |
-| [icon-512.png](assets/icon-512.png) | Größeres Icon für Verzeichnisse, 512 × 512 |
-| [01-native-themes.png](assets/01-native-themes.png) | Hauptbild: echte Karte in Hell und Dunkel, 1270 × 760 |
-| [02-watch-page.png](assets/02-watch-page.png) | Echte Karte auf der YouTube-Seite, 1270 × 760 |
-| [03-preferences.png](assets/03-preferences.png) | Echte Einstellungen in Hell und Dunkel, 1270 × 760 |
-| [Bestehende Desktop-Demo](../../website/assets/demo.mp4) | 1920 × 1080, ungefähr 19 Sekunden, Englisch |
-| [Bestehende Mobil-Demo](../../website/assets/demo-portrait.mp4) | 1080 × 1350, Englisch |
+| [icon-240.png](assets/icon-240.png) | Product Hunt logo, 240 × 240, transparent background |
+| [icon-512.png](assets/icon-512.png) | Larger icon for directories, 512 × 512 |
+| [01-native-themes.png](assets/01-native-themes.png) | Main image: real card in light and dark, 1270 × 760 |
+| [02-watch-page.png](assets/02-watch-page.png) | Real card on the YouTube page, 1270 × 760 |
+| [03-preferences.png](assets/03-preferences.png) | Real settings in light and dark, 1270 × 760 |
+| [Existing desktop demo](../../website/assets/demo.mp4) | 1920 × 1080, about 19 seconds, English |
+| [Existing mobile demo](../../website/assets/demo-portrait.mp4) | 1080 × 1350, English |
 
-Die PNGs sind aus dem bestehenden SVG-Icon und den vorhandenen echten Screenshots gerendert.
-Andere Videoinhalte in der Übersichtsaufnahme sind bereits unkenntlich gemacht. Die Bilder
-zeigen die englische Oberfläche. Videos werden in diesem Schritt nicht neu übersetzt oder
-bei einem weiteren Dienst hochgeladen. Für ein optionales Video-Feld erst prüfen, welche
-Video-Hoster die jeweilige Plattform akzeptiert; die Website bietet die Demo bereits direkt an.
+The PNGs are rendered from the existing SVG icon and the existing real screenshots.
+Other video content in the overview shot has already been made unrecognizable. The images
+show the English interface. Videos are not re-translated in this step or uploaded to
+another service. For an optional video field, first check which
+video hosts the platform in question accepts; the website already offers the demo directly.
 
-Galerie-Alt-Texte stehen bei den [Product-Hunt-Feldern](product-hunt.md).
-Bei Verzeichnissen mit wenig Platz reichen Icon und Hauptbild.
+Gallery alt texts are listed with the [Product Hunt fields](product-hunt.md).
+For directories with little space, the icon and main image are enough.
 
-## Vor dem Absenden
+## Before submitting
 
-1. Website und Store-Link öffnen, Demo abspielen.
-2. Mit dem eigenen persönlichen Account anmelden. Den Text einmal lesen und bestätigen.
-3. Die vorbereiteten Texte und Bilder übernehmen. **Free**, nicht Freemium, auswählen.
-4. Product-Hunt-Termin so wählen, dass Zeit für Antworten auf Kommentare bleibt.
-5. Show-HN-Beitrag selbst formulieren und selbst absenden; dort gelten menschlich geschriebene
-   Texte und keine automatisierte Veröffentlichung.
-6. Anschließend öffentlichen Link hier eintragen und auf Rückfragen eingehen.
+1. Open the website and store link, play the demo.
+2. Sign in with your own personal account. Read the text once and confirm it.
+3. Use the prepared texts and images. Select **Free**, not Freemium.
+4. Choose the Product Hunt date so that there is time to reply to comments.
+5. Write the Show HN post yourself and submit it yourself; human-written texts and no
+   automated publishing are the rule there.
+6. Afterwards, enter the public link here and respond to questions.
 
-Es sind keine bezahlten Platzierungen oder schnelleren Prüfungen vorgesehen. Diese Einträge
-sind vor allem Möglichkeiten, Nutzer und Feedback zu gewinnen. Ein veröffentlichter Link
-garantiert keinen Rankinggewinn.
-Keine 21 separaten Einträge für die Sprachversionen anlegen: die englische Hauptseite verwenden.
+No paid placements or faster reviews are planned. These entries
+are mainly ways to gain users and feedback. A published link
+does not guarantee a ranking gain.
+Do not create 21 separate entries for the language versions: use the English main page.
 
-## Medien neu erzeugen
+## Regenerating media
 
-Mit den vorhandenen Entwicklungsabhängigkeiten und installiertem Google Chrome:
+With the existing development dependencies and Google Chrome installed:
 
 ```sh
 node scripts/launch-assets.mjs
 ```
 
-Die Quelldateien bleiben unter `extension/icons/`, `website/assets/` und `docs/screenshots/`.
-Der Generator erstellt nur die PNGs in diesem Paket. Die Website und die Extension werden
-dabei nicht verändert.
+The source files stay under `extension/icons/`, `website/assets/` and `docs/screenshots/`.
+The generator only creates the PNGs in this kit. The website and the extension are
+not changed in the process.
 
-## Geprüfte Plattformregeln
+## Platform rules checked
 
-- [Product Hunt: Felder und Medien](https://help.producthunt.com/en/articles/17834537-4-build-your-product-page)
-  und [kostenloser Launch](https://help.producthunt.com/en/articles/17734646-8-launch-faq-and-myths).
-- [Indie Hackers: Produktdatenbank](https://www.indiehackers.com/products),
-  [kostenlose Basisnutzung](https://www.indiehackers.com/terms).
-- [Show HN](https://news.ycombinator.com/showhn.html) und
-  [HN-Richtlinien](https://news.ycombinator.com/newsguidelines.html).
-- [AlternativeTo: Einreichen und Warteschlange](https://alternativeto.net/faq/),
-  [Bedingungen](https://alternativeto.net/about/terms/).
+- [Product Hunt: fields and media](https://help.producthunt.com/en/articles/17834537-4-build-your-product-page)
+  and [free launch](https://help.producthunt.com/en/articles/17734646-8-launch-faq-and-myths).
+- [Indie Hackers: product database](https://www.indiehackers.com/products),
+  [free basic use](https://www.indiehackers.com/terms).
+- [Show HN](https://news.ycombinator.com/showhn.html) and
+  [HN guidelines](https://news.ycombinator.com/newsguidelines.html).
+- [AlternativeTo: submitting and queue](https://alternativeto.net/faq/),
+  [terms](https://alternativeto.net/about/terms/).
 
-Felder und Regeln können sich ändern; die jeweiligen Formulare sind beim Einreichen maßgeblich.
+Fields and rules can change; the respective forms are authoritative at the time of submission.

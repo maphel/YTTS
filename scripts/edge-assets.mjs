@@ -1,5 +1,5 @@
 // Render the optional Microsoft Edge Add-ons tile from YTTS's existing vector icon.
-// Usage: node scripts/edge-assets.mjs (development dependencies + Google Chrome).
+// Usage: node scripts/edge-assets.mjs (development dependencies with Playwright's Chromium).
 import { chromium } from '@playwright/test';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -21,7 +21,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="440" height="280" vi
   </g>
 </svg>`;
 await writeFile(new URL('small-tile.svg', destination), `${svg}\n`);
-const browser = await chromium.launch({ channel: 'chrome' });
+const browser = await chromium.launch({ channel: 'chromium' });
 try {
   const page = await browser.newPage({ viewport: { width: 440, height: 280 }, deviceScaleFactor: 1 });
   await page.setContent(`<style>html,body{margin:0}svg{display:block}</style>${svg}`);

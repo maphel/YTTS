@@ -1,21 +1,22 @@
 # Microsoft Edge Add-ons preparation
 
 Prepared 13 November 2026. **Local preparation only. No Edge dashboard draft or
-submission has been saved.** The developer portal reached Microsoft's security
-information confirmation; the account holder still needs to complete that step.
+submission has been saved.** The developer account setup is not finished.
 
 ## Package
 
-Use the existing [v0.1.2 release ZIP](https://github.com/maphel/YTTS/releases/download/v0.1.2/ytts-0.1.2.zip).
-The downloaded copy is `dist/edge-addons/ytts-0.1.2.zip` (40,621 bytes).
+Use the ZIP of the latest release; at the time of writing that is the
+[v0.2.0 release ZIP](https://github.com/maphel/YTTS/releases/download/v0.2.0/ytts-0.2.0.zip)
+(41,526 bytes). Download it again before uploading and compare the digest. For a later
+release, use that release's ZIP and digest instead.
 
 ```text
-SHA-256 607a0c5a98003fd1ed144fef9e58c315384587eb40b52dc523d3e1505fc474d6
+SHA-256 f8c1cf0962f8f3282b5aec208e8b5749670dd980f52dd31fae6ddcae9d04daee
 ```
 
-The digest matches GitHub's published release asset. `manifest.json` is at the
-archive root, with 21 `_locales` directories and 36 files in total. The extension
-matches the v0.1.2 tag. No permissions, storage behavior or runtime code changed.
+Checked against GitHub's published release asset on 13 November 2026: `manifest.json`
+(version 0.2.0) is at the archive root, with 21 `_locales` directories and 36 files in
+total. Permissions and storage behavior are the same as in v0.1.2.
 Static inspection found no obvious Edge-only blocker: MV3, `chrome.storage` and
 `chrome.i18n` are used; no `update_url` or Chrome-specific service integration is
 present. **A real Microsoft Edge sideload check remains necessary.** Do not label
@@ -130,8 +131,17 @@ it signed out after merge. The existing browser-neutral policy remains at
    URL. Then check all required fields and the final certification screen.
 
 The final **Publish** action submits for review and publication follows successful
-certification. There is no assumed second manual go-live gate. The current request
-is to prepare the submission, so stop with the draft saved.
+certification. There is no assumed second manual go-live gate.
+
+## Open items
+
+- **Descriptions differ by language.** `descriptions/en.txt` is the Chrome Web Store text and
+  does not mention Edge. Other languages name Microsoft Edge, and some add "free and open
+  source", "no ads" or the settings-sync sentence. All of these statements are true, but align
+  the 21 texts to one English source before submitting.
+- **Edge sideload check** (see above) and the saved dashboard draft.
+- **Privacy policy URL:** after this file is on `main`, open its public URL before using it in
+  the listing.
 
 ## Official references
 

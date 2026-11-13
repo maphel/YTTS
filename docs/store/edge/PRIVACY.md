@@ -1,8 +1,6 @@
 # YTTS privacy policy for Microsoft Edge
 
-Prepared 13 November 2026 for YTTS version 0.1.2 on Microsoft Edge. This describes
-the existing extension's data handling; an Edge Add-ons submission has not yet
-been published.
+Effective 13 November 2026. This policy applies from YTTS version 0.1.2 on Microsoft Edge.
 
 YTTS is a free, independent extension for reading and copying transcripts on
 YouTube in Microsoft Edge. It has no backend, analytics, advertising or telemetry.
@@ -16,7 +14,7 @@ and only to show and copy the current video's transcript.
 
 | Data | Use and storage |
 | --- | --- |
-| Transcript text | The card explains what YTTS reads. After you select **Allow transcripts**, YTTS reads text from YouTube's own transcript panel and displays it. If YTTS opens the panel, it does so in the background and closes it after loading. Text stays in tab memory until you leave the video, reload or close the tab. It is never saved in extension storage. |
+| Transcript text | The card explains what YTTS reads. After you select **Allow transcripts**, YTTS reads text from YouTube's own transcript panel and displays it. After that, YTTS does the same on later watch pages. If YTTS opens the panel, it does so in the background and closes it after loading. Text stays in tab memory until you leave the video, reload or close the tab. It is never saved in extension storage. |
 | Current video ID | Read from the page URL to associate the transcript with the current video and clear it on navigation. Used in tab memory; no watch history is stored. |
 | YouTube's interface language and the video's length | Used to choose the interface language and compute sentence end times. Not stored. |
 | Three display preferences | The default expanded state, timestamps when copying, and selected view (lines, sentences or text) are saved using `chrome.storage.sync`, the Chromium extension API available in Microsoft Edge. Edge may synchronize these preferences through your browser account if extension settings sync is enabled. |

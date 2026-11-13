@@ -1,5 +1,5 @@
 // Prepare launch gallery PNGs from the existing icon and real extension screenshots.
-// Usage: node scripts/launch-assets.mjs (development dependencies + Google Chrome).
+// Usage: node scripts/launch-assets.mjs (development dependencies with Playwright's Chromium).
 import { chromium } from '@playwright/test';
 import { mkdir, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -61,7 +61,7 @@ const gallery = [
   `)],
 ];
 
-const browser = await chromium.launch({ channel: 'chrome' });
+const browser = await chromium.launch({ channel: 'chromium' });
 try {
   for (const size of [240, 512]) {
     const page = await browser.newPage({ viewport: { width: size, height: size }, deviceScaleFactor: 1 });

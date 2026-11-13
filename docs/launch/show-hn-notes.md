@@ -1,43 +1,43 @@
-# Show HN — Fakten für Marcels eigenen Beitrag
+# Show HN — facts for Marcel's own post
 
-Noch nicht eingereicht. **Dies sind Arbeitsnotizen, kein veröffentlichbarer Beitrag.**
-Hacker News verlangt selbst geschriebene Texte und untersagt KI-generierte oder KI-editierte
-Beiträge und automatisiertes Posting. Deshalb hier weder einen fertigen Titel noch einen
-Kommentar aus den anderen Entwürfen übernehmen.
+Not yet submitted. **These are working notes, not a publishable post.**
+Hacker News requires self-written texts and prohibits AI-generated or AI-edited
+posts and automated posting. So do not take over either a finished title or a
+comment from the other drafts here.
 
-## Ort und Format
+## Place and format
 
-- [Selbst einreichen](https://news.ycombinator.com/submit), persönlicher Account erforderlich.
-- Titel mit `Show HN:` beginnen und selbst formulieren.
-- Als Ziel bietet sich das [öffentliche Repository](https://github.com/maphel/YTTS) an:
-  Installation, Quellcode und Funktionen sind dort direkt zugänglich. Die fertige Extension
-  lässt sich bereits aus dem Store installieren; keine reine Ankündigung einreichen.
-- Im eigenen Kommentar kann Marcel die [Demo](https://ytts.christophel.io/) und den
-  [Store](https://chromewebstore.google.com/detail/ytts/ipkipmmdaicpfijcddghjpfjpacgdphe) verlinken.
+- [Submit it yourself](https://news.ycombinator.com/submit), personal account required.
+- Start the title with `Show HN:` and word it yourself.
+- The [public repository](https://github.com/maphel/YTTS) is a good choice of target:
+  installation, source code and features are directly accessible there. The finished extension
+  can already be installed from the store; do not submit a mere announcement.
+- In his own comment, Marcel can link the [demo](https://ytts.christophel.io/) and the
+  [store](https://chromewebstore.google.com/detail/ytts/ipkipmmdaicpfijcddghjpfjpacgdphe).
 
-## Belegbare Eckdaten
+## Verifiable key facts
 
-| Thema | Fakt / Gesprächspunkt |
+| Topic | Fact / talking point |
 | --- | --- |
-| Persönlicher Ausgangspunkt | Häufig Transkripte lesen statt das ganze Video ansehen; vorhandene Tools entsprachen nicht der gewünschten schlichten YouTube-Integration |
-| Priorität 1 | Möglichst wie ein Teil von YouTube aussehen; Hell- und Dunkeldesign auch bei künftigen Anpassungen erhalten |
-| Priorität 2 | Komplett kostenlos, ohne Werbung, ohne Accountpflicht |
-| Funktionen | Vorhandenes Transkript lesen und kopieren; Lines, Sentences, Text; optionale Zeitstempel beim Kopieren; zu Zeitstempeln springen |
-| Sprache | 21 Oberflächen-Locales, einschließlich RTL; keine Transkriptübersetzung |
-| Technik | Chromium Manifest V3, Vanilla JavaScript, keine Laufzeitabhängigkeiten; native YouTube-Transkriptansicht als Quelle |
-| Datenschutz | Kein eigener Backenddienst, keine Analytics; Transkripte bleiben im Arbeitsspeicher der Seite und werden auf Wunsch in die Zwischenablage kopiert |
-| Lizenz | MIT; öffentliches Repository |
-| Grenzen | YouTube muss ein Transkript bereitstellen; keine Audiotranskription, KI-Zusammenfassung oder Übersetzung; YouTube-Änderungen können Anpassungen nötig machen |
+| Personal starting point | Often reading transcripts instead of watching the whole video; existing tools did not match the desired plain YouTube integration |
+| Priority 1 | Look as much like a part of YouTube as possible; keep the light and dark design through future changes too |
+| Priority 2 | Completely free, no ads, no account requirement |
+| Features | Read and copy the existing transcript; Lines, Sentences, Text; optional timestamps when copying; jump to timestamps |
+| Language | 21 interface locales, including RTL; no transcript translation |
+| Technology | Chromium Manifest V3, vanilla JavaScript, no runtime dependencies; native YouTube transcript view as the source |
+| Privacy | No backend service of its own, no analytics; transcripts stay in the page's memory and are copied to the clipboard on request |
+| License | MIT; public repository |
+| Limits | YouTube must provide a transcript; no audio transcription, AI summary or translation; YouTube changes can make adjustments necessary |
 
-## Selbst beantworten
+## Answer yourself
 
-- Warum war die Integration ins bestehende Design wichtiger als weitere Funktionen?
-- Was war an der YouTube-Integration technisch überraschend?
-- Welche Rückmeldung von echten Transkriptnutzern würde bei der Weiterentwicklung helfen?
+- Why was integration into the existing design more important than further features?
+- What was technically surprising about the YouTube integration?
+- What feedback from real transcript users would help with further development?
 
-Keine Reichweite oder Nutzerzahlen erfinden. Nach dem Absenden für technische Fragen verfügbar
-sein. Freunde nicht um Upvotes oder Kommentare bitten. Ein Eintrag erscheint zunächst bei
-Show New; eine Platzierung auf Show HN oder der Startseite ist nicht garantiert.
+Do not invent reach or user numbers. Be available for technical questions after
+submitting. Do not ask friends for upvotes or comments. A post first appears under
+Show New; placement on Show HN or the front page is not guaranteed.
 
-Quellen: [Show-HN-Regeln](https://news.ycombinator.com/showhn.html),
-[HN-Richtlinien](https://news.ycombinator.com/newsguidelines.html).
+Sources: [Show HN rules](https://news.ycombinator.com/showhn.html),
+[HN guidelines](https://news.ycombinator.com/newsguidelines.html).
