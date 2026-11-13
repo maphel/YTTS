@@ -1,5 +1,5 @@
-/* Hover highlights sit in @media (hover: hover): on touch screens a tapped row would otherwise stay
-   highlighted. */
+/* Row and button hover highlights sit in @media (hover: hover): where touch is the primary input
+   a tapped row would otherwise stay highlighted. */
 
 /* Values mirror YouTube's own engagement panel / transcript panel / tonal buttons
    (measured from youtube.com computed styles, 2026-11). Dark theme = html[dark]. */
@@ -16,11 +16,12 @@
   /* As tall as YouTube's own panels (playlist, chat, transcript): ytd-watch-flexy publishes their
      height (measured 2026-11: about the player's height in two columns, capped by the window
      height; 460px in single column and theater mode). The card inherits it in the sidebar and
-     below the video. Fallback: the former fixed size. Shorter transcripts shrink the card. */
+     below the video. Fallback: the former fixed size; the floor keeps the card usable should
+     YouTube ever publish 0 or a tiny value. Shorter transcripts shrink the card. */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  max-height: var(--ytd-watch-flexy-panel-max-height, 511px);
+  max-height: max(var(--ytd-watch-flexy-panel-max-height, 511px), 240px);
   margin: 0 0 16px;
   border: 1px solid var(--ytts-outline);
   border-radius: 12px;

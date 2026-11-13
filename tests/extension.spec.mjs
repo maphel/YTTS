@@ -374,11 +374,8 @@ test('expanded card is as tall as YouTube\'s own panels in each layout (#43)', a
   await ready(page);
   const card = page.locator('#ytts-panel');
   const body = card.locator('.ytts-body');
-  const setPanelHeight = (value) => page.evaluate((height) => {
-    const flexy = document.querySelector('ytd-watch-flexy');
-    if (height) flexy.style.setProperty('--ytd-watch-flexy-panel-max-height', height);
-    else flexy.style.removeProperty('--ytd-watch-flexy-panel-max-height');
-  }, value);
+  const setPanelHeight = (value) => page.evaluate((height) => document.querySelector('ytd-watch-flexy')
+    .style.setProperty('--ytd-watch-flexy-panel-max-height', height), value);
   const height = async (locator) => (await locator.boundingBox()).height;
 
   // Without YouTube's variable the card keeps its former size.
@@ -394,6 +391,10 @@ test('expanded card is as tall as YouTube\'s own panels in each layout (#43)', a
       <= node.parentElement.getBoundingClientRect().bottom)).toBe(true);
   }
 
+  // A zero or tiny value must not swallow the card.
+  await setPanelHeight('0px');
+  expect(await height(card)).toBe(240);
+
   // Single column: the card moves into #primary and still inherits the variable.
   await setPanelHeight('460px');
   await page.evaluate(() => fixture.setColumns(1));
@@ -402,9 +403,11 @@ test('expanded card is as tall as YouTube\'s own panels in each layout (#43)', a
 
   // Collapsed: only the header.
   await card.locator('.ytts-chevron').click();
+  await expect(card).toHaveClass(/ytts-collapsed/);
   expect(await height(card)).toBe(58);
 });
 
+// Guards the choice of max-height over height; it also passed with the former fixed size.
 test('a short transcript does not stretch the card to the panel height (#43)', async ({ page }) => {
   await setup(page, { classicLayout: true, settings: { expandedByDefault: true } });
   await page.locator('.ytts-load').click();

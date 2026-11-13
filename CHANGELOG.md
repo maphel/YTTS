@@ -7,13 +7,13 @@ All notable changes to YTTS are listed here. The format is based on
 
 <!-- Entries go under ### Added / ### Changed / ### Fixed / ### Removed; add only the subsections you need. -->
 
-### Changed
-- The expanded card is as tall as YouTube's own side panels in every layout: about level with the player on wide screens, 460 px in narrow windows and theater mode. Short transcripts still shrink it.
-- On touch screens a tapped line no longer stays highlighted.
-
 ### Added
 - Chrome Web Store installation link in the README, with manual installation kept as an alternative.
 - A lightweight website at ytts.christophel.io with the product demo, light/dark previews and all 21 supported interface languages.
+
+### Changed
+- The expanded card is as tall as YouTube's own side panels instead of always 511 px: about level with the player on wide screens, 460 px (smaller than before) in narrow windows and theater mode. Short transcripts still shrink it.
+- On devices whose main input is touch, a tapped line no longer stays highlighted.
 
 ## 0.1.2 — 2026-11-09
 
