@@ -123,6 +123,13 @@ test('loads, renders and copies a transcript from the live site', async ({ page,
 test('reads chapters and a long transcript, then follows SPA navigation', async ({ page }) => {
   await openWatchPage(page, VIDEOS.chapters);
   await waitForTranscript(page);
+  // The expanded card takes its height from YouTube's own panel variable (#43). If YouTube drops
+  // or renames it, the card silently falls back to a fixed size: notice that here.
+  const panelHeight = await page.evaluate(() => getComputedStyle(document.querySelector('ytd-watch-flexy'))
+    .getPropertyValue('--ytd-watch-flexy-panel-max-height').trim());
+  expect(panelHeight).toMatch(/^\d+(\.\d+)?px$/);
+  expect(parseFloat(panelHeight)).toBeGreaterThanOrEqual(240);
+  expect((await page.locator('#ytts-panel').boundingBox()).height).toBeCloseTo(parseFloat(panelHeight), 0);
   // Each chapter once: YouTube's panel also has a Chapters tab built from the same elements (#45).
   const chapters = await page.locator('#ytts-panel .ytts-chapter').allTextContents();
   expect(chapters.length).toBeGreaterThan(5);
