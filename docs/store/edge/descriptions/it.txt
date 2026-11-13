@@ -1,0 +1,9 @@
+YTTS mostra la trascrizione accanto al video, così puoi leggerla e copiarla con un clic. Leggi le righe originali dei sottotitoli, le frasi raggruppate o il testo continuo. Fai clic su una riga o una frase per passare a quel punto del video. Copia l’intera trascrizione come testo semplice, con timestamp facoltativi.
+
+Nella pagina di un video, espandi se necessario la scheda «Trascrizione», leggi l’informativa e fai clic su «Consenti le trascrizioni». YTTS apre quindi il pannello della trascrizione di YouTube in background quando serve, legge il testo visualizzato e chiude il pannello se è stato YTTS ad aprirlo. Microsoft Edge ricorda questa scelta per questa installazione, in modo che le trascrizioni vengano caricate nelle pagine dei video che apri in seguito.
+
+Le trascrizioni rimangono nella memoria della scheda del browser. YTTS scrive negli appunti solo quando fai clic su «Copia». Microsoft Edge salva il consenso localmente e memorizza tre preferenze di visualizzazione. YTTS non richiede un account e non ha backend, pubblicità, analisi dell’utilizzo o telemetria.
+
+Il video deve avere sottotitoli che YouTube rende disponibili come trascrizione. La scheda segue la lingua dell’interfaccia del sito e si adatta ai suoi temi chiaro e scuro.
+
+YTTS è un progetto indipendente e non è affiliato a YouTube o Google.

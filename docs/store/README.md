@@ -1,5 +1,7 @@
 # Chrome Web Store submission
 
+For a separate Microsoft Edge listing, use the [Edge Add-ons preparation](edge/README.md).
+
 Use this checklist for the first manual YTTS submission. Keep the listing, privacy policy and
 dashboard declarations aligned with the submitted package. The November 2026 audit covered the
 program policies, User Data FAQ, Privacy practices tab, image guidelines and review process.

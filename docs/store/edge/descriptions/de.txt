@@ -1,0 +1,9 @@
+YTTS zeigt das Transkript neben dem Video an, damit du es lesen und mit einem Klick kopieren kannst. Lies die ursprünglichen Untertitelzeilen, zu Sätzen gruppierte Untertitel oder Fließtext. Klicke auf eine Zeile oder einen Satz, um zur entsprechenden Stelle im Video zu springen. Kopiere das vollständige Transkript als Klartext, auf Wunsch mit Zeitstempeln.
+
+Klappe auf einer Videoseite bei Bedarf die Karte „Transkript“ aus, lies den Hinweis und klicke auf „Transkripte erlauben“. YTTS öffnet dann bei Bedarf YouTubes Transkriptbereich im Hintergrund, liest den angezeigten Text und schließt den Bereich, wenn YTTS ihn geöffnet hat. Microsoft Edge merkt sich diese Entscheidung für diese Installation, sodass Transkripte auch auf später geöffneten Videoseiten geladen werden.
+
+Transkripte bleiben im Arbeitsspeicher des Tabs. YTTS schreibt nur dann in die Zwischenablage, wenn du auf „Kopieren“ klickst. Microsoft Edge speichert deine Zustimmung lokal und sichert drei Anzeigeeinstellungen. YTTS benötigt kein Konto und hat kein Backend, keine Werbung, keine Analysefunktionen und keine Telemetrie.
+
+Ein Video muss Untertitel haben, die YouTube als Transkript bereitstellt. Die Karte folgt der Oberflächensprache der Website und passt zu ihrem hellen und dunklen Design.
+
+YTTS ist ein unabhängiges Projekt und steht in keiner Verbindung zu YouTube oder Google.

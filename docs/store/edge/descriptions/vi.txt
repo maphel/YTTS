@@ -1,0 +1,9 @@
+YTTS dành cho Microsoft Edge hiển thị bản chép lời bên cạnh video để bạn có thể đọc và sao chép chỉ bằng một lần nhấp. Đọc theo các dòng phụ đề gốc, các câu được nhóm lại hoặc văn bản liền mạch. Nhấp vào một dòng hoặc câu để chuyển đến thời điểm đó trong video. Sao chép toàn bộ bản chép lời dưới dạng văn bản thuần, có hoặc không có dấu thời gian.
+
+Trên trang xem video, hãy mở rộng thẻ Bản chép lời nếu cần, đọc phần giải thích rồi nhấp vào Cho phép đọc bản chép lời. Sau đó, khi cần, YTTS mở bảng bản chép lời gốc của YouTube ở chế độ nền, đọc văn bản được hiển thị và đóng bảng nếu chính YTTS đã mở nó. Trình duyệt ghi nhớ lựa chọn này cho lần cài đặt hiện tại, vì vậy bản chép lời sẽ được tải trên các trang xem video tiếp theo.
+
+Bản chép lời nằm trong bộ nhớ của thẻ. YTTS chỉ ghi vào bộ nhớ tạm khi bạn nhấp vào Sao chép. Trình duyệt lưu sự đồng ý của bạn cục bộ và lưu ba tùy chọn hiển thị; các tùy chọn này có thể đồng bộ qua tài khoản trình duyệt. YTTS miễn phí và có mã nguồn mở, không quảng cáo, không tài khoản, không có máy chủ riêng, không phân tích hay đo từ xa.
+
+Video cần có phụ đề được YouTube cung cấp dưới dạng bản chép lời. Thẻ sử dụng ngôn ngữ giao diện của trang và phù hợp với cả giao diện sáng lẫn tối.
+
+YTTS là một dự án độc lập, không liên kết với YouTube hoặc Google.
