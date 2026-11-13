@@ -15,6 +15,9 @@
   const MAX_SENTENCE_SEC = 30;
   const MAX_SENTENCE_CHARS = 300;
   const SENTENCES_PER_PARAGRAPH = 4;
+  // Typical speaking rate. Limits how much of a segment's time is spread over its sentences, so
+  // a pause, music or the rest of the video after a caption line is not counted as speech (#27).
+  const CHARS_PER_SEC = 15;
   // Closing quotes/brackets that may follow the punctuation: ASCII, English “” ‘’, German „…“ ‚…‘
   // (closing “ ‘), French/Swiss « » in both directions.
   const SENTENCE_END = /[.!?…]["'“”‘’«»)\]]*$/;
@@ -74,18 +77,22 @@
       const segEnd = Math.max(it.sec, segStarts[segIdx + 1] ?? fallbackEnd);
       const pieces = it.text.split(SENTENCE_SPLIT).filter(Boolean);
       // YouTube times segments, not sentences. Inside a segment, a sentence's start is estimated
-      // from its character offset, in whole seconds like YouTube's own timestamps (#27).
+      // from its character offset, in whole seconds like YouTube's own timestamps (#27). An
+      // estimate that is too early is harmless when seeking, one that is too late skips speech:
+      // the time spread over the text is capped by the speaking rate. If whole seconds cannot
+      // tell a segment's sentences apart, they keep one shared range.
+      const span = Math.min(segEnd - it.sec, it.text.length / CHARS_PER_SEC);
       const starts = [];
       let offset = 0;
       for (const piece of pieces) {
         const at = it.text.indexOf(piece, offset);
-        starts.push(starts.length
-          ? it.sec + Math.floor((at / it.text.length) * (segEnd - it.sec))
-          : it.sec);
+        starts.push(it.sec + Math.floor((at / it.text.length) * span));
         offset = at + piece.length;
       }
+      const estimated = starts.every((start, k) => (k ? start > starts[k - 1] : start === it.sec));
+      if (!estimated) starts.fill(it.sec);
       pieces.forEach((piece, k) => {
-        const pieceEnd = starts[k + 1] ?? segEnd;
+        const pieceEnd = estimated ? starts[k + 1] ?? segEnd : segEnd;
         if (!cur) cur = { type: 'sent', sec: starts[k], end: pieceEnd, text: '' };
         cur.text += (cur.text ? ' ' : '') + piece;
         cur.end = Math.max(cur.sec, pieceEnd);

@@ -78,7 +78,7 @@ Sentence time ranges are approximate: YouTube times caption segments, not
 sentences. A range ends at the next segment's start or the video duration, with
 an estimated fallback if the duration is unavailable. When one segment holds
 several sentences, YTTS estimates where each begins from its position in the
-text.
+text, assuming an even speaking pace.
 
 Copying without timestamps always produces paragraph text. With timestamps,
 **Lines** preserves the original segment timestamps; **Sentences** and **Text** use
