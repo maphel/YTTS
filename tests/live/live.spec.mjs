@@ -123,7 +123,10 @@ test('loads, renders and copies a transcript from the live site', async ({ page,
 test('reads chapters and a long transcript, then follows SPA navigation', async ({ page }) => {
   await openWatchPage(page, VIDEOS.chapters);
   await waitForTranscript(page);
-  expect(await page.locator('#ytts-panel .ytts-chapter').count()).toBeGreaterThan(5);
+  // Each chapter once: YouTube's panel also has a Chapters tab built from the same elements (#45).
+  const chapters = await page.locator('#ytts-panel .ytts-chapter').allTextContents();
+  expect(chapters.length).toBeGreaterThan(5);
+  expect(new Set(chapters).size).toBe(chapters.length);
   expect(await page.locator('#ytts-panel [data-sec]').count()).toBeGreaterThan(100);
   const oldSignature = await cardSignature(page);
 

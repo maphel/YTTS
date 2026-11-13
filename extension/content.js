@@ -155,7 +155,7 @@
     for (const el of panel.querySelectorAll(`${SEG_SEL}, ${CHAPTER_SEL}`)) {
       if (el.matches(CHAPTER_SEL)) {
         const title = (el.querySelector('h2, h3')?.textContent
-          || el.querySelector('[aria-label]')?.getAttribute('aria-label') || '').trim();
+          || el.querySelector('[aria-label]')?.getAttribute('aria-label') || '').replace(/\s+/g, ' ').trim();
         if (title) items.push({ type: 'chapter', title });
         continue;
       }

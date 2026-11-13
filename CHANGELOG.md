@@ -12,7 +12,7 @@ All notable changes to YTTS are listed here. The format is based on
 - A lightweight website at ytts.christophel.io with the product demo, light/dark previews and all 21 supported interface languages.
 
 ### Fixed
-- Chapter headings appear again, in the card and in copied text, on videos where YouTube shows its newer transcript panel.
+- Chapter headings now appear, in the card and in copied text, on videos where YouTube shows its newer transcript panel.
 
 ## 0.1.2 — 2026-11-09
 
