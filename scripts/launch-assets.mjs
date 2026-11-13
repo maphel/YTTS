@@ -63,7 +63,7 @@ const gallery = [
 
 const browser = await chromium.launch({ channel: 'chromium' });
 try {
-  for (const size of [240, 512]) {
+  for (const size of [512]) {
     const page = await browser.newPage({ viewport: { width: size, height: size }, deviceScaleFactor: 1 });
     const source = svg.replace('width="128" height="128"', `width="${size}" height="${size}"`);
     await page.setContent(`<style>html,body{margin:0;background:transparent}svg{display:block}</style>${source}`);

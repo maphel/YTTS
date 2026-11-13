@@ -1,9 +1,9 @@
-YTTS, transkripti videonun yanında göstererek metni okumanızı ve tek tıkla kopyalamanızı sağlar. Orijinal altyazı satırlarını, gruplandırılmış cümleleri veya kesintisiz metni okuyun. Videodaki ilgili ana gitmek için bir satıra veya cümleye tıklayın. Transkriptin tamamını, isteğe bağlı zaman damgalarıyla düz metin olarak kopyalayın.
+Microsoft Edge için YTTS, transkripti videonun yanında göstererek metni okumanızı ve tek tıkla kopyalamanızı sağlar. Orijinal altyazı satırlarını, gruplandırılmış cümleleri veya kesintisiz metni okuyun. Videodaki ilgili ana gitmek için bir satıra veya cümleye tıklayın. Transkriptin tamamını, isteğe bağlı zaman damgalarıyla düz metin olarak kopyalayın.
 
 Bir video sayfasında gerekirse “Transkript” kartını genişletin, açıklamayı okuyun ve “Transkriptlere izin ver” düğmesine tıklayın. YTTS daha sonra gerektiğinde YouTube’un transkript panelini arka planda açar, gösterilen metni okur ve paneli YTTS açtıysa kapatır. Microsoft Edge bu seçimi bu kurulum için hatırlar; böylece daha sonra açtığınız video sayfalarında transkriptler yüklenir.
 
-Transkriptler sekmenin belleğinde kalır. YTTS panoya yalnızca “Kopyala” düğmesine tıkladığınızda yazar. Microsoft Edge izninizi yerel olarak kaydeder ve üç görüntüleme tercihini saklar. YTTS hesap gerektirmez; arka uç sunucusu, reklam, kullanım analizi veya telemetri içermez.
+Transkriptler sekmenin belleğinde kalır. YTTS panoya yalnızca “Kopyala” düğmesine tıkladığınızda yazar. Microsoft Edge izninizi yerel olarak kaydeder ve üç görüntüleme tercihini saklar; ayar eşitlemesi açıksa bu tercihler tarayıcı hesabınız üzerinden eşitlenebilir. YTTS ücretsiz ve açık kaynaklıdır; reklam, hesap, arka uç sunucusu, kullanım analizi veya telemetri içermez.
 
 Videonun, YouTube tarafından transkript olarak sunulan altyazılara sahip olması gerekir. Kart, sitenin arayüz dilini izler ve açık ve koyu temalarına uyum sağlar.
 
-YTTS bağımsız bir projedir ve YouTube veya Google ile bağlantılı değildir.
+YTTS bağımsız bir projedir ve YouTube, Google veya Microsoft ile bağlantılı değildir.

@@ -1,16 +1,17 @@
 // Renders the README images into docs/screenshots/: the transcript card on a real YouTube watch
 // page (youtube-light.png, youtube-dark.png) and the settings popup (popup-light.png,
 // popup-dark.png). With --store, renders the Chrome Web Store sizes (1280 × 800 and 640 × 400,
-// light and dark) into docs/store/screenshots/ instead.
+// light and dark) into docs/store/screenshots/ instead. With --site, renders only the card for the
+// product website (website/assets/card-light.webp, card-dark.webp: 352 × 511 CSS px at 2×).
 //
 // The card comes from the real unpacked extension in Playwright's Chromium against youtube.com
 // (like tests/live/), so it needs the network and YouTube must deliver the transcript; YouTube
 // throttles transcripts after many automated requests, so run this sparingly. The popup uses the
 // test harness from tests/popup.spec.mjs (pages served from extension/, stubbed chrome API).
-// Interface language: English. Usage: npm run screenshot [-- --store]. Images are overwritten one by
+// Interface language: English. Usage: npm run screenshot [-- --store | --site]. Images are overwritten one by
 // one; if a run fails halfway, restore the pair with `git checkout docs/`.
 import { chromium } from '@playwright/test';
-import { mkdirSync, statSync } from 'node:fs';
+import { mkdirSync, statSync, writeFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -18,7 +19,10 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const extensionPath = join(root, 'extension');
 const store = process.argv.includes('--store');
-const output = join(root, store ? 'docs/store/screenshots' : 'docs/screenshots');
+const site = process.argv.includes('--site');
+const output = join(root, site ? 'website/assets' : store ? 'docs/store/screenshots' : 'docs/screenshots');
+// The website shows the card alone at a fixed size (build-website.mjs: width 704, height 1022).
+const SITE_CARD = { width: 352, height: 511 };
 
 // A public course with English captions and chapters. Measured 2026-11-09: in automated Chromium,
 // videos whose transcript YouTube loads via /youtubei/v1/get_panel work, while many that use the
@@ -73,7 +77,7 @@ async function cardScreenshots() {
       channel: 'chromium',
       locale: 'en-US',
       viewport: { width: SIZES[0].width, height: SIZES[0].height },
-      deviceScaleFactor: 1,
+      deviceScaleFactor: site ? 2 : 1,
       args: [`--disable-extensions-except=${extensionPath}`, `--load-extension=${extensionPath}`],
     });
     try {
@@ -97,6 +101,10 @@ async function cardScreenshots() {
           #related #metadata-line, #related yt-lockup-metadata-view-model, .ytp-chapter-container
           { filter: blur(6px) !important; }` });
       }
+      if (site) {
+        await siteCard(page, scheme);
+        continue;
+      }
       for (const { name, width, height } of SIZES) {
         await page.setViewportSize({ width, height });
         await page.evaluate(() => window.scrollTo(0, 0));
@@ -115,6 +123,45 @@ async function cardScreenshots() {
     } finally {
       await context.close();
     }
+  }
+}
+
+// The card alone for the website: pinned to SITE_CARD (YouTube's sidebar and panel height vary
+// with the window), captured at 2× and encoded as WebP by the browser, so no image tool is needed.
+async function siteCard(page, scheme) {
+  // The card is translucent like YouTube's panels: without this, the player's ambient glow
+  // (dark theme) tints the standalone image.
+  await page.addStyleTag({ content: '#cinematics, #cinematics-container { display: none !important; }' });
+  await page.evaluate(({ width, height }) => {
+    document.querySelector('ytd-watch-flexy').style.setProperty('--ytd-watch-flexy-panel-max-height', `${height}px`);
+    document.getElementById('ytts-panel').style.width = `${width}px`;
+    window.scrollTo(0, 0);
+  }, SITE_CARD);
+  await page.mouse.move(0, 0);
+  await page.waitForTimeout(1_000);
+  const card = page.locator('#ytts-panel');
+  const box = await card.boundingBox();
+  if (Math.round(box.width) !== SITE_CARD.width || Math.round(box.height) !== SITE_CARD.height) {
+    throw new Error(`The card is ${box.width} × ${box.height}, expected ${SITE_CARD.width} × ${SITE_CARD.height}.`);
+  }
+  const png = await card.screenshot({ animations: 'disabled' });
+  const encoder = await page.context().newPage();
+  try {
+    const webp = await encoder.evaluate(async (source) => {
+      const image = new Image();
+      image.src = source;
+      await image.decode();
+      const canvas = document.createElement('canvas');
+      canvas.width = image.naturalWidth;
+      canvas.height = image.naturalHeight;
+      canvas.getContext('2d').drawImage(image, 0, 0);
+      return canvas.toDataURL('image/webp', 0.9).split(',')[1];
+    }, `data:image/png;base64,${png.toString('base64')}`);
+    const out = join(output, `card-${scheme}.webp`);
+    writeFileSync(out, Buffer.from(webp, 'base64'));
+    console.log(`${relative(root, out)}  ${(statSync(out).size / 1024).toFixed(1)} KB`);
+  } finally {
+    await encoder.close();
   }
 }
 
@@ -153,4 +200,4 @@ async function popupScreenshots() {
 
 mkdirSync(output, { recursive: true });
 await cardScreenshots();
-if (!store) await popupScreenshots();
+if (!store && !site) await popupScreenshots();

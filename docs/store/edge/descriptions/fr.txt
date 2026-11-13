@@ -1,9 +1,9 @@
-YTTS affiche la transcription à côté de la vidéo pour vous permettre de la lire et de la copier en un clic. Lisez les lignes de sous-titres d’origine, des phrases regroupées ou du texte continu. Cliquez sur une ligne ou une phrase pour accéder à ce passage de la vidéo. Copiez la transcription complète en texte brut, avec ou sans horodatage.
+YTTS pour Microsoft Edge affiche la transcription à côté de la vidéo pour vous permettre de la lire et de la copier en un clic. Lisez les lignes de sous-titres d’origine, des phrases regroupées ou du texte continu. Cliquez sur une ligne ou une phrase pour accéder à ce passage de la vidéo. Copiez la transcription complète en texte brut, avec ou sans horodatage.
 
 Sur une page de lecture, dépliez si nécessaire la carte « Transcription », lisez l’avis et cliquez sur « Autoriser les transcriptions ». YTTS ouvre alors le panneau de transcription de YouTube en arrière-plan si nécessaire, lit le texte affiché et referme le panneau si YTTS l’a ouvert. Microsoft Edge mémorise ce choix pour cette installation, afin que les transcriptions se chargent sur les pages de lecture ouvertes ensuite.
 
-Les transcriptions restent dans la mémoire de l’onglet. YTTS écrit dans le presse-papiers uniquement lorsque vous cliquez sur « Copier ». Microsoft Edge enregistre votre consentement localement et conserve trois préférences d’affichage. YTTS ne nécessite aucun compte et n’utilise ni backend, ni publicité, ni analyse d’utilisation, ni télémétrie.
+Les transcriptions restent dans la mémoire de l’onglet. YTTS écrit dans le presse-papiers uniquement lorsque vous cliquez sur « Copier ». Microsoft Edge enregistre votre consentement localement et conserve trois préférences d’affichage, qui peuvent être synchronisées via votre compte de navigateur si la synchronisation des paramètres est activée. YTTS est gratuit et open source, sans publicité, compte, backend, analyse d’utilisation ni télémétrie.
 
 La vidéo doit disposer de sous-titres que YouTube propose sous forme de transcription. La carte suit la langue de l’interface du site et s’accorde avec ses thèmes clair et sombre.
 
-YTTS est un projet indépendant, sans affiliation avec YouTube ou Google.
+YTTS est un projet indépendant, sans affiliation avec YouTube, Google ou Microsoft.
