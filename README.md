@@ -34,7 +34,14 @@ click **Add to Chrome** and confirm the installation.
 
 Open a YouTube video with a transcript. The **Transcript** card appears above
 the related videos. Look in the sidebar on the classic layout, or below the
-video in narrow windows and on YouTube's newer layout.
+video in narrow windows and on YouTube's newer layout. When expanded, the card
+is as tall as YouTube's own side panels, so on a large screen it ends about
+level with the player.
+
+YTTS works on desktop YouTube (`www.youtube.com`) at any window size, also on
+touch screens. The mobile site (`m.youtube.com`), which phones and most tablets
+are sent to, is not supported: it is a different app and gave YTTS no
+transcript to read when it was checked.
 
 Expand the card if needed, read its disclosure and click **Allow transcripts**.
 Click **Copy** when the transcript is ready. YTTS remembers your choice in

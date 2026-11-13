@@ -57,7 +57,10 @@ entry, same isolated world) and `lib.js` → `i18n.js` → `popup.js` in `popup.
 6. **Support both segment DOM variants** (`ytd-transcript-segment-renderer`,
    `transcript-segment-view-model`) and all layouts: classic sidebar, single column (narrow
    windows, `#secondary` not rendered) and side-rail. Outside the sidebar the card sits directly
-   before the visible `#primary #related`.
+   before the visible `#primary #related`. The expanded card's height is YouTube's own
+   `--ytd-watch-flexy-panel-max-height` (inherited from `ytd-watch-flexy`), not a fixed number.
+   `m.youtube.com` is a non-goal: a different app outside the host match, with no transcript
+   entry to read from when measured (#43).
 7. **Before using the description's transcript button, wait for `ytd-watch-flexy[video-id]`
    to match the URL** (best effort): after SPA navigation the previous video's button
    lingers ~0.8 s (#11).

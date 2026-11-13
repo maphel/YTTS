@@ -1,3 +1,6 @@
+/* Hover highlights sit in @media (hover: hover): on touch screens a tapped row would otherwise stay
+   highlighted. */
+
 /* Values mirror YouTube's own engagement panel / transcript panel / tonal buttons
    (measured from youtube.com computed styles, 2026-11). Dark theme = html[dark]. */
 #ytts-panel {
@@ -10,6 +13,14 @@
   --ytts-chip-fg: #065fd4;
   --ytts-chip-bg: #def1ff;
 
+  /* As tall as YouTube's own panels (playlist, chat, transcript): ytd-watch-flexy publishes their
+     height (measured 2026-11: about the player's height in two columns, capped by the window
+     height; 460px in single column and theater mode). The card inherits it in the sidebar and
+     below the video. Fallback: the former fixed size. Shorter transcripts shrink the card. */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  max-height: var(--ytd-watch-flexy-panel-max-height, 511px);
   margin: 0 0 16px;
   border: 1px solid var(--ytts-outline);
   border-radius: 12px;
@@ -32,6 +43,7 @@ html[dark] #ytts-panel {
 /* Header — same box as ytd-engagement-panel-title-header-renderer */
 #ytts-panel .ytts-header {
   display: flex;
+  flex: none;
   align-items: center;
   gap: 8px;
   height: 48px;
@@ -82,8 +94,10 @@ html[dark] #ytts-panel {
   line-height: 36px;
 }
 
-#ytts-panel .ytts-copy:hover:not(:disabled) {
-  background: var(--ytts-tonal-hover);
+@media (hover: hover) {
+  #ytts-panel .ytts-copy:hover:not(:disabled) {
+    background: var(--ytts-tonal-hover);
+  }
 }
 
 #ytts-panel .ytts-copy:disabled {
@@ -100,8 +114,10 @@ html[dark] #ytts-panel {
   background: transparent;
 }
 
-#ytts-panel .ytts-chevron:hover {
-  background: var(--ytts-tonal-hover);
+@media (hover: hover) {
+  #ytts-panel .ytts-chevron:hover {
+    background: var(--ytts-tonal-hover);
+  }
 }
 
 #ytts-panel svg {
@@ -121,7 +137,8 @@ html[dark] #ytts-panel {
 
 /* Body — same rows as ytd-transcript-segment-renderer */
 #ytts-panel .ytts-body {
-  max-height: 440px;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   border-top: 1px solid var(--ytts-outline);
   padding: 4px 0 8px;
@@ -164,8 +181,10 @@ html[dark] #ytts-panel {
   line-height: 20px;
 }
 
-#ytts-panel .ytts-load:hover {
-  background: var(--ytts-tonal-hover);
+@media (hover: hover) {
+  #ytts-panel .ytts-load:hover {
+    background: var(--ytts-tonal-hover);
+  }
 }
 
 #ytts-panel .ytts-chapter {
@@ -189,8 +208,10 @@ html[dark] #ytts-panel {
   cursor: pointer;
 }
 
-#ytts-panel .ytts-seg:hover {
-  background: var(--ytts-hover);
+@media (hover: hover) {
+  #ytts-panel .ytts-seg:hover {
+    background: var(--ytts-hover);
+  }
 }
 
 #ytts-panel .ytts-time {
@@ -226,8 +247,10 @@ html[dark] #ytts-panel {
   cursor: pointer;
 }
 
-#ytts-panel .ytts-sent:hover {
-  background: var(--ytts-hover);
+@media (hover: hover) {
+  #ytts-panel .ytts-sent:hover {
+    background: var(--ytts-hover);
+  }
 }
 
 /* Text follows its own direction (dir="auto"), even inside right-to-left YouTube */
@@ -258,8 +281,10 @@ html[dark] #ytts-panel {
   outline: 2px solid var(--ytts-chip-fg);
 }
 
-#ytts-panel .ytts-s:hover {
-  background: var(--ytts-hover);
+@media (hover: hover) {
+  #ytts-panel .ytts-s:hover {
+    background: var(--ytts-hover);
+  }
 }
 
 /* Thin scrollbar like YouTube's panels */
