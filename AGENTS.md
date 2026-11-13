@@ -25,7 +25,7 @@ popup. Vanilla JavaScript classic scripts, no build step, no runtime dependencie
 | `scripts/locales.mjs` | Generates/verifies `_locales` from `i18n.js` |
 | `scripts/pack.mjs`, `release.mjs`, `changelog-section.mjs` | Release zip (git-tracked files of `extension/` only), two-step release, release notes |
 | `scripts/icons.mjs` | `npm run icons`: renders the PNG icons from `extension/icons/icon.svg` |
-| `scripts/screenshot.mjs` | `npm run screenshot [-- --store]`: README and store images from the real extension on youtube.com (card) and the popup harness |
+| `scripts/screenshot.mjs` | `npm run screenshot [-- --store | --site]`: README, store and website card images from the real extension on youtube.com (card) and the popup harness |
 | `.github/workflows/` | `check.yml` (lint, check, unit, e2e, pack artifact), `release.yml` (build with read-only token, publish job with write), `live.yml` (nightly canary, issue on failure) |
 | `.github/` templates, `dependabot.yml` | Bug report, security contact, PR checklist (definition of done); monthly updates (npm grouped, SHA-pinned actions) |
 | `package.json`, `eslint.config.js`, `.editorconfig`, `.gitignore` | Scripts and exact-pinned dev dependencies; lint rules (classic scripts in `extension/`, ESM elsewhere); editor settings |

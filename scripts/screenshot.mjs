@@ -9,7 +9,7 @@
 // throttles transcripts after many automated requests, so run this sparingly. The popup uses the
 // test harness from tests/popup.spec.mjs (pages served from extension/, stubbed chrome API).
 // Interface language: English. Usage: npm run screenshot [-- --store | --site]. Images are overwritten one by
-// one; if a run fails halfway, restore the pair with `git checkout docs/`.
+// one; if a run fails halfway, restore the pair with `git checkout docs/ website/assets/`.
 import { chromium } from '@playwright/test';
 import { mkdirSync, statSync, writeFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
@@ -20,6 +20,7 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 const extensionPath = join(root, 'extension');
 const store = process.argv.includes('--store');
 const site = process.argv.includes('--site');
+if (site && store) throw new Error('Use either --store or --site.');
 const output = join(root, site ? 'website/assets' : store ? 'docs/store/screenshots' : 'docs/screenshots');
 // The website shows the card alone at a fixed size (build-website.mjs: width 704, height 1022).
 const SITE_CARD = { width: 352, height: 511 };
@@ -155,10 +156,14 @@ async function siteCard(page, scheme) {
       canvas.width = image.naturalWidth;
       canvas.height = image.naturalHeight;
       canvas.getContext('2d').drawImage(image, 0, 0);
-      return canvas.toDataURL('image/webp', 0.9).split(',')[1];
+      return { width: canvas.width, height: canvas.height, data: canvas.toDataURL('image/webp', 0.9).split(',')[1] };
     }, `data:image/png;base64,${png.toString('base64')}`);
+    // build-website.mjs states these pixel dimensions in the page.
+    if (webp.width !== SITE_CARD.width * 2 || webp.height !== SITE_CARD.height * 2) {
+      throw new Error(`The image is ${webp.width} × ${webp.height} px, expected ${SITE_CARD.width * 2} × ${SITE_CARD.height * 2}.`);
+    }
     const out = join(output, `card-${scheme}.webp`);
-    writeFileSync(out, Buffer.from(webp, 'base64'));
+    writeFileSync(out, Buffer.from(webp.data, 'base64'));
     console.log(`${relative(root, out)}  ${(statSync(out).size / 1024).toFixed(1)} KB`);
   } finally {
     await encoder.close();
