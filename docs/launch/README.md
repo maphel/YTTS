@@ -1,7 +1,7 @@
 # YTTS Launch-Paket
 
-Stand 12. November 2026. **Veröffentlichungsstatus siehe Tabelle.**
-Die Texte sind Englisch, damit sie auf den vier internationalen Plattformen passen.
+Stand 13. November 2026. **Veröffentlichungsstatus siehe Tabelle.**
+Die Texte sind Englisch, damit sie auf den internationalen Plattformen passen.
 Vor dem Absenden kurz persönlich lesen und gegebenenfalls anpassen.
 
 ## Reihenfolge und Status
@@ -9,13 +9,15 @@ Vor dem Absenden kurz persönlich lesen und gegebenenfalls anpassen.
 | Plattform | Material | Status | Öffentlicher Eintrag |
 | --- | --- | --- | --- |
 | Indie Hackers | [Produkteintrag und erster Beitrag](indie-hackers.md) | Produkteintrag am 12. November veröffentlicht; Startjahr 2026 bestätigt. Community-Beitrag nur als Text vorbereitet | [YTTS](https://www.indiehackers.com/product/ytts) |
-| Product Hunt | [Felder und Maker-Kommentar](product-hunt.md) | Für 13. November 2026, 09:01 Uhr Berlin (00:01 PT) eingeplant; noch nicht live | [Launch-Ziel](https://www.producthunt.com/products/ytts?launch=ytts) |
+| Product Hunt | [Felder und Maker-Kommentar](product-hunt.md) | Am 12. November für 13. November 2026, 09:01 Uhr Berlin (00:01 PT) eingeplant; Live-Status noch nicht erneut geprüft | [Launch-Ziel](https://www.producthunt.com/products/ytts?launch=ytts) |
 | Show HN | [Eckdaten für deinen eigenen Text](show-hn-notes.md) | Fakten vorbereitet; Beitrag von Marcel zu schreiben | — |
 | AlternativeTo | [Produkteintrag und passende Alternativen](alternativeto.md) | Am 12. November mit zwei passenden Alternativen in die kostenlose Prüfwarteschlange eingereicht; noch nicht öffentlich | — |
+| Reddit r/SideProject | [Beitrag mit Demo](https://www.reddit.com/r/SideProject/comments/1xut1in/i_wanted_a_youtube_transcript_tool_that_actually/) | Am 13. November mit dem freigegebenen Text und englischer Demo eingereicht; von Reddit-Filtern entfernt. Bitte um manuelle Freigabe an die Moderatoren gesendet; UI bestätigt „Message sent“ | Noch nicht regulär sichtbar |
+| Microsoft Edge Add-ons | [Paket, 21 Beschreibungen, Bilder und Datenschutz](../store/edge/README.md) | Lokal vorbereitet; Microsoft-Sicherheitsbestätigung durch Kontoinhaber und echter Edge-Test noch offen. Kein Dashboard-Entwurf gespeichert, nicht eingereicht | — |
 
 Die Status wurden nach der Veröffentlichung beziehungsweise Einreichung in der Browser-UI
-geprüft. Product Hunt bestätigt den Termin im Pre-Launch-Dashboard als **Scheduled**.
-AlternativeTo zeigt **Your submission is waiting to be reviewed** und weist darauf hin,
+geprüft. Product Hunt bestätigte den Termin am 12. November im Pre-Launch-Dashboard als **Scheduled**.
+AlternativeTo zeigte bei der Einreichung **Your submission is waiting to be reviewed** und wies darauf hin,
 dass aktuell nur der Einreicher die App sehen kann. Status unter
 [My submissions](https://alternativeto.net/my-submissions/) prüfen; den App-Link erst nach
 Freigabe teilen. Eine zeitnahe Prüfung ist nicht garantiert. Es wurde keine kostenpflichtige

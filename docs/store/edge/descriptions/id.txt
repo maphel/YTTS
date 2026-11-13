@@ -1,0 +1,9 @@
+YTTS untuk Microsoft Edge menampilkan transkrip di samping video agar Anda dapat membaca dan menyalinnya dengan sekali klik. Baca baris takarir asli, kalimat yang dikelompokkan, atau teks bersambung. Klik baris atau kalimat untuk melompat ke bagian tersebut dalam video. Salin seluruh transkrip sebagai teks biasa, dengan atau tanpa stempel waktu.
+
+Di halaman video, luaskan kartu Transkrip jika perlu, baca penjelasannya, lalu klik Izinkan transkrip. YTTS kemudian membuka panel transkrip bawaan YouTube di latar belakang saat diperlukan, membaca teks yang ditampilkan, dan menutup panel jika YTTS yang membukanya. Browser mengingat pilihan itu untuk instalasi ini, sehingga transkrip dimuat pada halaman video berikutnya.
+
+Transkrip tetap berada di memori tab. YTTS hanya menulis ke papan klip ketika Anda mengeklik Salin. Browser menyimpan persetujuan Anda secara lokal dan menyimpan tiga preferensi tampilan yang dapat disinkronkan melalui akun browser Anda. YTTS gratis dan sumber terbuka, tanpa iklan, akun, backend, analitik, atau telemetri.
+
+Video harus memiliki takarir yang disediakan YouTube sebagai transkrip. Kartu mengikuti bahasa antarmuka situs dan menyesuaikan dengan tema terang maupun gelapnya.
+
+YTTS adalah proyek independen dan tidak berafiliasi dengan YouTube atau Google.

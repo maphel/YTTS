@@ -1,0 +1,9 @@
+YTTS shows the transcript next to the video so you can read it and copy it in one click. Read the original caption lines, grouped sentences or continuous text. Click a line or sentence to jump to that point in the video. Copy the full transcript as plain text, with optional timestamps.
+
+On a watch page, expand the Transcript card if needed, read the disclosure and click Allow transcripts. YTTS then opens YouTube's transcript panel in the background when needed, reads the text it shows and closes the panel if YTTS opened it. Your browser remembers that choice for this installation, so transcripts load on later watch pages.
+
+Transcripts stay in the tab's memory. YTTS writes to the clipboard only when you click Copy. Your browser stores your consent locally and saves three display preferences. YTTS has no account, backend, analytics or telemetry.
+
+A video needs captions that YouTube makes available as a transcript. The card follows the site's interface language and matches its light and dark themes.
+
+YTTS is an independent project and is not affiliated with YouTube or Google.

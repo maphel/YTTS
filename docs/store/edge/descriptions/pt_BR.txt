@@ -1,0 +1,9 @@
+O YTTS mostra a transcrição ao lado do vídeo para você ler e copiar com um clique. Leia as linhas originais das legendas, frases agrupadas ou texto corrido. Clique em uma linha ou frase para ir até esse ponto do vídeo. Copie a transcrição completa como texto simples, com marcações de tempo opcionais.
+
+Na página de um vídeo, expanda o cartão “Transcrição” se necessário, leia o aviso e clique em “Permitir transcrições”. O YTTS então abre o painel de transcrição do YouTube em segundo plano quando necessário, lê o texto exibido e fecha o painel se ele tiver sido aberto pelo YTTS. O Microsoft Edge lembra essa escolha para esta instalação, permitindo que as transcrições sejam carregadas nas páginas de vídeos que você abrir depois.
+
+As transcrições ficam na memória da aba. O YTTS só grava na área de transferência quando você clica em “Copiar”. O Microsoft Edge salva seu consentimento localmente e armazena três preferências de visualização. O YTTS não exige uma conta e não tem backend, anúncios, análise de uso ou telemetria.
+
+O vídeo precisa ter legendas que o YouTube disponibilize como transcrição. O cartão acompanha o idioma da interface do site e combina com seus temas claro e escuro.
+
+O YTTS é um projeto independente e não é afiliado ao YouTube ou ao Google.

@@ -1,0 +1,9 @@
+YTTS wyświetla transkrypcję obok filmu, dzięki czemu możesz ją czytać i kopiować jednym kliknięciem. Czytaj oryginalne wiersze napisów, pogrupowane zdania lub tekst ciągły. Kliknij wiersz lub zdanie, aby przejść do tego miejsca w filmie. Kopiuj całą transkrypcję jako zwykły tekst, opcjonalnie ze znacznikami czasu.
+
+Na stronie filmu w razie potrzeby rozwiń kartę „Transkrypcja”, przeczytaj informację i kliknij „Zezwól na transkrypcje”. YTTS otwiera następnie w tle panel transkrypcji YouTube, gdy jest to potrzebne, odczytuje wyświetlany tekst i zamyka panel, jeśli został on otwarty przez YTTS. Microsoft Edge zapamiętuje ten wybór dla tej instalacji, dzięki czemu transkrypcje wczytują się na kolejnych otwieranych stronach filmów.
+
+Transkrypcje pozostają w pamięci karty przeglądarki. YTTS zapisuje tekst w schowku tylko po kliknięciu „Kopiuj”. Microsoft Edge przechowuje zgodę lokalnie i zapisuje trzy preferencje wyświetlania. YTTS nie wymaga konta i nie ma backendu, reklam, analityki ani telemetrii.
+
+Film musi mieć napisy udostępniane przez YouTube jako transkrypcja. Karta używa języka interfejsu witryny i pasuje do jej jasnego oraz ciemnego motywu.
+
+YTTS jest niezależnym projektem i nie jest powiązany z YouTube ani Google.

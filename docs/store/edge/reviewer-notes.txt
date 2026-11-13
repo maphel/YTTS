@@ -1,0 +1,13 @@
+YTTS is a free, open-source Manifest V3 extension. No account or payment is needed. It reads YouTube's existing native transcript after explicit consent; it does not transcribe audio or generate summaries.
+
+Install the package in Microsoft Edge. Open https://www.youtube.com/watch?v=jNQXAC9IVRw in a new tab, or reload a YouTube tab opened before installation. Dismiss YouTube's cookie notice if shown. Expand the Transcript card above recommendations, read the disclosure and select Allow transcripts. Wait for the text to appear. The native transcript panel may open in the background; YTTS closes it if YTTS opened it.
+
+Select Copy and paste into a local text editor. Select a line or sentence to seek in the video. Use the extension's toolbar popup to try Lines, Sentences and Text, and copying with or without timestamps. Check light and dark YouTube themes. Reload or open another video tab to confirm that consent is remembered for this installation. A fresh installation asks again. Videos without a transcript cannot supply text to YTTS.
+
+YTTS has 21 interface locales. The card follows YouTube's interface language; the popup follows the browser's UI language. This does not translate the video's transcript. Arabic supports a right-to-left interface.
+
+The transcript and current video ID stay in tab memory. One consent flag is kept in chrome.storage.local, and three display preferences in chrome.storage.sync. No transcript or history is saved or synchronized. All executable code is included in the ZIP. There is no backend, remote executable code, analytics, advertising or telemetry.
+
+Public source: https://github.com/maphel/YTTS
+Support: https://github.com/maphel/YTTS/issues
+Product demo: https://ytts.christophel.io/

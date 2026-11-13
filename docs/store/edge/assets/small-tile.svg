@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="280" viewBox="0 0 440 280">
+  <title>YTTS — read and copy YouTube transcripts</title>
+  <rect width="440" height="280" fill="#f5f7fb"/>
+  <svg xmlns="http://www.w3.org/2000/svg" x="14" y="12" width="88" height="88" viewBox="0 0 128 128">
+  <title>YTTS</title>
+  <!-- Store icon geometry: 96 × 96 artwork with 16 px transparent padding (Chrome Web Store image
+       guidelines). scripts/icons.mjs renders all PNG sizes from this file. -->
+  <g transform="translate(16 16) scale(0.857143) translate(-8 -8)">
+    <rect x="8" y="8" width="112" height="112" rx="28" fill="#2563eb"/>
+    <path d="M50 29a3 3 0 0 0-4 3v32a3 3 0 0 0 4 3l29-16a3 3 0 0 0 0-6Z" fill="#fff"/>
+    <rect x="32" y="80" width="64" height="8" rx="4" fill="#fff"/>
+    <rect x="32" y="96" width="44" height="8" rx="4" fill="#fff"/>
+  </g>
+</svg>
+
+  <g font-family="Arial, sans-serif" fill="#101828">
+    <text x="106" y="69" font-size="34" font-weight="700">YTTS</text>
+    <text x="32" y="140" font-size="26" font-weight="700">Read YouTube transcripts.</text>
+    <text x="32" y="176" font-size="26" font-weight="700">Copy them in one click.</text>
+    <text x="32" y="236" font-size="16" fill="#475467">Free · Open source · No ads</text>
+  </g>
+</svg>

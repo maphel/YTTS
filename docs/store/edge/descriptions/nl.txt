@@ -1,0 +1,9 @@
+YTTS toont het transcript naast de video, zodat je het kunt lezen en met één klik kunt kopiëren. Lees de oorspronkelijke ondertitelregels, gegroepeerde zinnen of doorlopende tekst. Klik op een regel of zin om naar dat moment in de video te gaan. Kopieer het volledige transcript als platte tekst, met optionele tijdstempels.
+
+Vouw op een videopagina zo nodig de kaart ‘Transcript’ uit, lees de toelichting en klik op ‘Transcripties toestaan’. YTTS opent vervolgens indien nodig het transcriptpaneel van YouTube op de achtergrond, leest de weergegeven tekst en sluit het paneel als YTTS het heeft geopend. Microsoft Edge onthoudt deze keuze voor deze installatie, zodat transcripten ook worden geladen op videopagina’s die je later opent.
+
+Transcripten blijven in het geheugen van het tabblad. YTTS schrijft alleen naar het klembord wanneer je op ‘Kopiëren’ klikt. Microsoft Edge slaat je toestemming lokaal op en bewaart drie weergavevoorkeuren. YTTS vereist geen account en heeft geen backend, advertenties, gebruiksanalyses of telemetrie.
+
+Een video moet ondertitels hebben die YouTube als transcript beschikbaar stelt. De kaart volgt de interfacetaal van de site en sluit aan op de lichte en donkere thema’s.
+
+YTTS is een onafhankelijk project en is niet verbonden aan YouTube of Google.
